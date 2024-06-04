@@ -1,5 +1,10 @@
-function Main() {
-  return <span>Main</span>
+import './Main.css'
+import PropTypes from 'prop-types'
+
+export default function Main({ children }) {
+  return <div className="main">{children}</div>
 }
 
-export default Main
+Main.propTypes = {
+  children: PropTypes.node,
+}

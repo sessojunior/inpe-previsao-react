@@ -1,11 +1,13 @@
 .dockbar {
+  position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 80px;
   height: 100vh;
   background-color: #1351b4;
-  transition: all 0.025s;
+  transition: all 0.5s;
+  z-index: 50;
 }
 
 .dockbar:hover {
@@ -15,7 +17,9 @@
 }
 
 .dockbar .btn {
-  display: block;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
   background-color: transparent;
   border-color: transparent;
   transition: all 0.5s;

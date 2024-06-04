@@ -1,5 +1,9 @@
-function Toolbar() {
-  return <span>Toolbar</span>
-}
+import './Toolbar.css'
 
-export default Toolbar
+export default function Toolbar() {
+  return (
+    <div className="toolbar">
+      Toolbar
+    </div>
+  )
+}
