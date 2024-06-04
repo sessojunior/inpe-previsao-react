@@ -15,5 +15,5 @@ npm run dev
 Instalar também as seguintes bibliotecas:
 
 ```bash
-npm install react-bootstrap bootstrap
+npm install react-bootstrap bootstrap bootstrap-icons
 ```
