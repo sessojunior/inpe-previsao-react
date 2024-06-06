@@ -37,5 +37,6 @@ export default function Topbar({ showHideHeaderFooter, showQtyFrames }) {
 }
 
 Topbar.propTypes = {
-  showHideHeaderFooter: PropTypes.func
+  showHideHeaderFooter: PropTypes.func,
+  showQtyFrames: PropTypes.number
 }
