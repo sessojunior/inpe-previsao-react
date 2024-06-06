@@ -11,10 +11,10 @@ function App() {
       <main>
         <Topbar />
         <Main>
-          <Frame>Quadro 1</Frame>
-          <Frame>Quadro 2</Frame>
-          <Frame>Quadro 3</Frame>
-          <Frame>Quadro 4</Frame>
+          <Frame model="BAM" region="Sul" dateTime="Qua 05 Jun 2024 00 UTC" />
+          <Frame model="BRAMS 08km" region="América do Sul" dateTime="Qua 05 Jun 2024 00 UTC" />
+          <Frame model="WRF" region="Centro-oeste" dateTime="Qua 05 Jun 2024 00 UTC" />
+          <Frame model="Multimodelo" region="Nordeste" dateTime="Qua 05 Jun 2024 00 UTC" />
         </Main>
       </main>
       <footer>Footer</footer>
