@@ -3,6 +3,10 @@ import Button from 'react-bootstrap/Button';
 import PropTypes from "prop-types";
 
 const StyledTopBar = styled.div`
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 80px;
   background-color: #F8F8F8;
   border-bottom: 1px solid #cbcbcb;
