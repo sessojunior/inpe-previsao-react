@@ -1,16 +1,17 @@
-import './Topbar.css'
+import styled from "styled-components"
+
+const StyledTopBar = styled.div`
+  height: 80px;
+  background-color: #F8F8F8;
+  border-bottom: 1px solid #cbcbcb;
+  color: #000000;
+  display: flex;
+`;
 
 export default function Topbar() {
   return (
-    <div className="topbar">
-      <div className="left">
-        <div>Logo</div>
-        <div>Menu</div>
-      </div>
-      <div className="right">
-        <div>Buttons</div>
-        <div>Profile</div>
-      </div>
-    </div>
+    <StyledTopBar>
+      Topbar Styled
+    </StyledTopBar>
   )
 }

@@ -1,7 +1,28 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
 
 * {
-  font-family: "Poppins", sans-serif;
+  font-family: "Raleway", sans-serif;
+  font-optical-sizing: auto;
   font-weight: 400;
-  font-size: 16px;
+  font-style: normal;
+}
+
+header {
+  height: 196px;
+  background-color: #f8f8f8;
+  border-bottom: 1px solid #cbcbcb;
+  color: #000000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+footer {
+  height: 928px;
+  background-color: #071d41;
+  border-top: 1px solid #cbcbcb;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

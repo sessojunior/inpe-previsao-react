@@ -1,10 +1,13 @@
-import './Main.css'
-import PropTypes from 'prop-types'
+import Proptypes from "prop-types"
 
 export default function Main({ children }) {
-  return <div className="main">{children}</div>
+  return (
+    <>
+      {children}
+    </>
+  )
 }
 
 Main.propTypes = {
-  children: PropTypes.node,
+  children: Proptypes.node
 }

@@ -1,26 +1,25 @@
-import 'bootstrap/dist/css/bootstrap.min.css'
-import 'bootstrap-icons/font/bootstrap-icons.css';
 import './App.css'
-import Dockbar from './components/Dockbar'
+import "bootstrap/dist/css/bootstrap.min.css";
+import Frame from './components/Frame'
 import Main from './components/Main'
 import Topbar from './components/Topbar'
-import Content from './components/Content'
-import Sidebar from './components/Sidebar'
-import Toolbar from './components/Toolbar'
-import Frames from './components/Frames';
 
-export default function App() {
+function App() {
   return (
     <>
-      <Dockbar active="previsaoNumerica" />
-      <Main>
+      <header>Header</header>
+      <main>
         <Topbar />
-        <Content>
-          <Sidebar />
-          <Toolbar />
-          <Frames />
-        </Content>
-      </Main>
+        <Main>
+          <Frame>Quadro 1</Frame>
+          <Frame>Quadro 2</Frame>
+          <Frame>Quadro 3</Frame>
+          <Frame>Quadro 4</Frame>
+        </Main>
+      </main>
+      <footer>Footer</footer>
     </>
   )
 }
+
+export default App
