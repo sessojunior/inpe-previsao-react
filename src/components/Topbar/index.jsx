@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import Button from 'react-bootstrap/Button';
+import PropTypes from "prop-types";
 
 const StyledTopBar = styled.div`
   height: 80px;
@@ -21,16 +22,20 @@ const StyledTopBar = styled.div`
   }
 `
 
-export default function Topbar() {
+export default function Topbar({ showHideHeaderFooter, showQtyFrames }) {
   return (
     <StyledTopBar>
-      <div className="buttons"><Button variant="primary"><i className="bi bi-arrows-fullscreen"></i></Button></div>
+      <div className="buttons"><Button variant="primary" onClick={showHideHeaderFooter}><i className="bi bi-arrows-fullscreen"></i></Button></div>
       <div className="title">Previsão Numérica do Tempo</div>
       <div className="buttons">
-        <Button variant="primary"><i className="bi bi-window"></i></Button>
-        <Button variant="primary"><i className="bi bi-window-split"></i></Button>
-        <Button variant="primary"><i className="bi bi-border-all"></i></Button>
+        <Button variant={showQtyFrames === 1 ? "primary" : "outline-primary"}><i className="bi bi-window"></i></Button>
+        <Button variant={showQtyFrames === 2 ? "primary" : "outline-primary"}><i className="bi bi-window-split"></i></Button>
+        <Button variant={showQtyFrames === 4 ? "primary" : "outline-primary"}><i className="bi bi-border-all"></i></Button>
       </div>
     </StyledTopBar>
   )
+}
+
+Topbar.propTypes = {
+  showHideHeaderFooter: PropTypes.func
 }
