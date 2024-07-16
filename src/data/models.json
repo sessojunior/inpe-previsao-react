@@ -1,0 +1,369 @@
+[
+  {
+    "id": 1,
+    "label": "BAM",
+    "value": "bam",
+    "defaultValues": {
+      "region": {
+        "label": "Sul",
+        "value": "sul"
+      },
+      "options": {
+        "label": "Níveis isobáricos A",
+        "value": "n1"
+      },
+      "field": {
+        "label": "Campo 3A",
+        "value": "c1"
+      },
+      "init": "Qua 05 Jun 2024 18 UTC",
+      "timeRun": "12",
+      "currentTime": "096"
+    },
+    "possibleValues": {
+      "region": [
+        {
+          "label": "Norte",
+          "value": "norte"
+        },
+        {
+          "label": "Sul",
+          "value": "sul"
+        },
+        {
+          "label": "Centro-Oeste",
+          "value": "co"
+        },
+        {
+          "label": "Nordeste",
+          "value": "nde"
+        },
+        {
+          "label": "Sudeste",
+          "value": "sde"
+        }
+      ],
+      "options": [
+        {
+          "label": "Níveis isobáricos A",
+          "value": "n1"
+        },
+        {
+          "label": "Níveis simples A",
+          "value": "n2"
+        },
+        {
+          "label": "Conjuntos A",
+          "value": "n3"
+        }
+      ],
+      "field": [
+        {
+          "label": "Campo 3A",
+          "value": "c1"
+        },
+        {
+          "label": "Campo 4A",
+          "value": "c2"
+        },
+        {
+          "label": "Campo 7A",
+          "value": "c3"
+        }
+      ],
+      "init": [
+        "Qua 05 Jun 2024 00 UTC",
+        "Qua 05 Jun 2024 06 UTC",
+        "Qua 05 Jun 2024 12 UTC",
+        "Qua 05 Jun 2024 18 UTC"
+      ],
+      "time": [
+        "024",
+        "030",
+        "036",
+        "040",
+        "048",
+        "060",
+        "072",
+        "084",
+        "096"
+      ]
+    }
+  },
+  {
+    "id": 2,
+    "label": "WRF",
+    "value": "wrf",
+    "defaultValues": {
+      "region": {
+        "label": "Sul",
+        "value": "sul"
+      },
+      "options": {
+        "label": "Níveis simples B",
+        "value": "n2"
+      },
+      "field": {
+        "label": "Campo 4B",
+        "value": "c2"
+      },
+      "init": "Qua 05 Jun 2024 06 UTC",
+      "timeRun": "12",
+      "currentTime": "024"
+    },
+    "possibleValues": {
+      "region": [
+        {
+          "label": "Sul",
+          "value": "sul"
+        },
+        {
+          "label": "Centro-Oeste",
+          "value": "co"
+        },
+        {
+          "label": "Nordeste",
+          "value": "nde"
+        }
+      ],
+      "options": [
+        {
+          "label": "Níveis isobáricos B",
+          "value": "n1"
+        },
+        {
+          "label": "Níveis simples B",
+          "value": "n2"
+        },
+        {
+          "label": "Conjuntos B",
+          "value": "n3"
+        }
+      ],
+      "field": [
+        {
+          "label": "Campo 3B",
+          "value": "c1"
+        },
+        {
+          "label": "Campo 4B",
+          "value": "c2"
+        },
+        {
+          "label": "Campo 7B",
+          "value": "c3"
+        }
+      ],
+      "init": [
+        "Qua 05 Jun 2024 00 UTC",
+        "Qua 05 Jun 2024 06 UTC",
+        "Qua 05 Jun 2024 12 UTC",
+        "Qua 05 Jun 2024 18 UTC"
+      ],
+      "time": [
+        "024",
+        "030",
+        "036",
+        "040",
+        "048",
+        "060",
+        "072",
+        "084",
+        "096",
+        "108",
+        "120",
+        "132",
+        "144",
+        "156",
+        "168",
+        "180",
+        "192",
+        "204",
+        "216",
+        "228",
+        "240"
+      ]
+    }
+  },
+  {
+    "id": 3,
+    "label": "BRAMS",
+    "value": "brams05",
+    "defaultValues": {
+      "region": {
+        "label": "América do Sul",
+        "value": "ams"
+      },
+      "options": {
+        "label": "Conjuntos C",
+        "value": "n3"
+      },
+      "field": {
+        "label": "Campo 7C",
+        "value": "c3"
+      },
+      "init": "Qua 05 Jun 2024 12 UTC",
+      "timeRun": "06",
+      "currentTime": "036"
+    },
+    "possibleValues": {
+      "region": [
+        {
+          "label": "América do Sul",
+          "value": "ams"
+        },
+        {
+          "label": "Brasil",
+          "value": "brasil"
+        }
+      ],
+      "options": [
+        {
+          "label": "Níveis isobáricos C",
+          "value": "n1"
+        },
+        {
+          "label": "Níveis simples C",
+          "value": "n2"
+        },
+        {
+          "label": "Conjuntos C",
+          "value": "n3"
+        }
+      ],
+      "field": [
+        {
+          "label": "Campo 3C",
+          "value": "c1"
+        },
+        {
+          "label": "Campo 4C",
+          "value": "c2"
+        },
+        {
+          "label": "Campo 7C",
+          "value": "c3"
+        }
+      ],
+      "init": [
+        "Qua 05 Jun 2024 00 UTC",
+        "Qua 05 Jun 2024 06 UTC",
+        "Qua 05 Jun 2024 12 UTC",
+        "Qua 05 Jun 2024 18 UTC"
+      ],
+      "time": [
+        "030",
+        "036",
+        "040",
+        "048",
+        "060",
+        "072",
+        "084",
+        "096",
+        "108",
+        "120",
+        "132",
+        "144",
+        "156",
+        "168",
+        "180"
+      ]
+    }
+  },
+  {
+    "id": 4,
+    "label": "Outros",
+    "value": "others",
+    "defaultValues": {
+      "region": {
+        "label": "Norte",
+        "value": "norte"
+      },
+      "options": {
+        "label": "Níveis isobáricos D",
+        "value": "n1"
+      },
+      "field": {
+        "label": "Campo 3D",
+        "value": "c1"
+      },
+      "init": "Qua 05 Jun 2024 18 UTC",
+      "timeRun": "24",
+      "currentTime": "096"
+    },
+    "possibleValues": {
+      "region": [
+        {
+          "label": "Norte",
+          "value": "norte"
+        },
+        {
+          "label": "Sul",
+          "value": "sul"
+        },
+        {
+          "label": "Centro-Oeste",
+          "value": "co"
+        },
+        {
+          "label": "Nordeste",
+          "value": "nde"
+        },
+        {
+          "label": "Sudeste",
+          "value": "sde"
+        }
+      ],
+      "options": [
+        {
+          "label": "Níveis isobáricos D",
+          "value": "n1"
+        },
+        {
+          "label": "Níveis simples D",
+          "value": "n2"
+        },
+        {
+          "label": "Conjuntos D",
+          "value": "n3"
+        }
+      ],
+      "field": [
+        {
+          "label": "Campo 3D",
+          "value": "c1"
+        },
+        {
+          "label": "Campo 4D",
+          "value": "c2"
+        },
+        {
+          "label": "Campo 7D",
+          "value": "c3"
+        }
+      ],
+      "init": [
+        "Qua 05 Jun 2024 00 UTC",
+        "Qua 05 Jun 2024 06 UTC",
+        "Qua 05 Jun 2024 12 UTC",
+        "Qua 05 Jun 2024 18 UTC"
+      ],
+      "time": [
+        "040",
+        "048",
+        "060",
+        "072",
+        "084",
+        "096",
+        "108",
+        "120",
+        "132",
+        "144",
+        "156",
+        "168",
+        "180",
+        "192"
+      ]
+    }
+  }
+]

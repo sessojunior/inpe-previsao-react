@@ -1,0 +1,46 @@
+[
+  {
+    "id": 1,
+    "model": "bam",
+    "region": "sul",
+    "options": "n1",
+    "field": "c1",
+    "init": "Qua 05 Jun 2024 00 UTC",
+    "timeRun": "12",
+    "currentTime": "030",
+    "isPlaying": false
+  },
+  {
+    "id": 2,
+    "model": "wrf",
+    "region": "sul",
+    "options": "n2",
+    "field": "c2",
+    "init": "Qua 05 Jun 2024 06 UTC",
+    "timeRun": "12",
+    "currentTime": "024",
+    "isPlaying": false
+  },
+  {
+    "id": 3,
+    "model": "brams05",
+    "region": "ams",
+    "options": "n3",
+    "field": "c3",
+    "init": "Qua 05 Jun 2024 12 UTC",
+    "timeRun": "06",
+    "currentTime": "036",
+    "isPlaying": false
+  },
+  {
+    "id": 4,
+    "model": "others",
+    "region": "norte",
+    "options": "n1",
+    "field": "c1",
+    "init": "Qua 05 Jun 2024 18 UTC",
+    "timeRun": "24",
+    "currentTime": "096",
+    "isPlaying": false
+  }
+]
