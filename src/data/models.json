@@ -3,6 +3,7 @@
     "id": 1,
     "label": "BAM",
     "value": "bam",
+    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/bam/{{region}}/{{options}}/{{field}}/{{year}}/{{month}}/{{day}}/{{lastTurn}}/modelo_{{timeRun}}h_glo_{{year}}{{month}}{{day}}{{lastTurn}}Z.png",
     "defaultValues": {
       "region": {
         "label": "Sul",
@@ -94,6 +95,7 @@
     "id": 2,
     "label": "WRF",
     "value": "wrf",
+    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/wrf/{{region}}/{{options}}/{{field}}/{{year}}/{{month}}/{{day}}/{{lastTurn}}/modelo_{{timeRun}}h_glo_{{year}}{{month}}{{day}}{{lastTurn}}Z.png",
     "defaultValues": {
       "region": {
         "label": "Sul",
@@ -189,6 +191,7 @@
     "id": 3,
     "label": "BRAMS",
     "value": "brams05",
+    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/brams05/{{region}}/{{options}}/{{field}}/{{year}}/{{month}}/{{day}}/{{lastTurn}}/modelo_{{timeRun}}h_glo_{{year}}{{month}}{{day}}{{lastTurn}}Z.png",
     "defaultValues": {
       "region": {
         "label": "América do Sul",
@@ -274,6 +277,7 @@
     "id": 4,
     "label": "Outros",
     "value": "others",
+    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/{{region}}/{{options}}/{{field}}/{{year}}/{{month}}/{{day}}/{{lastTurn}}/modelo_{{timeRun}}h_glo_{{year}}{{month}}{{day}}{{lastTurn}}Z.png",
     "defaultValues": {
       "region": {
         "label": "Norte",

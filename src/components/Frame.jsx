@@ -6,7 +6,7 @@ import { useContext } from 'react'
 import { ConfigContext } from '../contexts/Config'
 
 const FrameTop = ({ frame, setFrame, model, setModel, models }) => {
-  
+
   const { config, setConfig } = useContext(ConfigContext)
 
   const classButton = "size-9 md:size-[38px] inline-flex justify-center items-center gap-2 rounded-md font-medium bg-white border border-gray-200 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-50 text-xs md:text-sm"
@@ -119,7 +119,7 @@ const FrameTop = ({ frame, setFrame, model, setModel, models }) => {
   // }
 
   {/* End Timer */ }
-  
+
   const handleChangeModel = (e) => {
     const model = models.find(model => model.value === e.target.value)
     setModel(model)
@@ -132,6 +132,7 @@ const FrameTop = ({ frame, setFrame, model, setModel, models }) => {
       init: model.defaultValues.init,
       timeRun: model.defaultValues.timeRun,
       currentTime: model.defaultValues.currentTime,
+      urlImage: model.urlImage,
     })
     // console.log("handleChangeModel (model)", model)
     // console.log("handleChangeModel (frame)", frame)
@@ -274,6 +275,16 @@ const FrameImage = ({ frame, model, date }) => {
       <p>Exemplo de URL da imagem:
         <br />[https://s1.cptec.inpe.br/grafico/Modelos/<b>{frame.model}</b>/<b>{frame.region}</b>/<b>{frame.options}</b>/<b>{frame.field}</b>
         <br />/<b>{date.yearMinusTimeRun}</b>/<b>{date.monthMinusTimeRun}</b>/<b>{date.dayMinusTimeRun}</b>/<b>{date.lastTurn}</b>/modelo_<b>{frame.currentTime}</b>_<b>{Number(date.timeRun)}</b>h_glo_<b>{date.yearMinusTimeRun}{date.monthMinusTimeRun}{date.dayMinusTimeRun}{date.lastTurn}</b>Z.png]</p>
+      <p>URL normal: {frame.urlImage}</p>
+      <p>URL convertida: {
+        frame.urlImage.replaceAll("{{region}}", frame.region)
+          .replaceAll("{{options}}", frame.options)
+          .replaceAll("{{field}}", frame.field)
+          .replaceAll("{{timeRun}}", frame.timeRun)
+          .replaceAll("{{lastTurn}}", date.lastTurn)
+          .replaceAll("{{year}}", date.yearMinusTimeRun)
+          .replaceAll("{{month}}", date.monthMinusTimeRun)
+          .replaceAll("{{day}}", date.dayMinusTimeRun)}</p>
       <p>Dados para a troca de imagem:</p>
       <p>[frame.model: <b>{frame.model}</b>]</p>
       <p>[frame.region: <b>{frame.region}</b>]</p>
@@ -295,7 +306,7 @@ const FrameImage = ({ frame, model, date }) => {
 }
 
 export default function Frame({ id }) {
-  
+
   const { config } = useContext(ConfigContext)
 
   const [frame, setFrame] = useState(config.frames.find(frame => frame.id === id))
@@ -365,7 +376,7 @@ export default function Frame({ id }) {
     return { date, year, month, day, hour, minute, second, weekName, monthName, timeRun, yearMinusTimeRun, monthMinusTimeRun, dayMinusTimeRun, hourMinusTimeRun, minuteMinusTimeRun, secondMinusTimeRun, lastTurn }
   }
   {/* End tests with date */ }
-  
+
   const date = dateTime(new Date(), frame.timeRun)
   console.log("frame.timeRun", frame.timeRun)
   console.log("date", date)

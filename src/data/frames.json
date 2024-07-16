@@ -8,7 +8,8 @@
     "init": "Qua 05 Jun 2024 00 UTC",
     "timeRun": "12",
     "currentTime": "030",
-    "isPlaying": false
+    "isPlaying": false,
+    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/bam/{{region}}/{{options}}/{{field}}/{{year}}/{{month}}/{{day}}/{{lastTurn}}/modelo_{{timeRun}}h_glo_{{year}}{{month}}{{day}}{{lastTurn}}Z.png"
   },
   {
     "id": 2,
@@ -19,7 +20,8 @@
     "init": "Qua 05 Jun 2024 06 UTC",
     "timeRun": "12",
     "currentTime": "024",
-    "isPlaying": false
+    "isPlaying": false,
+    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/wrf/{{region}}/{{options}}/{{field}}/{{year}}/{{month}}/{{day}}/{{lastTurn}}/modelo_{{timeRun}}h_glo_{{year}}{{month}}{{day}}{{lastTurn}}Z.png"
   },
   {
     "id": 3,
@@ -30,7 +32,8 @@
     "init": "Qua 05 Jun 2024 12 UTC",
     "timeRun": "06",
     "currentTime": "036",
-    "isPlaying": false
+    "isPlaying": false,
+    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/brams05/{{region}}/{{options}}/{{field}}/{{year}}/{{month}}/{{day}}/{{lastTurn}}/modelo_{{timeRun}}h_glo_{{year}}{{month}}{{day}}{{lastTurn}}Z.png"
   },
   {
     "id": 4,
@@ -41,6 +44,7 @@
     "init": "Qua 05 Jun 2024 18 UTC",
     "timeRun": "24",
     "currentTime": "096",
-    "isPlaying": false
+    "isPlaying": false,
+    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/{{region}}/{{options}}/{{field}}/{{year}}/{{month}}/{{day}}/{{lastTurn}}/modelo_{{timeRun}}h_glo_{{year}}{{month}}{{day}}{{lastTurn}}Z.png"
   }
 ]
