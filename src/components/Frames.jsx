@@ -4,9 +4,11 @@ import { useContext } from 'react'
 import { ConfigContext } from '../contexts/Config'
 
 export default function Frames() {
-  
+
   const { config } = useContext(ConfigContext)
   // console.log("config", config)
+
+  console.log("Frames")
 
   return (
     <>

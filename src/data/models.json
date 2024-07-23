@@ -17,8 +17,8 @@
         "label": "Campo 3A",
         "value": "c1"
       },
-      "init": "Qua 05 Jun 2024 18 UTC",
-      "timeRun": "12",
+      "maxDays": 7,
+      "timeRun": 12,
       "currentTime": "096"
     },
     "possibleValues": {
@@ -72,12 +72,6 @@
           "value": "c3"
         }
       ],
-      "init": [
-        "Qua 05 Jun 2024 00 UTC",
-        "Qua 05 Jun 2024 06 UTC",
-        "Qua 05 Jun 2024 12 UTC",
-        "Qua 05 Jun 2024 18 UTC"
-      ],
       "time": [
         "024",
         "030",
@@ -109,8 +103,8 @@
         "label": "Campo 4B",
         "value": "c2"
       },
-      "init": "Qua 05 Jun 2024 06 UTC",
-      "timeRun": "12",
+      "maxDays": 14,
+      "timeRun": 12,
       "currentTime": "024"
     },
     "possibleValues": {
@@ -156,12 +150,6 @@
           "value": "c3"
         }
       ],
-      "init": [
-        "Qua 05 Jun 2024 00 UTC",
-        "Qua 05 Jun 2024 06 UTC",
-        "Qua 05 Jun 2024 12 UTC",
-        "Qua 05 Jun 2024 18 UTC"
-      ],
       "time": [
         "024",
         "030",
@@ -205,8 +193,8 @@
         "label": "Campo 7C",
         "value": "c3"
       },
-      "init": "Qua 05 Jun 2024 12 UTC",
-      "timeRun": "06",
+      "maxDays": 21,
+      "timeRun": 6,
       "currentTime": "036"
     },
     "possibleValues": {
@@ -248,12 +236,6 @@
           "value": "c3"
         }
       ],
-      "init": [
-        "Qua 05 Jun 2024 00 UTC",
-        "Qua 05 Jun 2024 06 UTC",
-        "Qua 05 Jun 2024 12 UTC",
-        "Qua 05 Jun 2024 18 UTC"
-      ],
       "time": [
         "030",
         "036",
@@ -291,8 +273,8 @@
         "label": "Campo 3D",
         "value": "c1"
       },
-      "init": "Qua 05 Jun 2024 18 UTC",
-      "timeRun": "24",
+      "maxDays": 28,
+      "timeRun": 24,
       "currentTime": "096"
     },
     "possibleValues": {
@@ -345,12 +327,6 @@
           "label": "Campo 7D",
           "value": "c3"
         }
-      ],
-      "init": [
-        "Qua 05 Jun 2024 00 UTC",
-        "Qua 05 Jun 2024 06 UTC",
-        "Qua 05 Jun 2024 12 UTC",
-        "Qua 05 Jun 2024 18 UTC"
       ],
       "time": [
         "040",

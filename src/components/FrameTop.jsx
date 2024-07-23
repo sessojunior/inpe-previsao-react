@@ -1,22 +1,16 @@
 import { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
-import { useContext } from 'react'
-import { ConfigContext } from '../contexts/Config'
-
-import { FaChevronLeft, FaChevronRight, FaClock, FaPause, FaPlay } from 'react-icons/fa'
-import { FaRegRectangleList } from 'react-icons/fa6'
+import { FaChevronLeft, FaChevronRight, FaClock, FaCog, FaPause, FaPlay } from 'react-icons/fa'
 
 import DropDownConfig from './DropDownConfig'
 import DropDownTime from './DropDownTime'
 
-export default function FrameTop({ frame, setFrame, model, setModel, models }) {
-
-  const { config, setConfig } = useContext(ConfigContext)
+export default function FrameTop({ frame, setFrame, model, setModel, models, date }) {
 
   const classButton = "size-9 md:size-[38px] inline-flex justify-center items-center gap-2 rounded-md font-medium bg-white border border-gray-200 text-gray-700 hover:bg-gray-100 text-xs md:text-sm"
 
-  const classButtonActive = "size-9 md:size-[38px] inline-flex justify-center items-center gap-2 rounded-md font-medium bg-blue-700 border border-gray-200 text-gray-50 hover:bg-blue-600 text-xs md:text-sm"
+  const classButtonActive = "size-9 md:size-[38px] inline-flex justify-center items-center gap-2 rounded-md font-medium bg-blue-600 border border-gray-200 text-gray-50 hover:bg-blue-500 text-xs md:text-sm"
 
   const [openDropdownConfig, setOpenDropdownConfig] = useState(false)
   const [openDropdownTime, setOpenDropdownTime] = useState(false)
@@ -65,34 +59,16 @@ export default function FrameTop({ frame, setFrame, model, setModel, models }) {
   const [currentTime, setCurrentTime] = useState(model.possibleValues.time[model.possibleValues.time.indexOf(frame.currentTime)])
 
   useEffect(() => {
-    // console.log("currentTime", currentTime)
+    console.log("currentTime", currentTime)
     if (timer > 0) {
       setFrame({ ...frame, currentTime: currentTime })
     }
   }, [timer])
 
-  useEffect(() => {
-    const index = frame.id - 1
-    // console.log("index", index)
-    // console.log("frame", frame)
-    // console.log("config.frames", config.frames)
-
-    setConfig({ ...config, frames: [...config.frames.slice(0, index), { ...frame, isPlaying: false }, ...config.frames.slice(index + 1)] })
-    console.log("mudou config")
-    // localStorage.setItem('frames', JSON.stringify(config.frames))
-  }, [frame])
-
-  useEffect(() => {
-    console.log("config.frames", config.frames)
-    localStorage.setItem('frames', JSON.stringify(config.frames))
-    console.log("salvou no localStorage")
-  }, [config.frames])
-
   // Function to start the timer
   const startTimer = () => {
-    // Use setInterval to update the timer every 1000 milliseconds (1 second)
+  console.log("startTimer")
     setTimeInterval(setInterval(() => {
-      // Update the timer by incrementing the previous value by 1
       setTimer((prev) => prev + 1)
       setCurrentTime((prev) => {
         if (prev === model.possibleValues.time[model.possibleValues.time.length - 1]) {
@@ -107,7 +83,6 @@ export default function FrameTop({ frame, setFrame, model, setModel, models }) {
 
   // Function to pause the timer
   const pauseTimer = () => {
-    // Clear the interval to stop the timer from updating
     clearInterval(timeInterval)
     setFrame({ ...frame, isPlaying: false })
   }
@@ -123,15 +98,17 @@ export default function FrameTop({ frame, setFrame, model, setModel, models }) {
 
   {/* End Timer */ }
 
+  console.log("FrameTop")
+
   return (
     <div className="flex justify-between">
       <div className="flex relative">
-        <button className={openDropdownConfig ? classButtonActive : classButton} onClick={handleDropdownConfig}><FaRegRectangleList /></button>
-        {openDropdownConfig && <DropDownConfig frame={frame} setFrame={setFrame} models={models} model={model} setModel={setModel} />}
+        <button className={openDropdownConfig ? classButtonActive : classButton} onClick={handleDropdownConfig}><FaCog /></button>
+        {openDropdownConfig && <DropDownConfig frame={frame} setFrame={setFrame} models={models} model={model} setModel={setModel} date={date} />}
         <div className="mx-2">
           <div className="font-bold text-sm">{/* {frame.model} */} {model.label} {">"} Região {/* {frame.region} */} {model.possibleValues.region.find(region => region.value === frame.region).label}
           </div>
-          <div className="text-xs">{frame.init}</div>
+          <div className="text-xs">{date.formattedDateMinusTimeRun[0]}</div>
         </div>
       </div>
       <div className="flex relative">
@@ -148,7 +125,7 @@ export default function FrameTop({ frame, setFrame, model, setModel, models }) {
         <div className="flex items-center">
           <div className="font-bold text-sm px-2">{frame.currentTime} horas</div>
           <button className={openDropdownTime ? classButtonActive : classButton} onClick={handleDropdownTime}><FaClock /></button>
-          {openDropdownTime && <DropDownTime frame={frame} setFrame={setFrame} model={model} />}
+          {openDropdownTime && <DropDownTime currentTime={currentTime} setCurrentTime={setCurrentTime} frame={frame} setFrame={setFrame} model={model} />}
         </div>
       </div>
     </div>
@@ -161,4 +138,5 @@ FrameTop.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   models: PropTypes.array,
+  date: PropTypes.object,
 }
