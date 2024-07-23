@@ -9,11 +9,13 @@ export const ConfigContext = createContext({})
 export default function ConfigProvider({ children }) {
 
   const [config, setConfig] = useState({
-    showHeaderFooter: true,
-    quantityFrames: 4,
+    showHeaderFooter: JSON.parse(localStorage.getItem('config'))?.showHeaderFooter ?? true,
+    quantityFrames: JSON.parse(localStorage.getItem('config'))?.quantityFrames || 4,
     models: jsonModels,
     frames: JSON.parse(localStorage.getItem('frames')) || jsonFrames,
   })
+
+  console.log("config", config)
 
   {/*
     Start dateTime

@@ -1,6 +1,6 @@
 import { BsArrowsFullscreen, BsWindow, BsWindowSplit, BsBorderAll } from "react-icons/bs"
 
-import { useContext } from 'react'
+import { useEffect, useContext } from 'react'
 import { ConfigContext } from '../contexts/Config'
 
 export default function TopBar() {
@@ -12,11 +12,7 @@ export default function TopBar() {
   const { config, setConfig } = useContext(ConfigContext)
 
   const handleFullScreen = () => {
-    if (config.showHeaderFooter) {
-      setConfig({ ...config, showHeaderFooter: false })
-    } else {
-      setConfig({ ...config, showHeaderFooter: true })
-    }
+    setConfig({ ...config, showHeaderFooter: !config.showHeaderFooter })
   }
 
   const handleQuantityFrames = ({ quantity }) => {
@@ -24,12 +20,16 @@ export default function TopBar() {
     setConfig({ ...config, quantityFrames: quantity })
   }
 
+  useEffect(() => {
+    localStorage.setItem('config', JSON.stringify({ showHeaderFooter: config.showHeaderFooter, quantityFrames: config.quantityFrames }))
+  }, [config.showHeaderFooter, config.quantityFrames])
+
   // console.log("config", config)
 
   return (
     <header className="flex justify-between items-center px-4 w-full h-16 bg-gray-100 border border-y-gray-300">
       <div>
-        <button className={config.showHeaderFooter ? classButton : classButtonActive} onClick={handleFullScreen}><BsArrowsFullscreen /></button>
+        <button className={!config.showHeaderFooter ? classButtonActive : classButton} onClick={handleFullScreen}><BsArrowsFullscreen /></button>
       </div>
       <div>
         <h2 className="text-xl font-bold">Previsão Numérica do Tempo</h2>
