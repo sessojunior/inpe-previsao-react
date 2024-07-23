@@ -108,7 +108,7 @@ export default function FrameTop({ frame, setFrame, model, setModel, models, dat
         <div className="mx-2">
           <div className="font-bold text-sm">{/* {frame.model} */} {model.label} {">"} Região {/* {frame.region} */} {model.possibleValues.region.find(region => region.value === frame.region).label}
           </div>
-          <div className="text-xs">{date.formattedDateMinusTimeRun[0]}</div>
+          <div className="text-xs">{frame.init ?? date.formattedDateMinusTimeRun[0]}</div>
         </div>
       </div>
       <div className="flex relative">

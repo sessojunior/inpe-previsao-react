@@ -40,7 +40,7 @@ export default function Frame({ id }) {
     // console.log("frame", frame)
     // console.log("config.frames", config.frames)
 
-    setConfig({ ...config, frames: [...config.frames.slice(0, index), { ...frame, isPlaying: false }, ...config.frames.slice(index + 1)] })
+    setConfig({ ...config, frames: [...config.frames.slice(0, index), { ...frame, isPlaying: false, init: null }, ...config.frames.slice(index + 1)] })
     console.log("config", config)
     console.log("mudou config")
     // localStorage.setItem('frames', JSON.stringify(config.frames))
