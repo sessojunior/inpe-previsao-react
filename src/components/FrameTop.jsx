@@ -112,7 +112,7 @@ export default function FrameTop({ frame, setFrame, model, setModel, date }) {
   return (
     <div className="flex justify-between">
       <div className="flex relative">
-        <button className={openDropdownConfig ? classButtonActive : classButton} onClick={handleDropdownConfig}><FaCog /></button>
+        <button className={openDropdownConfig ? classButtonActive : classButton} onClick={handleDropdownConfig} title="Configurações"><FaCog /></button>
         {openDropdownConfig && <DropDownConfig frame={frame} setFrame={setFrame} model={model} setModel={setModel} date={date} />}
         <div className="mx-2">
           <div className="font-bold text-sm">{/* {frame.model} */} {model.label} {">"} Região {/* {frame.region} */} {model.possibleValues.region.find(region => region.value === frame.region).label}
@@ -122,18 +122,18 @@ export default function FrameTop({ frame, setFrame, model, setModel, date }) {
       </div>
       <div className="flex relative">
         <div className="flex gap-1">
-          <button className={classButton} onClick={handleDecreaseTime}><FaChevronLeft /></button>
+          <button className={classButton} onClick={handleDecreaseTime} title="Voltar"><FaChevronLeft /></button>
           {frame.isPlaying ? (
-            <button className={classButtonActive} onClick={pauseTimer}><FaPause /></button>
+            <button className={classButtonActive} onClick={pauseTimer} title="Pausar"><FaPause /></button>
           ) : (
-            <button className={classButton} onClick={startTimer}><FaPlay /></button>
+            <button className={classButton} onClick={startTimer} title="Iniciar"><FaPlay /></button>
           )}
           {/* <button className={classButton} onClick={resetTimer}>Reset</button> */}
-          <button className={classButton} onClick={handleIncreaseTime}><FaChevronRight /></button>
+          <button className={classButton} onClick={handleIncreaseTime} title="Avançar"><FaChevronRight /></button>
         </div>
         <div className="flex items-center">
           <div className="font-bold text-sm px-2">{frame.currentTime} horas</div>
-          <button className={openDropdownTime ? classButtonActive : classButton} onClick={handleDropdownTime}><FaClock /></button>
+          <button className={openDropdownTime ? classButtonActive : classButton} onClick={handleDropdownTime} title="Selecionar as horas"><FaClock /></button>
           {openDropdownTime && <DropDownTime currentTime={currentTime} setCurrentTime={setCurrentTime} frame={frame} setFrame={setFrame} model={model} />}
         </div>
       </div>

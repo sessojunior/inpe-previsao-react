@@ -49,13 +49,13 @@ export default function TopBar() {
       </div>
       <div className="flex gap-1">
         {config.isAllPlaying ? (
-          <button className={classButtonActive} onClick={pauseAllTimer}><FaPause /></button>
+          <button className={classButtonActive} onClick={pauseAllTimer} title="Pausar tudo"><FaPause /></button>
         ) : (
-          <button className={classButton} onClick={startAllTimer}><FaPlay /></button>
+          <button className={classButton} onClick={startAllTimer} title="Iniciar tudo"><FaPlay /></button>
         )}
-        <button className={config.quantityFrames === 1 ? classButtonActive : classButton} onClick={() => handleQuantityFrames({ quantity: 1 })}><BsWindow /></button>
-        <button className={config.quantityFrames === 2 ? classButtonActive : classButton} onClick={() => handleQuantityFrames({ quantity: 2 })}><BsWindowSplit /></button>
-        <button className={config.quantityFrames === 4 ? classButtonActive : classButton} onClick={() => handleQuantityFrames({ quantity: 4 })}><BsBorderAll /></button>
+        <button className={config.quantityFrames === 1 ? classButtonActive : classButton} onClick={() => handleQuantityFrames({ quantity: 1 })} title="1 quadro"><BsWindow /></button>
+        <button className={config.quantityFrames === 2 ? classButtonActive : classButton} onClick={() => handleQuantityFrames({ quantity: 2 })} title="2 quadros"><BsWindowSplit /></button>
+        <button className={config.quantityFrames === 4 ? classButtonActive : classButton} onClick={() => handleQuantityFrames({ quantity: 4 })} title="4 quadros"><BsBorderAll /></button>
       </div>
     </header>
   )
