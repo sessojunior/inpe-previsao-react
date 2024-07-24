@@ -1,15 +1,22 @@
 import { BsArrowsFullscreen, BsWindow, BsWindowSplit, BsBorderAll } from "react-icons/bs"
+import { FaPause, FaPlay } from "react-icons/fa"
 
 import { useEffect, useContext } from 'react'
 import { ConfigContext } from '../contexts/Config'
 
 export default function TopBar() {
 
+  console.log("TopBar")
+
+  const { config, setConfig } = useContext(ConfigContext)
+
   const classButton = "size-9 md:size-[38px] inline-flex justify-center items-center gap-2 rounded-md font-medium bg-white border border-gray-200 text-gray-700 hover:bg-gray-100 text-xs md:text-sm"
 
   const classButtonActive = "size-9 md:size-[38px] inline-flex justify-center items-center gap-2 rounded-md font-medium bg-blue-600 border border-gray-200 text-gray-50 hover:bg-blue-500 text-xs md:text-sm"
 
-  const { config, setConfig } = useContext(ConfigContext)
+  useEffect(() => {
+    localStorage.setItem('config', JSON.stringify({ showHeaderFooter: config.showHeaderFooter, quantityFrames: config.quantityFrames }))
+  }, [config.showHeaderFooter, config.quantityFrames])
 
   const handleFullScreen = () => {
     setConfig({ ...config, showHeaderFooter: !config.showHeaderFooter })
@@ -20,9 +27,15 @@ export default function TopBar() {
     setConfig({ ...config, quantityFrames: quantity })
   }
 
-  useEffect(() => {
-    localStorage.setItem('config', JSON.stringify({ showHeaderFooter: config.showHeaderFooter, quantityFrames: config.quantityFrames }))
-  }, [config.showHeaderFooter, config.quantityFrames])
+  const startAllTimer = () => {
+    console.log("startAllTimer")
+    setConfig({ ...config, isAllPlaying: true })
+  }
+
+  const pauseAllTimer = () => {
+    console.log("pauseAllTimer")
+    setConfig({ ...config, isAllPlaying: false })
+  }
 
   // console.log("config", config)
 
@@ -35,6 +48,11 @@ export default function TopBar() {
         <h2 className="text-xl font-bold">Previsão Numérica do Tempo</h2>
       </div>
       <div className="flex gap-1">
+        {config.isAllPlaying ? (
+          <button className={classButtonActive} onClick={pauseAllTimer}><FaPause /></button>
+        ) : (
+          <button className={classButton} onClick={startAllTimer}><FaPlay /></button>
+        )}
         <button className={config.quantityFrames === 1 ? classButtonActive : classButton} onClick={() => handleQuantityFrames({ quantity: 1 })}><BsWindow /></button>
         <button className={config.quantityFrames === 2 ? classButtonActive : classButton} onClick={() => handleQuantityFrames({ quantity: 2 })}><BsWindowSplit /></button>
         <button className={config.quantityFrames === 4 ? classButtonActive : classButton} onClick={() => handleQuantityFrames({ quantity: 4 })}><BsBorderAll /></button>

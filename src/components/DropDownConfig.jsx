@@ -1,6 +1,11 @@
 import PropTypes from 'prop-types'
 
-export default function DropDownConfig({ frame, setFrame, models, model, setModel, date }) {
+import { useContext } from 'react'
+import { ConfigContext } from '../contexts/Config'
+
+export default function DropDownConfig({ frame, setFrame, model, setModel, date }) {
+
+  const { frames, setFrames, models } = useContext(ConfigContext)
 
   const classSelect = "py-2 px-2 block w-full border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
 
@@ -20,6 +25,16 @@ export default function DropDownConfig({ frame, setFrame, models, model, setMode
       currentTime: model.defaultValues.currentTime,
       urlImage: model.urlImage,
     })
+    setFrames([...frames.slice(0, frame.id - 1), {
+      ...frame,
+      model: e.target.value,
+      region: model.defaultValues.region.value,
+      options: model.defaultValues.options.value,
+      field: model.defaultValues.field.value,
+      maxDays: model.defaultValues.maxDays,
+      timeRun: model.defaultValues.timeRun,
+      urlImage: model.urlImage
+    }, ...frames.slice(frame.id)])
     // console.log("handleChangeModel (model)", model)
     // console.log("handleChangeModel (frame)", frame)
     // console.log("frame.region", frame.region)
@@ -29,18 +44,22 @@ export default function DropDownConfig({ frame, setFrame, models, model, setMode
 
   const handleChangeRegion = (e) => {
     setFrame({ ...frame, region: e.target.value })
+    setFrames([...frames.slice(0, frame.id - 1), { ...frame, region: e.target.value }, ...frames.slice(frame.id)])
   }
 
   const handleChangeOptions = (e) => {
     setFrame({ ...frame, options: e.target.value })
+    setFrames([...frames.slice(0, frame.id - 1), { ...frame, options: e.target.value }, ...frames.slice(frame.id)])
   }
 
   const handleChangeField = (e) => {
     setFrame({ ...frame, field: e.target.value })
+    setFrames([...frames.slice(0, frame.id - 1), { ...frame, field: e.target.value }, ...frames.slice(frame.id)])
   }
 
   const handleChangeInit = (e) => {
     setFrame({ ...frame, init: e.target.value })
+    setFrames([...frames.slice(0, frame.id - 1), { ...frame, init: e.target.value }, ...frames.slice(frame.id)])
   }
 
   console.log("date.formattedDateMinusTimeRun", date.formattedDateMinusTimeRun)
@@ -109,7 +128,6 @@ export default function DropDownConfig({ frame, setFrame, models, model, setMode
 DropDownConfig.propTypes = {
   frame: PropTypes.object,
   setFrame: PropTypes.func,
-  models: PropTypes.array,
   model: PropTypes.object,
   setModel: PropTypes.func,
   date: PropTypes.object,

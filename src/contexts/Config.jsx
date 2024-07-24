@@ -1,4 +1,4 @@
-import { useState, createContext } from 'react'
+import { useState, useEffect, createContext } from 'react'
 import PropTypes from 'prop-types'
 
 import jsonModels from '../data/models.json'
@@ -11,30 +11,50 @@ export default function ConfigProvider({ children }) {
   const [config, setConfig] = useState({
     showHeaderFooter: JSON.parse(localStorage.getItem('config'))?.showHeaderFooter ?? true,
     quantityFrames: JSON.parse(localStorage.getItem('config'))?.quantityFrames || 4,
-    models: jsonModels,
-    frames: JSON.parse(localStorage.getItem('frames')) || jsonFrames,
+    isAllPlaying: false,
   })
+  const [frames, setFrames] = useState(JSON.parse(localStorage.getItem('frames')) || jsonFrames)
+  const models = jsonModels
+
+  console.log("models", models)
+
+  useEffect(() => {
+    // console.log("frames", frames)
+    localStorage.setItem('config', JSON.stringify({ showHeaderFooter: config.showHeaderFooter, quantityFrames: config.quantityFrames }))
+    console.log("salvou no localStorage: config")
+  }, [config])
 
   console.log("config", config)
 
+  useEffect(() => {
+    // console.log("frames", frames)
+    localStorage.setItem('frames', JSON.stringify(frames))
+    console.log("salvou no localStorage: frames")
+  }, [frames])
+
+  console.log("frames", frames)
+
   {/*
-    Start dateTime
+    Function dateTime
     date: selectioned date
     timeRun: model execution time in hours
     maxDays: maximum number of days to display
     */ }
   function dateTime(date, timeRun, maxDays) {
+
+    const weeks = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab']
+    const months = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']
+
     const year = String(date.getFullYear())
     const month = ("0" + (date.getMonth() + 1)).slice(-2)
     const day = ("0" + date.getDate()).slice(-2)
     const hour = ("0" + (date.getHours() + 1)).slice(-2)
     const minute = ("0" + (date.getMinutes() + 1)).slice(-2)
-    // const second = ("0" + (date.getSeconds() + 1)).slice(-2)
-    const weekdays = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab']
-    const weekName = weekdays[date.getDay()]
-    const months = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']
+
+    const weekName = weeks[date.getDay()]
     const monthName = months[date.getMonth()]
-    // console.log("year, month, day, hour, minute, second, weekName, monthName, timeRun", year, month, day, hour, minute, second, weekName, monthName, timeRun)
+
+    // console.log("year, month, day, hour, minute, weekName, monthName", year, month, day, hour, minute, weekName, monthName)
 
     let dateMinusTimeRun = []
     let yearMinusTimeRun = []
@@ -63,7 +83,7 @@ export default function ConfigProvider({ children }) {
       dayMinusTimeRun[i] = ("0" + dateMinusTimeRun[i].getDate()).slice(-2)
       hourMinusTimeRun[i] = ("0" + (dateMinusTimeRun[i].getHours() + 1)).slice(-2)
       monthNameMinusTimeRun[i] = months[dateMinusTimeRun[i].getMonth()]
-      weekNameMinusTimeRun[i] = weekdays[dateMinusTimeRun[i].getDay()]
+      weekNameMinusTimeRun[i] = weeks[dateMinusTimeRun[i].getDay()]
       // console.log("dateMinusTimeRun[i]", dateMinusTimeRun[i])
 
       lastTurn[i] = null
@@ -89,7 +109,7 @@ export default function ConfigProvider({ children }) {
         default:
           lastTurn[i] = "00"
       }
-      // console.log("lastTurn", lastTurn)
+      // console.log("lastTurn[i]", lastTurn[i])
 
       formattedDateMinusTimeRun[i] = `${weekNameMinusTimeRun[i]} ${dayMinusTimeRun[i]} ${monthNameMinusTimeRun[i]} ${yearMinusTimeRun[i]} ${lastTurn[i]} UTC`
       fullDateMinusTimeRun[i] = `${yearMinusTimeRun[i]}${monthMinusTimeRun[i]}${dayMinusTimeRun[i]}${lastTurn[i]}`
@@ -97,10 +117,9 @@ export default function ConfigProvider({ children }) {
 
     return { date, timeRun, maxDays, year, month, day, hour, minute, weekName, monthName, yearMinusTimeRun, monthMinusTimeRun, dayMinusTimeRun, monthNameMinusTimeRun, weekNameMinusTimeRun, lastTurn, formattedDateMinusTimeRun, fullDateMinusTimeRun }
   }
-  {/* End dateTime */ }
 
   return (
-    <ConfigContext.Provider value={{ config, setConfig, dateTime }}>
+    <ConfigContext.Provider value={{ config, setConfig, models, frames, setFrames, dateTime }}>
       {children}
     </ConfigContext.Provider>
   )

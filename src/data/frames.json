@@ -8,7 +8,7 @@
     "maxDays": 7,
     "timeRun": 12,
     "init": null,
-    "currentTime": "030",
+    "currentTime": "024",
     "isPlaying": false,
     "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/bam/{{region}}/{{options}}/{{field}}/{{year}}/{{month}}/{{day}}/{{lastTurn}}/modelo_{{timeRun}}h_glo_{{year}}{{month}}{{day}}{{lastTurn}}Z.png"
   },
@@ -34,7 +34,7 @@
     "maxDays": 21,
     "timeRun": 6,
     "init": null,
-    "currentTime": "036",
+    "currentTime": "030",
     "isPlaying": false,
     "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/brams05/{{region}}/{{options}}/{{field}}/{{year}}/{{month}}/{{day}}/{{lastTurn}}/modelo_{{timeRun}}h_glo_{{year}}{{month}}{{day}}{{lastTurn}}Z.png"
   },
@@ -47,7 +47,7 @@
     "maxDays": 28,
     "timeRun": 24,
     "init": null,
-    "currentTime": "096",
+    "currentTime": "040",
     "isPlaying": false,
     "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/{{region}}/{{options}}/{{field}}/{{year}}/{{month}}/{{day}}/{{lastTurn}}/modelo_{{timeRun}}h_glo_{{year}}{{month}}{{day}}{{lastTurn}}Z.png"
   }

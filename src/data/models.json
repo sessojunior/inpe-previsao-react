@@ -18,8 +18,7 @@
         "value": "c1"
       },
       "maxDays": 7,
-      "timeRun": 12,
-      "currentTime": "096"
+      "timeRun": 12
     },
     "possibleValues": {
       "region": [
@@ -104,8 +103,7 @@
         "value": "c2"
       },
       "maxDays": 14,
-      "timeRun": 12,
-      "currentTime": "024"
+      "timeRun": 12
     },
     "possibleValues": {
       "region": [
@@ -194,8 +192,7 @@
         "value": "c3"
       },
       "maxDays": 21,
-      "timeRun": 6,
-      "currentTime": "036"
+      "timeRun": 6
     },
     "possibleValues": {
       "region": [
@@ -274,8 +271,7 @@
         "value": "c1"
       },
       "maxDays": 28,
-      "timeRun": 24,
-      "currentTime": "096"
+      "timeRun": 24
     },
     "possibleValues": {
       "region": [

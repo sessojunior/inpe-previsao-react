@@ -1,12 +1,18 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import PropTypes from 'prop-types'
+
+import { ConfigContext } from '../contexts/Config'
 
 import { FaChevronLeft, FaChevronRight, FaClock, FaCog, FaPause, FaPlay } from 'react-icons/fa'
 
 import DropDownConfig from './DropDownConfig'
 import DropDownTime from './DropDownTime'
 
-export default function FrameTop({ frame, setFrame, model, setModel, models, date }) {
+export default function FrameTop({ frame, setFrame, model, setModel, date }) {
+
+  console.log("FrameTop")
+
+  const { config, setConfig } = useContext(ConfigContext)
 
   const classButton = "size-9 md:size-[38px] inline-flex justify-center items-center gap-2 rounded-md font-medium bg-white border border-gray-200 text-gray-700 hover:bg-gray-100 text-xs md:text-sm"
 
@@ -27,7 +33,6 @@ export default function FrameTop({ frame, setFrame, model, setModel, models, dat
     // console.log("decreaseTime")
     // console.log("frame.currentTime", frame.currentTime)
     // console.log("model.possibleValues.time", model.possibleValues.time)
-    // console.log("indexOf(model.currentTime)", model.possibleValues.time.indexOf(frame.currentTime))
     // console.log("model.possibleValues.time.length", model.possibleValues.time.length)
     if (model.possibleValues.time.indexOf(frame.currentTime) > 0) {
       // console.log("model.possibleValues.time[model.possibleValues.time.indexOf(frame.currentTime) - 1]", model.possibleValues.time[model.possibleValues.time.indexOf(frame.currentTime) - 1])
@@ -53,7 +58,6 @@ export default function FrameTop({ frame, setFrame, model, setModel, models, dat
 
   {/* Begin Timer */ }
 
-  // Initialize state variables for timer and timeInterval
   const [timer, setTimer] = useState(0);
   const [timeInterval, setTimeInterval] = useState(null);
   const [currentTime, setCurrentTime] = useState(model.possibleValues.time[model.possibleValues.time.indexOf(frame.currentTime)])
@@ -65,9 +69,17 @@ export default function FrameTop({ frame, setFrame, model, setModel, models, dat
     }
   }, [timer])
 
-  // Function to start the timer
+  useEffect(() => {
+    config.isAllPlaying ? startTimer() : pauseTimer()
+  }, [config.isAllPlaying])
+
   const startTimer = () => {
-  console.log("startTimer")
+    console.log("startTimer")
+    if (config.isAllPlaying) {
+      clearInterval(timeInterval)
+      setCurrentTime(model.possibleValues.time[0])
+      setFrame({ ...frame, currentTime: model.possibleValues.time[0] })
+    }
     setTimeInterval(setInterval(() => {
       setTimer((prev) => prev + 1)
       setCurrentTime((prev) => {
@@ -81,30 +93,27 @@ export default function FrameTop({ frame, setFrame, model, setModel, models, dat
     }, 1000))
   }
 
-  // Function to pause the timer
   const pauseTimer = () => {
     clearInterval(timeInterval)
     setFrame({ ...frame, isPlaying: false })
+    setConfig({ ...config, isAllPlaying: false })
   }
 
-  // Function to reset the timer
   // const resetTimer = () => {
   //   // Reset the timer value to 0
   //   setTimer(0)
   //   setFrame({ ...frame, isPlaying: true, currentTime: model.possibleValues.time[0] })
-  //   // Clear the interval to stop the timer
+  //   setFrames([...frames.slice(0, frame.id - 1), { ...frame, isPlaying: true, currentTime: model.possibleValues.time[0] }, ...frames.slice(frame.id)])
   //   clearInterval(timeInterval)
   // }
 
   {/* End Timer */ }
 
-  console.log("FrameTop")
-
   return (
     <div className="flex justify-between">
       <div className="flex relative">
         <button className={openDropdownConfig ? classButtonActive : classButton} onClick={handleDropdownConfig}><FaCog /></button>
-        {openDropdownConfig && <DropDownConfig frame={frame} setFrame={setFrame} models={models} model={model} setModel={setModel} date={date} />}
+        {openDropdownConfig && <DropDownConfig frame={frame} setFrame={setFrame} model={model} setModel={setModel} date={date} />}
         <div className="mx-2">
           <div className="font-bold text-sm">{/* {frame.model} */} {model.label} {">"} Região {/* {frame.region} */} {model.possibleValues.region.find(region => region.value === frame.region).label}
           </div>
@@ -137,6 +146,5 @@ FrameTop.propTypes = {
   setFrame: PropTypes.func,
   model: PropTypes.object,
   setModel: PropTypes.func,
-  models: PropTypes.array,
   date: PropTypes.object,
 }

@@ -2,8 +2,10 @@ import PropTypes from 'prop-types'
 
 export default function FrameImage({ frame, model, date }) {
 
-  // console.log(frames, id)
-  console.log("frame", frame)
+  console.log("FrameImage")
+  // console.log("frame", frame)
+  // console.log("model", model)
+  // console.log("date", date)
 
   return (
     <div>
