@@ -588,6 +588,14 @@ video {
   margin-bottom: 0.5rem;
 }
 
+.mb-3 {
+  margin-bottom: 0.75rem;
+}
+
+.ml-2 {
+  margin-left: 0.5rem;
+}
+
 .mr-1 {
   margin-right: 0.25rem;
 }
@@ -598,6 +606,10 @@ video {
 
 .block {
   display: block;
+}
+
+.inline-block {
+  display: inline-block;
 }
 
 .flex {
@@ -612,17 +624,21 @@ video {
   display: grid;
 }
 
+.hidden {
+  display: none;
+}
+
 .size-9 {
   width: 2.25rem;
   height: 2.25rem;
 }
 
-.h-16 {
-  height: 4rem;
+.h-10 {
+  height: 2.5rem;
 }
 
-.h-48 {
-  height: 12rem;
+.h-16 {
+  height: 4rem;
 }
 
 .h-6 {
@@ -709,6 +725,10 @@ video {
   border-left-width: 1px;
 }
 
+.border-l-2 {
+  border-left-width: 2px;
+}
+
 .border-r {
   border-right-width: 1px;
 }
@@ -722,6 +742,11 @@ video {
   --tw-border-opacity: 1;
   border-top-color: rgb(209 213 219 / var(--tw-border-opacity));
   border-bottom-color: rgb(209 213 219 / var(--tw-border-opacity));
+}
+
+.border-l-gray-400 {
+  --tw-border-opacity: 1;
+  border-left-color: rgb(156 163 175 / var(--tw-border-opacity));
 }
 
 .bg-blue-600 {
@@ -748,6 +773,11 @@ video {
   padding: 1rem;
 }
 
+.px-10 {
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
+
 .px-2 {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
@@ -763,8 +793,29 @@ video {
   padding-bottom: 0.5rem;
 }
 
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
 .pb-3 {
   padding-bottom: 0.75rem;
+}
+
+.pl-2 {
+  padding-left: 0.5rem;
+}
+
+.pl-4 {
+  padding-left: 1rem;
+}
+
+.pr-4 {
+  padding-right: 1rem;
+}
+
+.text-right {
+  text-align: right;
 }
 
 .text-2xl {
@@ -825,6 +876,11 @@ video {
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
 }
 
+.hover\:text-blue-800:hover {
+  --tw-text-opacity: 1;
+  color: rgb(30 64 175 / var(--tw-text-opacity));
+}
+
 .focus\:border-blue-500:focus {
   --tw-border-opacity: 1;
   border-color: rgb(59 130 246 / var(--tw-border-opacity));
@@ -844,6 +900,10 @@ video {
 }
 
 @media (min-width: 768px) {
+  .md\:flex {
+    display: flex;
+  }
+
   .md\:size-\[38px\] {
     width: 38px;
     height: 38px;
@@ -856,6 +916,10 @@ video {
 }
 
 @media (min-width: 1024px) {
+  .lg\:flex {
+    display: flex;
+  }
+
   .lg\:grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }

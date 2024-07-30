@@ -45,7 +45,7 @@ export default function TopBar() {
         <button className={!config.showHeaderFooter ? classButtonActive : classButton} onClick={handleFullScreen}><BsArrowsFullscreen /></button>
       </div>
       <div>
-        <h2 className="text-xl font-bold">Previsão Numérica do Tempo</h2>
+        <h2 className="text-xl font-medium">Previsão Numérica do Tempo</h2>
       </div>
       <div className="flex gap-1">
         {config.isAllPlaying ? (
