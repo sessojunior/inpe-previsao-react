@@ -12,7 +12,7 @@ export default function FrameImage({ frame, model, date }) {
       <p>Exemplo de URL da imagem:
         <br />[https://s1.cptec.inpe.br/grafico/Modelos/<b>{frame.model}</b>/<b>{frame.region}</b>/<b>{frame.options}</b>/<b>{frame.field}</b>
         <br />/<b>{date.yearMinusTimeRun[0]}</b>/<b>{date.monthMinusTimeRun[0]}</b>/<b>{date.dayMinusTimeRun[0]}</b>/<b>{date.lastTurn[0]}</b>/modelo_<b>{frame.currentTime}</b>_<b>{Number(date.timeRun)}</b>h_glo_<b>{date.yearMinusTimeRun[0]}{date.monthMinusTimeRun[0]}{date.dayMinusTimeRun[0]}{date.lastTurn[0]}</b>Z.png]</p>
-      <p>URL normal: <span>{frame.urlImage}</span></p>
+      {/* <p>URL normal: <span>{frame.urlImage}</span></p>
       <p>URL convertida: <span>{
         frame.urlImage.replaceAll("{{region}}", frame.region)
           .replaceAll("{{options}}", frame.options)
@@ -21,7 +21,7 @@ export default function FrameImage({ frame, model, date }) {
           .replaceAll("{{lastTurn}}", date.lastTurn[0])
           .replaceAll("{{year}}", date.yearMinusTimeRun[0])
           .replaceAll("{{month}}", date.monthMinusTimeRun[0])
-          .replaceAll("{{day}}", date.dayMinusTimeRun[0])}</span></p>
+          .replaceAll("{{day}}", date.dayMinusTimeRun[0])}</span></p> */}
       <p>Dados para a troca de imagem:</p>
       <p>[frame.model: <b>{frame.model}</b>]</p>
       <p>[frame.region: <b>{frame.region}</b>]</p>
