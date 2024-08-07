@@ -37,7 +37,12 @@ export default function FrameImage({ frame, model, date }) {
       <p>Data menos o timeRun: <b>{date.yearMinusTimeRun[0]} {date.monthMinusTimeRun[0]} {date.dayMinusTimeRun[0]}</b></p>
       <p>[lastTurn: <b>{date.lastTurn[0]}</b>]</p>
       <p>Último turno de timeRun (00, 06, 12, 18]: <b>{date.yearMinusTimeRun[0]}{date.monthMinusTimeRun[0]}{date.dayMinusTimeRun[0]}<u>{date.lastTurn[0]}</u>Z</b></p>
-      <img src="https://s1.cptec.inpe.br/grafico/Modelos/SMNA/figuras/precipitacao/2024/07/11/00/prec_6h_glo_2024071100Z_2024071100Z.png" alt="imagem" className="rounded-md mt-4 w-full " />
+      <div className="w-full relative">
+        <img src="https://s1.cptec.inpe.br/grafico/Modelos/SMNA/figuras/precipitacao/2024/07/11/00/prec_6h_glo_2024071100Z_2024071100Z.png" alt="imagem" className="rounded-md mt-4 w-full " />
+        <div className="absolute top-2 right-2">
+          <a href="https://s1.cptec.inpe.br/grafico/Modelos/SMNA/figuras/precipitacao/2024/07/11/00/prec_6h_glo_2024071100Z_2024071100Z.png" download="imagem-de-previsao.png" target="_blank" rel="noreferrer" className="px-4 py-2 rounded bg-gray-600 text-white hover:bg-gray-700">Download da imagem</a>
+        </div>
+      </div>
     </div>
   )
 }

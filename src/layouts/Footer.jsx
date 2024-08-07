@@ -85,7 +85,7 @@ export default function Footer() {
                   ))}
                 </ul>
               </div>
-              <div className="pb-4">
+              <div className="pb-8">
                 <h2 className="text-lg text-white font-medium uppercase pb-4">Canais de atendimento</h2>
                 <ul>
                   {linksCanais.map((link, index) => (
@@ -94,10 +94,10 @@ export default function Footer() {
                 </ul>
               </div>
             </div>
-            <div className="flex flex-col py-8">
+            {/* <div className="flex flex-col py-4">
               <a href="#" className="text-white flex items-center"><span className="pr-2"><FaCookieBite /></span> Redefinir Cookies</a>
-            </div>
-            <div className="pb-4 flex justify-between">
+            </div> */}
+            <div className="py-4 flex justify-between">
               <div>
                 <h2 className="text-lg text-white font-medium uppercase pb-4">Redes sociais</h2>
                 <ul>
