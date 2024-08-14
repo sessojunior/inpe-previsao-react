@@ -112,3 +112,7 @@ Onde:
 
 - **model**: é o nome do modelo para a URL. Em minúsculo, sem acentuação e sem espaços
 - **datesRun**: é um array, no seguinte padrão YYYY-MM-DD HHz (onde Y é ano (4 dígitos), M é mês (2 dígitos), D é dia (2 dígitos) e H é o turno (2 dígitos) e z é fixo, após o turno.
+
+Observação:
+
+As horas de previsão precisam ser fixas para cada modelo. Ou seja, não devem variar na quantidade de horas ao alterar um produto ou região do modelo.

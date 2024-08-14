@@ -17,7 +17,7 @@ export default function Frame({ id }) {
   const [model, setModel] = useState(models.find(model => model.value === frame.model))
 
   // console.log("frame.model", frame.model)
-  console.log("frame", frame)
+  // console.log("frame", frame)
   // console.log("models", models)
 
   // console.log("model", model)

@@ -3,7 +3,7 @@ import { ConfigContext } from '../contexts/Config'
 
 import { formatDate } from '../lib/formatDate'
 
-export default function DropDownConfig({ frame, setFrame, model, setModel, dates }) {
+export default function DropDownConfig({ frame, setFrame, model, setModel, dates, resetTimer }) {
 
   const { frames, setFrames, models } = useContext(ConfigContext)
 
@@ -14,12 +14,14 @@ export default function DropDownConfig({ frame, setFrame, model, setModel, dates
   const handleChangeModel = (e) => {
     const model = models.find(model => model.value === e.target.value)
     setModel(model)
+    resetTimer(model.possibleValues.time[0])
     setFrame({
       ...frame,
       model: e.target.value,
       region: model.defaultValues.region.value,
       product: model.defaultValues.product.value,
       currentTime: model.possibleValues.time[0],
+      isPlaying: false,
     })
     setFrames([...frames.slice(0, frame.id - 1), {
       ...frame,
@@ -27,6 +29,7 @@ export default function DropDownConfig({ frame, setFrame, model, setModel, dates
       region: model.defaultValues.region.value,
       product: model.defaultValues.product.value,
       currentTime: model.possibleValues.time[0],
+      isPlaying: false,
     }, ...frames.slice(frame.id)])
     // console.log("handleChangeModel (model)", model)
     // console.log("handleChangeModel (frame)", frame)
@@ -36,21 +39,25 @@ export default function DropDownConfig({ frame, setFrame, model, setModel, dates
   }
 
   const handleChangeRegion = (e) => {
-    setFrame({ ...frame, region: e.target.value })
-    setFrames([...frames.slice(0, frame.id - 1), { ...frame, region: e.target.value }, ...frames.slice(frame.id)])
+    console.log("handleChangeRegion model", model)
+    resetTimer(model.possibleValues.time[0])
+    setFrame({ ...frame, region: e.target.value, isPlaying: false })
+    setFrames([...frames.slice(0, frame.id - 1), { ...frame, region: e.target.value, isPlaying: false }, ...frames.slice(frame.id)])
   }
 
   const handleChangeProduct = (e) => {
-    setFrame({ ...frame, product: e.target.value })
-    setFrames([...frames.slice(0, frame.id - 1), { ...frame, product: e.target.value }, ...frames.slice(frame.id)])
+    resetTimer(model.possibleValues.time[0])
+    setFrame({ ...frame, product: e.target.value, isPlaying: false })
+    setFrames([...frames.slice(0, frame.id - 1), { ...frame, product: e.target.value, isPlaying: false }, ...frames.slice(frame.id)])
   }
 
   const handleChangeInit = (e) => {
-    setFrame({ ...frame, init: e.target.value })
-    setFrames([...frames.slice(0, frame.id - 1), { ...frame, init: e.target.value }, ...frames.slice(frame.id)])
+    resetTimer(model.possibleValues.time[0])
+    setFrame({ ...frame, init: e.target.value, isPlaying: false })
+    setFrames([...frames.slice(0, frame.id - 1), { ...frame, init: e.target.value, isPlaying: false }, ...frames.slice(frame.id)])
   }
 
-  console.log("dates", dates)
+  // console.log("dates", dates)
 
   // console.log("frames", frames)
   // console.log("possibleValues", model.possibleValues)

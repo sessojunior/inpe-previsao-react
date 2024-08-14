@@ -24,6 +24,8 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
   const [openDropdownConfig, setOpenDropdownConfig] = useState(false)
   const [openDropdownTime, setOpenDropdownTime] = useState(false)
 
+  const [currentTime, setCurrentTime] = useState(frame.currentTime ?? model.possibleValues.time[0])
+
   const handleDropdownConfig = () => {
     setOpenDropdownConfig(!openDropdownConfig)
   }
@@ -37,10 +39,11 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
     // console.log("frame.currentTime", frame.currentTime)
     // console.log("model.possibleValues.time", model.possibleValues.time)
     // console.log("model.possibleValues.time.length", model.possibleValues.time.length)
-    if (model.possibleValues.time.indexOf(frame.currentTime) > 0) {
+    if (model.possibleValues.time.indexOf(currentTime) > 0) {
       // console.log("model.possibleValues.time[model.possibleValues.time.indexOf(frame.currentTime) - 1]", model.possibleValues.time[model.possibleValues.time.indexOf(frame.currentTime) - 1])
-      const previousTime = model.possibleValues.time[model.possibleValues.time.indexOf(frame.currentTime) - 1]
+      const previousTime = model.possibleValues.time[model.possibleValues.time.indexOf(currentTime) - 1]
       // console.log("previousTime", previousTime)
+      setCurrentTime(previousTime)
       setFrame({ ...frame, currentTime: previousTime })
     }
   }
@@ -51,19 +54,19 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
     // console.log("model.possibleValues.time", model.possibleValues.time)
     // console.log("indexOf(frame.currentTime)", model.possibleValues.time.indexOf(frame.currentTime))
     // console.log("model.possibleValues.time.length", model.possibleValues.time.length)
-    if (model.possibleValues.time.indexOf(frame.currentTime) < model.possibleValues.time.length - 1) {
+    if (model.possibleValues.time.indexOf(currentTime) < model.possibleValues.time.length - 1) {
       // console.log("model.possibleValues.time[model.possibleValues.time.indexOf(frame.currentTime) + 1]", model.possibleValues.time[model.possibleValues.time.indexOf(frame.currentTime) + 1])
-      const nextTime = model.possibleValues.time[model.possibleValues.time.indexOf(frame.currentTime) + 1]
+      const nextTime = model.possibleValues.time[model.possibleValues.time.indexOf(currentTime) + 1]
       // console.log("nextTime", nextTime)
+      setCurrentTime(nextTime)
       setFrame({ ...frame, currentTime: nextTime })
     }
   }
 
   {/* Begin Timer */ }
 
-  const [timer, setTimer] = useState(0);
-  const [timeInterval, setTimeInterval] = useState(null);
-  const [currentTime, setCurrentTime] = useState(frame.currentTime ?? model.possibleValues.time[0])
+  const [timer, setTimer] = useState(0)
+  const [timeInterval, setTimeInterval] = useState(null)
 
   useEffect(() => {
     // console.log("currentTime", currentTime)
@@ -97,18 +100,22 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
   }
 
   const pauseTimer = () => {
+    console.log("pauseTimer")
     clearInterval(timeInterval)
     setFrame({ ...frame, isPlaying: false })
     setConfig({ ...config, isAllPlaying: false })
   }
 
-  // const resetTimer = () => {
-  //   // Reset the timer value to 0
-  //   setTimer(0)
-  //   setFrame({ ...frame, isPlaying: true, currentTime: model.possibleValues.time[0] })
-  //   setFrames([...frames.slice(0, frame.id - 1), { ...frame, isPlaying: true, currentTime: model.possibleValues.time[0] }, ...frames.slice(frame.id)])
-  //   clearInterval(timeInterval)
-  // }
+  const resetTimer = (time = null) => {
+    console.log("resetTimer")
+    setTimer(0)
+    pauseTimer()
+    setCurrentTime(time ?? model.possibleValues.time[0])
+    // console.log("model", model)
+    // console.log("currentTime", currentTime)
+    console.log("frame", frame)
+    // console.log("config", config)
+  }
 
   {/* End Timer */ }
 
@@ -116,7 +123,7 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
     <div className="flex justify-between">
       <div className="flex relative">
         <button className={openDropdownConfig ? classButtonActive : classButton} onClick={handleDropdownConfig} title="Configurações"><FaCog /></button>
-        {openDropdownConfig && <DropDownConfig frame={frame} setFrame={setFrame} model={model} setModel={setModel} dates={dates} />}
+        {openDropdownConfig && <DropDownConfig frame={frame} setFrame={setFrame} model={model} setModel={setModel} dates={dates} resetTimer={resetTimer} />}
         <div className="mx-2">
           <div className="font-bold text-sm">{/* {frame.model} */} {model.label} {">"} Região {/* {frame.region} */} {model.possibleValues.region.find(region => region.value === frame.region).label}
           </div>
@@ -131,7 +138,7 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
           ) : (
             <button className={classButton} onClick={startTimer} title="Iniciar"><FaPlay /></button>
           )}
-          {/* <button className={classButton} onClick={resetTimer}>Reset</button> */}
+          <button className={classButton} onClick={() => resetTimer(model.possibleValues.time[0])} title="Resetar">Resetar</button>
           <button className={classButton} onClick={handleIncreaseTime} title="Avançar"><FaChevronRight /></button>
         </div>
         <div className="flex items-center">
