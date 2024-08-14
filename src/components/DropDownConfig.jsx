@@ -19,13 +19,14 @@ export default function DropDownConfig({ frame, setFrame, model, setModel, dates
       model: e.target.value,
       region: model.defaultValues.region.value,
       product: model.defaultValues.product.value,
-      currentTime: model.defaultValues.currentTime,
+      currentTime: model.possibleValues.time[0],
     })
     setFrames([...frames.slice(0, frame.id - 1), {
       ...frame,
       model: e.target.value,
       region: model.defaultValues.region.value,
       product: model.defaultValues.product.value,
+      currentTime: model.possibleValues.time[0],
     }, ...frames.slice(frame.id)])
     // console.log("handleChangeModel (model)", model)
     // console.log("handleChangeModel (frame)", frame)

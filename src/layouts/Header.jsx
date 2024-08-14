@@ -1,6 +1,8 @@
 import { useContext } from 'react'
 import { ConfigContext } from '../contexts/Config'
 
+import imgLogo from "../assets/govbr-logo.png"
+
 export default function Header() {
 
   const { config } = useContext(ConfigContext)
@@ -29,7 +31,7 @@ export default function Header() {
         <header className="bg-white w-full px-4 py-4">
           <div className="flex justify-between mb-3 h-10">
             <div className="flex items-center">
-              <div><img src="src//assets/govbr-logo.png" alt="Logo" /></div>
+              <div><img src={imgLogo} alt="Logo" /></div>
               <div className="flex items-center">
                 <span className="pl-2 ml-2 border-l-2 border-l-gray-400 text-md">Ministério da Ciência, Tecnologia e Inovação</span>
               </div>

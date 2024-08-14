@@ -63,7 +63,7 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
 
   const [timer, setTimer] = useState(0);
   const [timeInterval, setTimeInterval] = useState(null);
-  const [currentTime, setCurrentTime] = useState(model.possibleValues.time[model.possibleValues.time.indexOf(frame.currentTime)])
+  const [currentTime, setCurrentTime] = useState(frame.currentTime ?? model.possibleValues.time[0])
 
   useEffect(() => {
     // console.log("currentTime", currentTime)
@@ -135,9 +135,9 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
           <button className={classButton} onClick={handleIncreaseTime} title="Avançar"><FaChevronRight /></button>
         </div>
         <div className="flex items-center">
-          <div className="font-bold text-sm px-2">{frame.currentTime} horas</div>
+          <div className="font-bold text-sm px-2">{currentTime} horas</div>
           <button className={openDropdownTime ? classButtonActive : classButton} onClick={handleDropdownTime} title="Selecionar as horas"><FaClock /></button>
-          {openDropdownTime && <DropDownTime currentTime={frame.currentTime} setCurrentTime={setCurrentTime} frame={frame} setFrame={setFrame} model={model} />}
+          {openDropdownTime && <DropDownTime currentTime={currentTime} setCurrentTime={setCurrentTime} frame={frame} setFrame={setFrame} model={model} />}
         </div>
       </div>
     </div>

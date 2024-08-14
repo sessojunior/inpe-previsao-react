@@ -10,14 +10,15 @@ import { formatDate } from '../lib/formatDate'
 export default function Frame({ id }) {
 
   const { config, models, frames } = useContext(ConfigContext)
-  const [frame, setFrame] = useState(frames.find(frame => frame.id === id))
 
   // console.log("Frame (id, frame.currentTime)", id, frame.currentTime)
 
-  // console.log("frame.model", frame.model)
-  // console.log("models", models)
-
+  const [frame, setFrame] = useState(frames.find(item => item.id === id))
   const [model, setModel] = useState(models.find(model => model.value === frame.model))
+
+  // console.log("frame.model", frame.model)
+  console.log("frame", frame)
+  // console.log("models", models)
 
   // console.log("model", model)
 
