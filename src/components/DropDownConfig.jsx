@@ -1,9 +1,9 @@
-import PropTypes from 'prop-types'
-
 import { useContext } from 'react'
 import { ConfigContext } from '../contexts/Config'
 
-export default function DropDownConfig({ frame, setFrame, model, setModel, date }) {
+import { formatDate } from '../lib/formatDate'
+
+export default function DropDownConfig({ frame, setFrame, model, setModel, dates }) {
 
   const { frames, setFrames, models } = useContext(ConfigContext)
 
@@ -18,22 +18,14 @@ export default function DropDownConfig({ frame, setFrame, model, setModel, date 
       ...frame,
       model: e.target.value,
       region: model.defaultValues.region.value,
-      options: model.defaultValues.options.value,
-      field: model.defaultValues.field.value,
-      maxDays: model.defaultValues.maxDays,
-      timeRun: model.defaultValues.timeRun,
+      product: model.defaultValues.product.value,
       currentTime: model.defaultValues.currentTime,
-      urlImage: model.urlImage,
     })
     setFrames([...frames.slice(0, frame.id - 1), {
       ...frame,
       model: e.target.value,
       region: model.defaultValues.region.value,
-      options: model.defaultValues.options.value,
-      field: model.defaultValues.field.value,
-      maxDays: model.defaultValues.maxDays,
-      timeRun: model.defaultValues.timeRun,
-      urlImage: model.urlImage
+      product: model.defaultValues.product.value,
     }, ...frames.slice(frame.id)])
     // console.log("handleChangeModel (model)", model)
     // console.log("handleChangeModel (frame)", frame)
@@ -47,14 +39,9 @@ export default function DropDownConfig({ frame, setFrame, model, setModel, date 
     setFrames([...frames.slice(0, frame.id - 1), { ...frame, region: e.target.value }, ...frames.slice(frame.id)])
   }
 
-  const handleChangeOptions = (e) => {
-    setFrame({ ...frame, options: e.target.value })
-    setFrames([...frames.slice(0, frame.id - 1), { ...frame, options: e.target.value }, ...frames.slice(frame.id)])
-  }
-
-  const handleChangeField = (e) => {
-    setFrame({ ...frame, field: e.target.value })
-    setFrames([...frames.slice(0, frame.id - 1), { ...frame, field: e.target.value }, ...frames.slice(frame.id)])
+  const handleChangeProduct = (e) => {
+    setFrame({ ...frame, product: e.target.value })
+    setFrames([...frames.slice(0, frame.id - 1), { ...frame, product: e.target.value }, ...frames.slice(frame.id)])
   }
 
   const handleChangeInit = (e) => {
@@ -62,9 +49,7 @@ export default function DropDownConfig({ frame, setFrame, model, setModel, date 
     setFrames([...frames.slice(0, frame.id - 1), { ...frame, init: e.target.value }, ...frames.slice(frame.id)])
   }
 
-  console.log("date.formattedDateMinusTimeRun", date.formattedDateMinusTimeRun)
-
-  console.log("date init", date)
+  console.log("dates", dates)
 
   // console.log("frames", frames)
   // console.log("possibleValues", model.possibleValues)
@@ -73,7 +58,7 @@ export default function DropDownConfig({ frame, setFrame, model, setModel, date 
   // console.log("TopFrame (frame)", frame)
 
   return (
-    <>
+    <div>
       <form>
           <div className="absolute top-12 left-0 bg-white border border-gray-200 rounded-md w-60">
             <div className="border-b border-gray-200 p-4">
@@ -95,40 +80,26 @@ export default function DropDownConfig({ frame, setFrame, model, setModel, date 
             </div>
             <div className="border-b border-gray-200 p-4">
               <div className="mb-2">
-                <label className="block w-full pb-3 text-sm font-bold">Características do modelo</label>
-                {model.possibleValues.options.map((option, index) => (
-                  <div key={index} className="flex items-center h-6">
-                    <input type="radio" name="options" id={`options-${frame.id}-${index}`} value={option.value} onChange={e => handleChangeOptions(e)} defaultChecked={frame.options === option.value} className={classRadio} />
-                    <label className="block text-sm cursor-pointer" htmlFor={`options-${frame.id}-${index}`}>{option.label}</label>
-                  </div>
-                ))}
+                <label className="block w-full pb-3 text-sm font-bold">Produto</label>
+                <select name="product" value={frame.product} onChange={e => handleChangeProduct(e)} className={classSelect}>
+                  {model.possibleValues.product.map((product, index) => (
+                    <option key={index} value={product.value}>{product.label}</option>
+                  ))}
+                </select>
               </div>
-              <select name="field" value={frame.field} onChange={e => handleChangeField(e)} className={classSelect}>
-                {model.possibleValues.field.map((field, index) => (
-                  <option key={index} value={field.value}>{field.label}</option>
-                ))}
-              </select>
             </div>
             <div className="border-b border-gray-200 p-4">
               <div>
                 <label htmlFor="init" className="block w-full pb-3 text-sm font-bold">Inicialização</label>
-                <select name="init" value={frame.init === null ? date.formattedDateMinusTimeRun[0] : frame.init} onChange={e => handleChangeInit(e)} className={classSelect}>
-                  {date.formattedDateMinusTimeRun.map((date, index) => (
-                    <option key={index} value={date}>{date}</option>
+                <select name="init" value={frame.init === null ? dates[0] : frame.init} onChange={e => handleChangeInit(e)} className={classSelect}>
+                  {dates.map((date, index) => (
+                    <option key={index} value={date}>{formatDate(date)}</option>
                   ))}
                 </select>
               </div>
             </div>
           </div>
         </form>
-    </>
+    </div>
   )
-}
-
-DropDownConfig.propTypes = {
-  frame: PropTypes.object,
-  setFrame: PropTypes.func,
-  model: PropTypes.object,
-  setModel: PropTypes.func,
-  date: PropTypes.object,
 }

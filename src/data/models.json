@@ -3,21 +3,17 @@
     "id": 1,
     "label": "BAM",
     "value": "bam",
-    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/bam/{{region}}/{{options}}/{{field}}/{{year}}/{{month}}/{{day}}/{{lastTurn}}/modelo_{{timeRun}}h_glo_{{year}}{{month}}{{day}}{{lastTurn}}Z.png",
+    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/bam/{{region}}/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/modelo_{{currentTime}}h_glo_{{year}}{{month}}{{day}}{{turn}}Z.png",
+    "urlDates": "http://localhost:5173/src/data/bam_dates.json",
     "defaultValues": {
       "region": {
         "label": "Sul",
         "value": "sul"
       },
-      "options": {
-        "label": "Níveis isobáricos A",
-        "value": "n1"
-      },
-      "field": {
+      "product": {
         "label": "Campo 3A",
         "value": "c1"
       },
-      "maxDays": 7,
       "timeRun": 12
     },
     "possibleValues": {
@@ -43,21 +39,7 @@
           "value": "sde"
         }
       ],
-      "options": [
-        {
-          "label": "Níveis isobáricos A",
-          "value": "n1"
-        },
-        {
-          "label": "Níveis simples A",
-          "value": "n2"
-        },
-        {
-          "label": "Conjuntos A",
-          "value": "n3"
-        }
-      ],
-      "field": [
+      "product": [
         {
           "label": "Campo 3A",
           "value": "c1"
@@ -88,21 +70,17 @@
     "id": 2,
     "label": "WRF",
     "value": "wrf",
-    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/wrf/{{region}}/{{options}}/{{field}}/{{year}}/{{month}}/{{day}}/{{lastTurn}}/modelo_{{timeRun}}h_glo_{{year}}{{month}}{{day}}{{lastTurn}}Z.png",
+    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/wrf/{{region}}/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/modelo_{{currentTime}}h_glo_{{year}}{{month}}{{day}}{{turn}}Z.png",
+    "urlDates": "http://localhost:5173/src/data/wrf_dates.json",
     "defaultValues": {
       "region": {
         "label": "Sul",
         "value": "sul"
       },
-      "options": {
-        "label": "Níveis simples B",
-        "value": "n2"
-      },
-      "field": {
+      "product": {
         "label": "Campo 4B",
         "value": "c2"
       },
-      "maxDays": 14,
       "timeRun": 12
     },
     "possibleValues": {
@@ -120,21 +98,7 @@
           "value": "nde"
         }
       ],
-      "options": [
-        {
-          "label": "Níveis isobáricos B",
-          "value": "n1"
-        },
-        {
-          "label": "Níveis simples B",
-          "value": "n2"
-        },
-        {
-          "label": "Conjuntos B",
-          "value": "n3"
-        }
-      ],
-      "field": [
+      "product": [
         {
           "label": "Campo 3B",
           "value": "c1"
@@ -177,21 +141,17 @@
     "id": 3,
     "label": "BRAMS",
     "value": "brams05",
-    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/brams05/{{region}}/{{options}}/{{field}}/{{year}}/{{month}}/{{day}}/{{lastTurn}}/modelo_{{timeRun}}h_glo_{{year}}{{month}}{{day}}{{lastTurn}}Z.png",
+    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/brams05/{{region}}/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/modelo_{{currentTime}}h_glo_{{year}}{{month}}{{day}}{{turn}}Z.png",
+    "urlDates": "http://localhost:5173/src/data/brams05_dates.json",
     "defaultValues": {
       "region": {
         "label": "América do Sul",
         "value": "ams"
       },
-      "options": {
-        "label": "Conjuntos C",
-        "value": "n3"
-      },
-      "field": {
+      "product": {
         "label": "Campo 7C",
         "value": "c3"
       },
-      "maxDays": 21,
       "timeRun": 6
     },
     "possibleValues": {
@@ -205,21 +165,7 @@
           "value": "brasil"
         }
       ],
-      "options": [
-        {
-          "label": "Níveis isobáricos C",
-          "value": "n1"
-        },
-        {
-          "label": "Níveis simples C",
-          "value": "n2"
-        },
-        {
-          "label": "Conjuntos C",
-          "value": "n3"
-        }
-      ],
-      "field": [
+      "product": [
         {
           "label": "Campo 3C",
           "value": "c1"
@@ -256,21 +202,17 @@
     "id": 4,
     "label": "Outros",
     "value": "others",
-    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/{{region}}/{{options}}/{{field}}/{{year}}/{{month}}/{{day}}/{{lastTurn}}/modelo_{{timeRun}}h_glo_{{year}}{{month}}{{day}}{{lastTurn}}Z.png",
+    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/{{region}}/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/modelo_{{currentTime}}h_glo_{{year}}{{month}}{{day}}{{turn}}Z.png",
+    "urlDates": "http://localhost:5173/src/data/others_dates.json",
     "defaultValues": {
       "region": {
         "label": "Norte",
         "value": "norte"
       },
-      "options": {
-        "label": "Níveis isobáricos D",
-        "value": "n1"
-      },
-      "field": {
+      "product": {
         "label": "Campo 3D",
         "value": "c1"
       },
-      "maxDays": 28,
       "timeRun": 24
     },
     "possibleValues": {
@@ -296,21 +238,7 @@
           "value": "sde"
         }
       ],
-      "options": [
-        {
-          "label": "Níveis isobáricos D",
-          "value": "n1"
-        },
-        {
-          "label": "Níveis simples D",
-          "value": "n2"
-        },
-        {
-          "label": "Conjuntos D",
-          "value": "n3"
-        }
-      ],
-      "field": [
+      "product": [
         {
           "label": "Campo 3D",
           "value": "c1"

@@ -1,25 +1,43 @@
-import { useState } from 'react'
-import PropTypes from 'prop-types'
+import { useState, useEffect } from 'react'
 
 import { useContext } from 'react'
 import { ConfigContext } from '../contexts/Config'
 
 import FrameTop from './FrameTop'
 import FrameImage from './FrameImage'
+import { formatDate } from '../lib/formatDate'
 
 export default function Frame({ id }) {
 
-  const { config, models, frames, dateTime } = useContext(ConfigContext)
-
+  const { config, models, frames } = useContext(ConfigContext)
   const [frame, setFrame] = useState(frames.find(frame => frame.id === id))
 
-  console.log("Frame (id, frame.currentTime)", id, frame.currentTime)
+  // console.log("Frame (id, frame.currentTime)", id, frame.currentTime)
 
   // console.log("frame.model", frame.model)
   // console.log("models", models)
 
   const [model, setModel] = useState(models.find(model => model.value === frame.model))
+
   // console.log("model", model)
+
+  const [dates, setDates] = useState([])
+
+  useEffect(() => {
+    async function fetchUrlDates() {
+      try {
+        const response = await fetch(model.urlDates)
+        const data = await response.json()
+        setDates(data.datesRun)
+      } catch (error) {
+        // console.log(error)
+      }
+    }
+
+    fetchUrlDates()
+  }, [model])
+
+  // console.log("model.value dates", model.value, dates)
 
   let classFrame = ""
   if (config.quantityFrames === 1) {
@@ -31,17 +49,14 @@ export default function Frame({ id }) {
   // console.log("frame", frame)
   // console.log("frame.timeRun", frame.timeRun)
 
-  const date = dateTime(new Date(), frame.timeRun, frame.maxDays)
-  // console.log("date", date)
+  // console.log("model.urlDates", model.urlDates)
+
+  // console.log("Frame dates", dates)
 
   return (
     <div className={classFrame}>
-      <FrameTop frame={frame} setFrame={setFrame} model={model} setModel={setModel} date={date} />
-      <FrameImage frame={frame} model={model} date={date} />
+      <FrameTop frame={frame} setFrame={setFrame} model={model} setModel={setModel} dates={dates} />
+      <FrameImage frame={frame} model={model} dates={dates} />
     </div>
   )
-}
-
-Frame.propTypes = {
-  id: PropTypes.number,
 }

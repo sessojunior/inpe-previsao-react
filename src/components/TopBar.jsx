@@ -6,7 +6,7 @@ import { ConfigContext } from '../contexts/Config'
 
 export default function TopBar() {
 
-  console.log("TopBar")
+  // console.log("TopBar")
 
   const { config, setConfig } = useContext(ConfigContext)
 

@@ -1,5 +1,4 @@
 import { useState, useEffect, useContext } from 'react'
-import PropTypes from 'prop-types'
 
 import { ConfigContext } from '../contexts/Config'
 
@@ -8,9 +7,13 @@ import { FaChevronLeft, FaChevronRight, FaClock, FaCog, FaPause, FaPlay } from '
 import DropDownConfig from './DropDownConfig'
 import DropDownTime from './DropDownTime'
 
-export default function FrameTop({ frame, setFrame, model, setModel, date }) {
+import { formatDate } from '../lib/formatDate'
 
-  console.log("FrameTop")
+export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
+
+  // console.log("FrameTop")
+
+  // console.log("FrameTop dates", dates)
 
   const { config, setConfig } = useContext(ConfigContext)
 
@@ -63,7 +66,7 @@ export default function FrameTop({ frame, setFrame, model, setModel, date }) {
   const [currentTime, setCurrentTime] = useState(model.possibleValues.time[model.possibleValues.time.indexOf(frame.currentTime)])
 
   useEffect(() => {
-    console.log("currentTime", currentTime)
+    // console.log("currentTime", currentTime)
     if (timer > 0) {
       setFrame({ ...frame, currentTime: currentTime })
     }
@@ -113,11 +116,11 @@ export default function FrameTop({ frame, setFrame, model, setModel, date }) {
     <div className="flex justify-between">
       <div className="flex relative">
         <button className={openDropdownConfig ? classButtonActive : classButton} onClick={handleDropdownConfig} title="Configurações"><FaCog /></button>
-        {openDropdownConfig && <DropDownConfig frame={frame} setFrame={setFrame} model={model} setModel={setModel} date={date} />}
+        {openDropdownConfig && <DropDownConfig frame={frame} setFrame={setFrame} model={model} setModel={setModel} dates={dates} />}
         <div className="mx-2">
           <div className="font-bold text-sm">{/* {frame.model} */} {model.label} {">"} Região {/* {frame.region} */} {model.possibleValues.region.find(region => region.value === frame.region).label}
           </div>
-          <div className="text-xs">{frame.init ?? date.formattedDateMinusTimeRun[0]}</div>
+          <div className="text-xs">{frame.init ? formatDate(frame.init) : formatDate(dates[0])}</div>
         </div>
       </div>
       <div className="flex relative">
@@ -134,17 +137,9 @@ export default function FrameTop({ frame, setFrame, model, setModel, date }) {
         <div className="flex items-center">
           <div className="font-bold text-sm px-2">{frame.currentTime} horas</div>
           <button className={openDropdownTime ? classButtonActive : classButton} onClick={handleDropdownTime} title="Selecionar as horas"><FaClock /></button>
-          {openDropdownTime && <DropDownTime currentTime={currentTime} setCurrentTime={setCurrentTime} frame={frame} setFrame={setFrame} model={model} />}
+          {openDropdownTime && <DropDownTime currentTime={frame.currentTime} setCurrentTime={setCurrentTime} frame={frame} setFrame={setFrame} model={model} />}
         </div>
       </div>
     </div>
   )
-}
-
-FrameTop.propTypes = {
-  frame: PropTypes.object,
-  setFrame: PropTypes.func,
-  model: PropTypes.object,
-  setModel: PropTypes.func,
-  date: PropTypes.object,
 }

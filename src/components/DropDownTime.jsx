@@ -1,8 +1,6 @@
-import PropTypes from 'prop-types'
-
 export default function DropDownTime({ currentTime, setCurrentTime, frame, setFrame, model }) {
 
-  console.log("DropDownTime")
+  console.log("DropDownTime currentTime", currentTime)
   // console.log("currentTime", currentTime)
 
   const classButtonTime = "size-9 md:size-[38px] inline-flex justify-center items-center gap-2 rounded-md font-bold bg-white text-black hover:bg-gray-100 text-xs md:text-sm"
@@ -30,10 +28,3 @@ export default function DropDownTime({ currentTime, setCurrentTime, frame, setFr
   )
 }
 
-DropDownTime.propTypes = {
-  currentTime: PropTypes.string,
-  setCurrentTime: PropTypes.func,
-  frame: PropTypes.object,
-  setFrame: PropTypes.func,
-  model: PropTypes.object
-}

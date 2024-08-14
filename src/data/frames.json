@@ -3,52 +3,36 @@
     "id": 1,
     "model": "bam",
     "region": "sul",
-    "options": "n1",
-    "field": "c1",
-    "maxDays": 7,
-    "timeRun": 12,
-    "init": null,
+    "product": "c1",
     "currentTime": "024",
     "isPlaying": false,
-    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/bam/{{region}}/{{options}}/{{field}}/{{year}}/{{month}}/{{day}}/{{lastTurn}}/modelo_{{timeRun}}h_glo_{{year}}{{month}}{{day}}{{lastTurn}}Z.png"
+    "init": null
   },
   {
     "id": 2,
     "model": "wrf",
     "region": "sul",
-    "options": "n2",
-    "field": "c2",
-    "maxDays": 14,
-    "timeRun": 12,
-    "init": null,
+    "product": "c2",
     "currentTime": "024",
     "isPlaying": false,
-    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/wrf/{{region}}/{{options}}/{{field}}/{{year}}/{{month}}/{{day}}/{{lastTurn}}/modelo_{{timeRun}}h_glo_{{year}}{{month}}{{day}}{{lastTurn}}Z.png"
+    "init": null
   },
   {
     "id": 3,
     "model": "brams05",
     "region": "ams",
-    "options": "n3",
-    "field": "c3",
-    "maxDays": 21,
-    "timeRun": 6,
-    "init": null,
+    "product": "c3",
     "currentTime": "030",
     "isPlaying": false,
-    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/brams05/{{region}}/{{options}}/{{field}}/{{year}}/{{month}}/{{day}}/{{lastTurn}}/modelo_{{timeRun}}h_glo_{{year}}{{month}}{{day}}{{lastTurn}}Z.png"
+    "init": null
   },
   {
     "id": 4,
     "model": "others",
     "region": "norte",
-    "options": "n1",
-    "field": "c1",
-    "maxDays": 28,
-    "timeRun": 24,
-    "init": null,
+    "product": "c1",
     "currentTime": "040",
     "isPlaying": false,
-    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/{{region}}/{{options}}/{{field}}/{{year}}/{{month}}/{{day}}/{{lastTurn}}/modelo_{{timeRun}}h_glo_{{year}}{{month}}{{day}}{{lastTurn}}Z.png"
+    "init": null
   }
 ]
