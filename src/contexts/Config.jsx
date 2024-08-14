@@ -25,9 +25,10 @@ export default function ConfigProvider({ children }) {
 
   useEffect(() => {
     const adjustedFrames = frames.map(frame => ({
-      ...frame,
-      currentTime: null,
-      init: null,
+      "id": frame.id,
+      "model": frame.model,
+      "region": frame.region,
+      "product": frame.product,
     }));
     // console.log("frames", frames)
     // console.log("adjustedFrames", adjustedFrames)
