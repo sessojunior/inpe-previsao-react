@@ -7,7 +7,7 @@ export default function FrameImage({ frame, model, dates }) {
   const month = init?.slice(5, 7)
   const day = init?.slice(8, 10)
   const turn = init?.slice(11, 13)
-  const currentTime = frame.currentTime ?? model.possibleValues.time[0]
+  const forecastTime = frame.forecastTime ?? model.possibleValues.time[0]
 
   // console.log("init", init)
   // console.log("FrameImage dates", dates)
@@ -20,7 +20,7 @@ export default function FrameImage({ frame, model, dates }) {
     <div>
       <p className="pb-2">Exemplo de URL da imagem:
         <br />[https://s1.cptec.inpe.br/grafico/Modelos/<b>{frame.model}</b>/<b>{frame.region}</b>/<b>{frame.product}</b>
-        <br />/<b>{year}</b>/<b>{month}</b>/<b>{day}</b>/<b>{turn}</b>/modelo_<b>{currentTime}</b>_<b>{model.defaultValues.timeRun}</b>h_glo_<b>{year}{month}{day}{turn}</b>Z.png]</p>
+        <br />/<b>{year}</b>/<b>{month}</b>/<b>{day}</b>/<b>{turn}</b>/modelo_<b>{forecastTime}</b>_<b>{model.defaultValues.timeRun}</b>h_glo_<b>{year}{month}{day}{turn}</b>Z.png]</p>
       <p className="pb-2">URL do modelo:
         <br /><b>{model.urlImage.replaceAll("{{", " {{").replaceAll("}}", "}} ")}</b></p>
       <p className="pb-2">URL convertida:
@@ -28,7 +28,7 @@ export default function FrameImage({ frame, model, dates }) {
           model.urlImage.replaceAll("{{model}}", " " + model.value + " ")
             .replaceAll("{{region}}", " " + frame.region + " ")
             .replaceAll("{{product}}", " " + frame.product + " ")
-            .replaceAll("{{currentTime}}", " " + currentTime + " ")
+            .replaceAll("{{forecastTime}}", " " + forecastTime + " ")
             .replaceAll("{{timeRun}}", " " + model.defaultValues.timeRun + " ")
             .replaceAll("{{turn}}", " " + turn + " ")
             .replaceAll("{{year}}", " " + year + " ")
@@ -39,8 +39,8 @@ export default function FrameImage({ frame, model, dates }) {
       <p>[frame.region: <b>{frame.region}</b>]</p>
       <p>[frame.product: <b>{frame.product}</b>]</p>
       <p>[model.possibleValues.time: <b>{model.possibleValues.time.map(time => time + " ")}</b>]</p>
-      <p><b>[frame.currentTime: <b>{frame.currentTime}</b>]</b></p>
-      <p><b>[currentTime: <b>{currentTime}</b>]</b></p>
+      <p><b>[frame.forecastTime: <b>{frame.forecastTime}</b>]</b></p>
+      <p><b>[forecastTime: <b>{forecastTime}</b>]</b></p>
       <p>[frame.isPlaying: <b>{frame.isPlaying ? "true" : "false"}</b>]</p>
       <p>[frame.timeRun: <b>{frame.timeRun}</b>]</p>
       <p>[frame.init: <b>{frame.init}</b>]</p>

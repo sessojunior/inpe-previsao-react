@@ -4,7 +4,7 @@
     "model": "bam",
     "region": "sul",
     "product": "c1",
-    "currentTime": null,
+    "forecastTime": null,
     "isPlaying": false,
     "init": null
   },
@@ -13,7 +13,7 @@
     "model": "wrf",
     "region": "sul",
     "product": "c2",
-    "currentTime": null,
+    "forecastTime": null,
     "isPlaying": false,
     "init": null
   },
@@ -22,7 +22,7 @@
     "model": "brams05",
     "region": "ams",
     "product": "c3",
-    "currentTime": null,
+    "forecastTime": null,
     "isPlaying": false,
     "init": null
   },
@@ -31,7 +31,7 @@
     "model": "others",
     "region": "norte",
     "product": "c1",
-    "currentTime": null,
+    "forecastTime": null,
     "isPlaying": false,
     "init": null
   }

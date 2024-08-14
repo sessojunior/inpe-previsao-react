@@ -1,15 +1,15 @@
-export default function DropDownTime({ currentTime, setCurrentTime, frame, setFrame, model }) {
+export default function DropDownTime({ forecastTime, setForecastTime, frame, setFrame, model }) {
 
-  console.log("DropDownTime currentTime", currentTime)
-  // console.log("currentTime", currentTime)
+  console.log("DropDownTime forecastTime", forecastTime)
+  // console.log("forecastTime", forecastTime)
 
   const classButtonTime = "size-9 md:size-[38px] inline-flex justify-center items-center gap-2 rounded-md font-bold bg-white text-black hover:bg-gray-100 text-xs md:text-sm"
 
   const classButtonTimeActive = "size-9 md:size-[38px] inline-flex justify-center items-center gap-2 rounded-md font-bold bg-blue-600 text-gray-50 text-xs md:text-sm"
 
   const handleChangeTime = (time) => {
-    setCurrentTime(time)
-    setFrame({ ...frame, currentTime: time })
+    setForecastTime(time)
+    setFrame({ ...frame, forecastTime: time })
   }
 
   return (
@@ -19,7 +19,7 @@ export default function DropDownTime({ currentTime, setCurrentTime, frame, setFr
           <label className="block w-full pb-3 text-sm font-bold">Horas de previsão</label>
           <div className="flex flex-wrap gap-1">
             {model.possibleValues.time.map((time, index) => (
-              <button key={index} className={currentTime === time ? classButtonTimeActive : classButtonTime} onClick={() => handleChangeTime(time)}>{time}</button>
+              <button key={index} className={forecastTime === time ? classButtonTimeActive : classButtonTime} onClick={() => handleChangeTime(time)}>{time}</button>
             ))}
           </div>
         </div>

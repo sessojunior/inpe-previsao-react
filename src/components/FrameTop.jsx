@@ -24,7 +24,7 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
   const [openDropdownConfig, setOpenDropdownConfig] = useState(false)
   const [openDropdownTime, setOpenDropdownTime] = useState(false)
 
-  const [currentTime, setCurrentTime] = useState(frame.currentTime ?? model.possibleValues.time[0])
+  const [forecastTime, setForecastTime] = useState(frame.forecastTime ?? model.possibleValues.time[0])
 
   const handleDropdownConfig = () => {
     setOpenDropdownConfig(!openDropdownConfig)
@@ -36,30 +36,30 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
 
   const handleDecreaseTime = () => {
     // console.log("decreaseTime")
-    // console.log("frame.currentTime", frame.currentTime)
+    // console.log("frame.forecastTime", frame.forecastTime)
     // console.log("model.possibleValues.time", model.possibleValues.time)
     // console.log("model.possibleValues.time.length", model.possibleValues.time.length)
-    if (model.possibleValues.time.indexOf(currentTime) > 0) {
-      // console.log("model.possibleValues.time[model.possibleValues.time.indexOf(frame.currentTime) - 1]", model.possibleValues.time[model.possibleValues.time.indexOf(frame.currentTime) - 1])
-      const previousTime = model.possibleValues.time[model.possibleValues.time.indexOf(currentTime) - 1]
+    if (model.possibleValues.time.indexOf(forecastTime) > 0) {
+      // console.log("model.possibleValues.time[model.possibleValues.time.indexOf(frame.forecastTime) - 1]", model.possibleValues.time[model.possibleValues.time.indexOf(frame.forecastTime) - 1])
+      const previousTime = model.possibleValues.time[model.possibleValues.time.indexOf(forecastTime) - 1]
       // console.log("previousTime", previousTime)
-      setCurrentTime(previousTime)
-      setFrame({ ...frame, currentTime: previousTime })
+      setForecastTime(previousTime)
+      setFrame({ ...frame, forecastTime: previousTime })
     }
   }
 
   const handleIncreaseTime = () => {
     // console.log("increaseTime")
-    // console.log("frame.currentTime", frame.currentTime)
+    // console.log("frame.forecastTime", frame.forecastTime)
     // console.log("model.possibleValues.time", model.possibleValues.time)
-    // console.log("indexOf(frame.currentTime)", model.possibleValues.time.indexOf(frame.currentTime))
+    // console.log("indexOf(frame.forecastTime)", model.possibleValues.time.indexOf(frame.forecastTime))
     // console.log("model.possibleValues.time.length", model.possibleValues.time.length)
-    if (model.possibleValues.time.indexOf(currentTime) < model.possibleValues.time.length - 1) {
-      // console.log("model.possibleValues.time[model.possibleValues.time.indexOf(frame.currentTime) + 1]", model.possibleValues.time[model.possibleValues.time.indexOf(frame.currentTime) + 1])
-      const nextTime = model.possibleValues.time[model.possibleValues.time.indexOf(currentTime) + 1]
+    if (model.possibleValues.time.indexOf(forecastTime) < model.possibleValues.time.length - 1) {
+      // console.log("model.possibleValues.time[model.possibleValues.time.indexOf(frame.forecastTime) + 1]", model.possibleValues.time[model.possibleValues.time.indexOf(frame.forecastTime) + 1])
+      const nextTime = model.possibleValues.time[model.possibleValues.time.indexOf(forecastTime) + 1]
       // console.log("nextTime", nextTime)
-      setCurrentTime(nextTime)
-      setFrame({ ...frame, currentTime: nextTime })
+      setForecastTime(nextTime)
+      setFrame({ ...frame, forecastTime: nextTime })
     }
   }
 
@@ -69,9 +69,9 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
   const [timeInterval, setTimeInterval] = useState(null)
 
   useEffect(() => {
-    // console.log("currentTime", currentTime)
+    // console.log("forecastTime", forecastTime)
     if (timer > 0) {
-      setFrame({ ...frame, currentTime: currentTime })
+      setFrame({ ...frame, forecastTime: forecastTime })
     }
   }, [timer])
 
@@ -83,12 +83,12 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
     console.log("startTimer")
     if (config.isAllPlaying) {
       clearInterval(timeInterval)
-      setCurrentTime(model.possibleValues.time[0])
-      setFrame({ ...frame, currentTime: model.possibleValues.time[0] })
+      setForecastTime(model.possibleValues.time[0])
+      setFrame({ ...frame, forecastTime: model.possibleValues.time[0] })
     }
     setTimeInterval(setInterval(() => {
       setTimer((prev) => prev + 1)
-      setCurrentTime((prev) => {
+      setForecastTime((prev) => {
         if (prev === model.possibleValues.time[model.possibleValues.time.length - 1]) {
           return model.possibleValues.time[0]
         } else {
@@ -110,9 +110,9 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
     console.log("resetTimer")
     setTimer(0)
     pauseTimer()
-    setCurrentTime(time ?? model.possibleValues.time[0])
+    setForecastTime(time ?? model.possibleValues.time[0])
     // console.log("model", model)
-    // console.log("currentTime", currentTime)
+    // console.log("forecastTime", forecastTime)
     // console.log("frame", frame)
     // console.log("config", config)
   }
@@ -132,19 +132,19 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
       </div>
       <div className="flex relative">
         <div className="flex gap-1">
-          <button className={classButton} onClick={handleDecreaseTime} title="Voltar"><FaChevronLeft /></button>
+          <button className={classButton} onClick={handleDecreaseTime} title="Voltar o tempo de previsão atual - forecast time"><FaChevronLeft /></button>
           {frame.isPlaying ? (
             <button className={classButtonActive} onClick={pauseTimer} title="Pausar"><FaPause /></button>
           ) : (
-            <button className={classButton} onClick={startTimer} title="Iniciar"><FaPlay /></button>
+            <button className={classButton} onClick={startTimer} title="Iniciar animação do tempo de previsão"><FaPlay /></button>
           )}
           {/* <button className={classButton} onClick={() => resetTimer(model.possibleValues.time[0])} title="Resetar">Resetar</button> */}
-          <button className={classButton} onClick={handleIncreaseTime} title="Avançar"><FaChevronRight /></button>
+          <button className={classButton} onClick={handleIncreaseTime} title="Avançar o tempo de previsão atual - forecast time"><FaChevronRight /></button>
         </div>
         <div className="flex items-center">
-          <div className="font-bold text-sm px-2">{currentTime} horas</div>
-          <button className={openDropdownTime ? classButtonActive : classButton} onClick={handleDropdownTime} title="Selecionar as horas"><FaClock /></button>
-          {openDropdownTime && <DropDownTime currentTime={currentTime} setCurrentTime={setCurrentTime} frame={frame} setFrame={setFrame} model={model} />}
+          <div className="font-bold text-sm px-2" title="Tempo de previsão atual - forecast time">{forecastTime} horas</div>
+          <button className={openDropdownTime ? classButtonActive : classButton} onClick={handleDropdownTime} title="Selecionar o tempo de previsão - forecast time"><FaClock /></button>
+          {openDropdownTime && <DropDownTime forecastTime={forecastTime} setForecastTime={setForecastTime} frame={frame} setFrame={setFrame} model={model} />}
         </div>
       </div>
     </div>

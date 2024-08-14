@@ -11,7 +11,7 @@ export default function Frame({ id }) {
 
   const { config, models, frames } = useContext(ConfigContext)
 
-  // console.log("Frame (id, frame.currentTime)", id, frame.currentTime)
+  // console.log("Frame (id, frame.forecastTime)", id, frame.forecastTime)
 
   const [frame, setFrame] = useState(frames.find(item => item.id === id))
   const [model, setModel] = useState(models.find(model => model.value === frame.model))

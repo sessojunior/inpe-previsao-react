@@ -3,7 +3,7 @@
     "id": 1,
     "label": "BAM",
     "value": "bam",
-    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/{{region}}/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/modelo_{{currentTime}}h_glo_{{year}}{{month}}{{day}}{{turn}}Z.png",
+    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/{{region}}/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/modelo_{{forecastTime}}h_glo_{{year}}{{month}}{{day}}{{turn}}Z.png",
     "urlDates": "http://localhost:5173/src/data/bam_dates.json",
     "defaultValues": {
       "region": {
@@ -68,7 +68,7 @@
     "id": 2,
     "label": "WRF",
     "value": "wrf",
-    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/{{region}}/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/modelo_{{currentTime}}h_glo_{{year}}{{month}}{{day}}{{turn}}Z.png",
+    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/{{region}}/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/modelo_{{forecastTime}}h_glo_{{year}}{{month}}{{day}}{{turn}}Z.png",
     "urlDates": "http://localhost:5173/src/data/wrf_dates.json",
     "defaultValues": {
       "region": {
@@ -139,7 +139,7 @@
     "id": 3,
     "label": "BRAMS",
     "value": "brams05",
-    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/{{region}}/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/modelo_{{currentTime}}h_glo_{{year}}{{month}}{{day}}{{turn}}Z.png",
+    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/{{region}}/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/modelo_{{forecastTime}}h_glo_{{year}}{{month}}{{day}}{{turn}}Z.png",
     "urlDates": "http://localhost:5173/src/data/brams05_dates.json",
     "defaultValues": {
       "region": {
@@ -200,7 +200,7 @@
     "id": 4,
     "label": "Outros",
     "value": "others",
-    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/{{region}}/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/modelo_{{currentTime}}h_glo_{{year}}{{month}}{{day}}{{turn}}Z.png",
+    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/{{region}}/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/modelo_{{forecastTime}}h_glo_{{year}}{{month}}{{day}}{{turn}}Z.png",
     "urlDates": "http://localhost:5173/src/data/others_dates.json",
     "defaultValues": {
       "region": {

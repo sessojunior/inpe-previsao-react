@@ -15,7 +15,7 @@ Arquivo **models.json**:
 - **{{month}}** - Mês (MM). Ex: 08
 - **{{day}}** - Dia (DD). Ex: 14
 - **{{turn}}** - Turno (HH) que executa o modelo. Ex: 00, 12
-- **{{currentTime}}** - Hora (HHH) de execução atual da imagem. Ex: 024, 040, 072, 128, 320
+- **{{forecastTime}}** - Hora (HHH) de execução atual da imagem. Tempo de previsão (forecast time). Ex: 024, 040, 072, 128, 320
 
 Arquivo models.json:
 
@@ -25,7 +25,7 @@ Arquivo models.json:
     "id": 1,
     "label": "BAM",
     "value": "bam",
-    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/{{region}}/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/modelo_{{currentTime}}h_glo_{{year}}{{month}}{{day}}{{turn}}Z.png",
+    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/{{region}}/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/modelo_{{forecastTime}}h_glo_{{year}}{{month}}{{day}}{{turn}}Z.png",
     "urlDates": "http://localhost:5173/src/data/bam_dates.json",
     "defaultValues": {
       "region": {
