@@ -113,7 +113,7 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
     setCurrentTime(time ?? model.possibleValues.time[0])
     // console.log("model", model)
     // console.log("currentTime", currentTime)
-    console.log("frame", frame)
+    // console.log("frame", frame)
     // console.log("config", config)
   }
 

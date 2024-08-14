@@ -39,7 +39,7 @@ export default function DropDownConfig({ frame, setFrame, model, setModel, dates
   }
 
   const handleChangeRegion = (e) => {
-    console.log("handleChangeRegion model", model)
+    // console.log("handleChangeRegion model", model)
     resetTimer(model.possibleValues.time[0])
     setFrame({ ...frame, region: e.target.value, isPlaying: false })
     setFrames([...frames.slice(0, frame.id - 1), { ...frame, region: e.target.value, isPlaying: false }, ...frames.slice(frame.id)])

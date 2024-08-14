@@ -24,8 +24,14 @@ export default function ConfigProvider({ children }) {
   // console.log("config", config)
 
   useEffect(() => {
+    const adjustedFrames = frames.map(frame => ({
+      ...frame,
+      currentTime: null,
+      init: null,
+    }));
     // console.log("frames", frames)
-    localStorage.setItem('frames', JSON.stringify(frames))
+    // console.log("adjustedFrames", adjustedFrames)
+    localStorage.setItem('frames', JSON.stringify(adjustedFrames))
     console.log("salvou no localStorage: frames")
   }, [frames])
 
