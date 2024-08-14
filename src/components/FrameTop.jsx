@@ -138,7 +138,7 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
           ) : (
             <button className={classButton} onClick={startTimer} title="Iniciar"><FaPlay /></button>
           )}
-          <button className={classButton} onClick={() => resetTimer(model.possibleValues.time[0])} title="Resetar">Resetar</button>
+          {/* <button className={classButton} onClick={() => resetTimer(model.possibleValues.time[0])} title="Resetar">Resetar</button> */}
           <button className={classButton} onClick={handleIncreaseTime} title="Avançar"><FaChevronRight /></button>
         </div>
         <div className="flex items-center">
