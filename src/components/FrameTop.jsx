@@ -120,7 +120,7 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
         <div className="mx-2">
           <div className="font-bold text-sm">{/* {frame.model} */} {model.label} {">"} Região {/* {frame.region} */} {model.possibleValues.region.find(region => region.value === frame.region).label}
           </div>
-          <div className="text-xs">{frame.init ? formatDate(frame.init) : formatDate(dates[0])}</div>
+          <div className="text-xs">{frame.init ? formatDate(frame.init) : dates.length > 0 ? formatDate(dates[0]) : "Data não definida"}</div>
         </div>
       </div>
       <div className="flex relative">

@@ -90,12 +90,16 @@ export default function DropDownConfig({ frame, setFrame, model, setModel, dates
             </div>
             <div className="border-b border-gray-200 p-4">
               <div>
-                <label htmlFor="init" className="block w-full pb-3 text-sm font-bold">Inicialização</label>
+              <label htmlFor="init" className="block w-full pb-3 text-sm font-bold">Inicialização</label>
+              {dates.length > 0 ? (
                 <select name="init" value={frame.init === null ? dates[0] : frame.init} onChange={e => handleChangeInit(e)} className={classSelect}>
                   {dates.map((date, index) => (
                     <option key={index} value={date}>{formatDate(date)}</option>
                   ))}
                 </select>
+              ) : (
+                <p>Carregando...</p>
+              )}
               </div>
             </div>
           </div>
