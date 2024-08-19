@@ -19,16 +19,16 @@
   },
   {
     "id": 3,
-    "model": "brams05",
+    "model": "BRAMS08",
     "region": "ams",
-    "product": "c3",
+    "product": "prec_pnmm",
     "forecastTime": null,
     "isPlaying": false,
     "init": null
   },
   {
     "id": 4,
-    "model": "others",
+    "model": "eta",
     "region": "norte",
     "product": "c1",
     "forecastTime": null,

@@ -69,7 +69,7 @@
     "label": "WRF",
     "value": "wrf",
     "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/{{region}}/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/modelo_{{forecastTime}}h_glo_{{year}}{{month}}{{day}}{{turn}}Z.png",
-    "urlDates": "http://localhost:5173/src/data/wrf_dates.json",
+    "urlDates": "https://s1.cptec.inpe.br/grafico/Modelos/portal_previsao_numerica/mod_wrf.json",
     "defaultValues": {
       "region": {
         "label": "Sul",
@@ -137,20 +137,20 @@
   },
   {
     "id": 3,
-    "label": "BRAMS",
-    "value": "brams05",
-    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/{{region}}/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/modelo_{{forecastTime}}h_glo_{{year}}{{month}}{{day}}{{turn}}Z.png",
-    "urlDates": "http://localhost:5173/src/data/brams05_dates.json",
+    "label": "BRAMS 8",
+    "value": "BRAMS08",
+    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/PN/{{region}}/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/{{model}}_{{product}}_{{region}}_{{year}}{{month}}{{day}}{{turn}}Z_{{forecastTime}}Z.png",
+    "urlDates": "https://s1.cptec.inpe.br/grafico/Modelos/portal_previsao_numerica/mod_brams.json",
     "defaultValues": {
       "region": {
         "label": "América do Sul",
         "value": "ams"
       },
       "product": {
-        "label": "Campo 7C",
-        "value": "c3"
+        "label": "prec_pnmm",
+        "value": "prec_pnmm"
       },
-      "timeRun": 6
+      "timeRun": 24
     },
     "possibleValues": {
       "region": [
@@ -165,8 +165,8 @@
       ],
       "product": [
         {
-          "label": "Campo 3C",
-          "value": "c1"
+          "label": "prec_pnmm",
+          "value": "prec_pnmm"
         },
         {
           "label": "Campo 4C",
@@ -198,10 +198,10 @@
   },
   {
     "id": 4,
-    "label": "Outros",
-    "value": "others",
+    "label": "Eta",
+    "value": "eta",
     "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/{{region}}/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/modelo_{{forecastTime}}h_glo_{{year}}{{month}}{{day}}{{turn}}Z.png",
-    "urlDates": "http://localhost:5173/src/data/others_dates.json",
+    "urlDates": "https://s1.cptec.inpe.br/grafico/Modelos/portal_previsao_numerica/mod_eta.json",
     "defaultValues": {
       "region": {
         "label": "Norte",

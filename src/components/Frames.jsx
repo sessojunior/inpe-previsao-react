@@ -1,6 +1,6 @@
 import Frame from "./Frame"
 
-import { useContext } from 'react'
+import { Suspense, useContext } from 'react'
 import { ConfigContext } from '../contexts/Config'
 
 export default function Frames() {
@@ -25,10 +25,18 @@ export default function Frames() {
       )}
       {(config.quantityFrames === 4) && (
         <div className="grid grid-cols-1 lg:grid-cols-2">
-          <Frame id={1} />
-          <Frame id={2} />
-          <Frame id={3} />
-          <Frame id={4} />
+          <Suspense fallback={<div>Carregando...</div>}>
+            <Frame id={1} />
+          </Suspense>
+          <Suspense fallback={<div>Carregando...</div>}>
+            <Frame id={2} />
+          </Suspense>
+          <Suspense fallback={<div>Carregando...</div>}>
+            <Frame id={3} />
+          </Suspense>
+          <Suspense fallback={<div>Carregando...</div>}>
+            <Frame id={4} />
+          </Suspense>
         </div>
       )}
     </>

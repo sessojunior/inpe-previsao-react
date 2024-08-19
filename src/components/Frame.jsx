@@ -31,7 +31,7 @@ export default function Frame({ id }) {
         const data = await response.json()
         setDates(data.datesRun)
       } catch (error) {
-        // console.log(error)
+        console.log(error)
       }
     }
 
