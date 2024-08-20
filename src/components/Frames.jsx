@@ -13,7 +13,7 @@ export default function Frames() {
   return (
     <>
       {config.quantityFrames === 1 && (
-        <div className="flex justify-center items-center max-w-3xl mx-auto">
+        <div className="flex justify-center items-center max-w-full mx-auto">
           <Frame id={1} />
         </div>
       )}

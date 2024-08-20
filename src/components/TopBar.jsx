@@ -28,12 +28,12 @@ export default function TopBar() {
   }
 
   const startAllTimer = () => {
-    console.log("startAllTimer")
+    // console.log("startAllTimer")
     setConfig({ ...config, isAllPlaying: true })
   }
 
   const pauseAllTimer = () => {
-    console.log("pauseAllTimer")
+    // console.log("pauseAllTimer")
     setConfig({ ...config, isAllPlaying: false })
   }
 

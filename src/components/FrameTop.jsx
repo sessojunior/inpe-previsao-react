@@ -25,6 +25,7 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
   const [openDropdownTime, setOpenDropdownTime] = useState(false)
 
   const [forecastTime, setForecastTime] = useState(frame.forecastTime ?? model.possibleValues.time[0])
+  const [isPlaying, setIsPlaying] = useState(frame.isPlaying ?? false)
 
   const handleDropdownConfig = () => {
     setOpenDropdownConfig(!openDropdownConfig)
@@ -71,7 +72,7 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
   useEffect(() => {
     // console.log("forecastTime", forecastTime)
     if (timer > 0) {
-      setFrame({ ...frame, forecastTime: forecastTime })
+      setFrame({ ...frame, forecastTime: forecastTime, isPlaying: isPlaying })
     }
   }, [timer])
 
@@ -80,37 +81,43 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
   }, [config.isAllPlaying])
 
   const startTimer = () => {
-    console.log("startTimer")
+    // console.log("startTimer")
     if (config.isAllPlaying) {
       clearInterval(timeInterval)
       setForecastTime(model.possibleValues.time[0])
-      setFrame({ ...frame, forecastTime: model.possibleValues.time[0] })
+      setIsPlaying(true)
     }
     setTimeInterval(setInterval(() => {
+      let ft = null
       setTimer((prev) => prev + 1)
       setForecastTime((prev) => {
         if (prev === model.possibleValues.time[model.possibleValues.time.length - 1]) {
-          return model.possibleValues.time[0]
+          ft = model.possibleValues.time[0]
+          return ft
         } else {
-          return model.possibleValues.time[model.possibleValues.time.indexOf(prev) + 1]
+          ft = model.possibleValues.time[model.possibleValues.time.indexOf(prev) + 1]
+          return ft
         }
       })
-      setFrame({ ...frame, isPlaying: true })
+      setIsPlaying(true)
+      // console.log("forecastTime", forecastTime)
     }, 1000))
   }
 
   const pauseTimer = () => {
-    console.log("pauseTimer")
+    // console.log("pauseTimer")
     clearInterval(timeInterval)
     setFrame({ ...frame, isPlaying: false })
+    setIsPlaying(false)
     setConfig({ ...config, isAllPlaying: false })
   }
 
   const resetTimer = (time = null) => {
-    console.log("resetTimer")
+    // console.log("resetTimer")
     setTimer(0)
     pauseTimer()
     setForecastTime(time ?? model.possibleValues.time[0])
+    setIsPlaying(false)
     // console.log("model", model)
     // console.log("forecastTime", forecastTime)
     // console.log("frame", frame)

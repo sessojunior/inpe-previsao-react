@@ -28,6 +28,8 @@ export default function FrameImage({ frame, model, dates }) {
 
   const altImage = `${frame.model} - ${frame.region}`
 
+  // console.log("frame.forecastTime", frame.forecastTime)
+
   return (
     <div>
       {/* <p className="pb-2">URL do modelo:
@@ -60,7 +62,7 @@ export default function FrameImage({ frame, model, dates }) {
       <p>[day: <b>{day}</b>]</p>
       <p>[turn: <b>{turn}</b>]</p> */}
       <div className="w-full">
-        <img src={urlImage} alt={altImage} className="rounded-md mt-4 w-full " />
+        <img src={urlImage} alt={altImage} className="rounded-md mt-4 w-full" />
         <div className="mt-4 flex justify-end">
           <a href={urlImage} download="imagem-de-previsao.png" target="_blank" rel="noreferrer" className="px-4 py-2 rounded bg-gray-600 text-white hover:bg-gray-700">Download da imagem</a>
         </div>

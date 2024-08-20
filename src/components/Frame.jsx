@@ -5,7 +5,6 @@ import { ConfigContext } from '../contexts/Config'
 
 import FrameTop from './FrameTop'
 import FrameImage from './FrameImage'
-import { formatDate } from '../lib/formatDate'
 
 export default function Frame({ id }) {
 
@@ -42,7 +41,7 @@ export default function Frame({ id }) {
 
   let classFrame = ""
   if (config.quantityFrames === 1) {
-    classFrame = "flex flex-col border-l border-r border-gray-r-300 border-gray-l-300 p-4"
+    classFrame = "flex flex-col p-4"
   } else {
     classFrame = "flex flex-col border-r border-b border-gray-r-300 p-4"
   }
