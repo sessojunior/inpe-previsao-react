@@ -3,7 +3,7 @@
     "id": 1,
     "label": "BAM",
     "value": "bam",
-    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/{{region}}/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/modelo_{{forecastTime}}h_glo_{{year}}{{month}}{{day}}{{turn}}Z.png",
+    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/pn/{{region}}/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/{{model}}_{{product}}_{{region}}_{{year}}{{month}}{{day}}{{turn}}z_{{forecastTime}}z.png",
     "urlDates": "http://localhost:5173/src/data/bam_dates.json",
     "defaultValues": {
       "region": {
@@ -14,7 +14,7 @@
         "label": "Campo 3A",
         "value": "c1"
       },
-      "timeRun": 12
+      "timeRun": 24
     },
     "possibleValues": {
       "region": [
@@ -68,7 +68,7 @@
     "id": 2,
     "label": "WRF",
     "value": "wrf",
-    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/{{region}}/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/modelo_{{forecastTime}}h_glo_{{year}}{{month}}{{day}}{{turn}}Z.png",
+    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/pn/{{region}}/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/{{model}}_{{product}}_{{region}}_{{year}}{{month}}{{day}}{{turn}}z_{{forecastTime}}z.png",
     "urlDates": "https://s1.cptec.inpe.br/grafico/Modelos/portal_previsao_numerica/mod_wrf.json",
     "defaultValues": {
       "region": {
@@ -139,7 +139,7 @@
     "id": 3,
     "label": "BRAMS 8",
     "value": "BRAMS08",
-    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/PN/{{region}}/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/{{model}}_{{product}}_{{region}}_{{year}}{{month}}{{day}}{{turn}}Z_{{forecastTime}}Z.png",
+    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/pn/{{region}}/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/{{model}}_{{product}}_{{region}}_{{year}}{{month}}{{day}}{{turn}}z_{{forecastTime}}z.png",
     "urlDates": "https://s1.cptec.inpe.br/grafico/Modelos/portal_previsao_numerica/mod_brams.json",
     "defaultValues": {
       "region": {
@@ -147,10 +147,10 @@
         "value": "ams"
       },
       "product": {
-        "label": "prec_pnmm",
+        "label": "Precipitação, pressão e espessura",
         "value": "prec_pnmm"
       },
-      "timeRun": 24
+      "timeRun": 12
     },
     "possibleValues": {
       "region": [
@@ -160,12 +160,12 @@
         },
         {
           "label": "Brasil",
-          "value": "brasil"
+          "value": "bra"
         }
       ],
       "product": [
         {
-          "label": "prec_pnmm",
+          "label": "Precipitação, pressão e espessura",
           "value": "prec_pnmm"
         },
         {
@@ -178,20 +178,35 @@
         }
       ],
       "time": [
+        "006",
+        "012",
+        "018",
+        "024",
         "030",
         "036",
-        "040",
+        "042",
         "048",
+        "054",
         "060",
+        "066",
         "072",
+        "078",
         "084",
+        "090",
         "096",
+        "102",
         "108",
+        "114",
         "120",
+        "126",
         "132",
+        "138",
         "144",
+        "150",
         "156",
+        "162",
         "168",
+        "174",
         "180"
       ]
     }
@@ -200,7 +215,7 @@
     "id": 4,
     "label": "Eta",
     "value": "eta",
-    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/{{region}}/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/modelo_{{forecastTime}}h_glo_{{year}}{{month}}{{day}}{{turn}}Z.png",
+    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/pn/{{region}}/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/{{model}}_{{product}}_{{region}}_{{year}}{{month}}{{day}}{{turn}}z_{{forecastTime}}z.png",
     "urlDates": "https://s1.cptec.inpe.br/grafico/Modelos/portal_previsao_numerica/mod_eta.json",
     "defaultValues": {
       "region": {
@@ -211,7 +226,7 @@
         "label": "Campo 3D",
         "value": "c1"
       },
-      "timeRun": 24
+      "timeRun": 12
     },
     "possibleValues": {
       "region": [

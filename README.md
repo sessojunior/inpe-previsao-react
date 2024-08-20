@@ -116,3 +116,17 @@ Onde:
 Observação:
 
 As horas de previsão precisam ser fixas para cada modelo. Ou seja, não devem variar na quantidade de horas ao alterar um produto ou região do modelo.
+
+Informações importantes:
+
+Geralmente dá o seguinte erro:
+
+Access to fetch at 'https://s1.cptec.inpe.br/grafico/Modelos/portal_previsao_numerica/mod_wrf.json' from origin 'http://...' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+
+A solução é criar um arquivo .htaccess no mesmo diretório que estão os arquivos .json do CPTEC. Esse arquivo .htaccess deve ter o seguinte conteúdo:
+
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin *
+    Header set Access-Control-Allow-Methods "GET, POST, OPTIONS, PUT, DELETE"
+    Header set Access-Control-Allow-Headers "Content-Type, Authorization"
+</IfModule>

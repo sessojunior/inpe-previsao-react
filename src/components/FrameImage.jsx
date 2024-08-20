@@ -16,12 +16,21 @@ export default function FrameImage({ frame, model, dates }) {
 
   // console.log("model.urlImage", model.urlImage)
 
+  const urlImage = model.urlImage.replaceAll("{{model}}", model.value)
+    .replaceAll("{{region}}", frame.region)
+    .replaceAll("{{product}}", frame.product)
+    .replaceAll("{{forecastTime}}", forecastTime)
+    .replaceAll("{{timeRun}}", model.defaultValues.timeRun)
+    .replaceAll("{{turn}}", turn)
+    .replaceAll("{{year}}", year)
+    .replaceAll("{{month}}", month)
+    .replaceAll("{{day}}", day)
+
+  const altImage = `${frame.model} - ${frame.region}`
+
   return (
     <div>
-      <p className="pb-2">Exemplo de URL da imagem:
-        <br />[https://s1.cptec.inpe.br/grafico/Modelos/<b>{frame.model}</b>/<b>{frame.region}</b>/<b>{frame.product}</b>
-        <br />/<b>{year}</b>/<b>{month}</b>/<b>{day}</b>/<b>{turn}</b>/modelo_<b>{forecastTime}</b>_<b>{model.defaultValues.timeRun}</b>h_glo_<b>{year}{month}{day}{turn}</b>Z.png]</p>
-      <p className="pb-2">URL do modelo:
+      {/* <p className="pb-2">URL do modelo:
         <br /><b>{model.urlImage.replaceAll("{{", " {{").replaceAll("}}", "}} ")}</b></p>
       <p className="pb-2">URL convertida:
         <br />[<b>{
@@ -49,11 +58,11 @@ export default function FrameImage({ frame, model, dates }) {
       <p>[year: <b>{year}</b>]</p>
       <p>[month: <b>{month}</b>]</p>
       <p>[day: <b>{day}</b>]</p>
-      <p>[turn: <b>{turn}</b>]</p>
+      <p>[turn: <b>{turn}</b>]</p> */}
       <div className="w-full">
-        <img src="https://s1.cptec.inpe.br/grafico/Modelos/SMNA/figuras/precipitacao/2024/07/11/00/prec_6h_glo_2024071100Z_2024071100Z.png" alt="imagem" className="rounded-md mt-4 w-full " />
+        <img src={urlImage} alt={altImage} className="rounded-md mt-4 w-full " />
         <div className="mt-4 flex justify-end">
-          <a href="https://s1.cptec.inpe.br/grafico/Modelos/SMNA/figuras/precipitacao/2024/07/11/00/prec_6h_glo_2024071100Z_2024071100Z.png" download="imagem-de-previsao.png" target="_blank" rel="noreferrer" className="px-4 py-2 rounded bg-gray-600 text-white hover:bg-gray-700">Download da imagem</a>
+          <a href={urlImage} download="imagem-de-previsao.png" target="_blank" rel="noreferrer" className="px-4 py-2 rounded bg-gray-600 text-white hover:bg-gray-700">Download da imagem</a>
         </div>
       </div>
     </div>
