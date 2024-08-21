@@ -1,193 +1,23 @@
 [
   {
     "id": 1,
-    "label": "BAM",
-    "value": "bam",
-    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/pn/{{region}}/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/{{model}}_{{product}}_{{region}}_{{year}}{{month}}{{day}}{{turn}}z_{{forecastTime}}z.png",
-    "urlDates": "http://localhost:5173/src/data/bam_dates.json",
-    "defaultValues": {
-      "region": {
-        "label": "Sul",
-        "value": "sul"
-      },
-      "product": {
-        "label": "Campo 3A",
-        "value": "c1"
-      },
-      "timeRun": 24
-    },
-    "possibleValues": {
-      "region": [
-        {
-          "label": "Norte",
-          "value": "norte"
-        },
-        {
-          "label": "Sul",
-          "value": "sul"
-        },
-        {
-          "label": "Centro-Oeste",
-          "value": "co"
-        },
-        {
-          "label": "Nordeste",
-          "value": "nde"
-        },
-        {
-          "label": "Sudeste",
-          "value": "sde"
-        }
-      ],
-      "product": [
-        {
-          "label": "Campo 3A",
-          "value": "c1"
-        },
-        {
-          "label": "Campo 4A",
-          "value": "c2"
-        },
-        {
-          "label": "Campo 7A",
-          "value": "c3"
-        }
-      ],
-      "time": [
-        "036",
-        "040",
-        "048",
-        "060",
-        "072",
-        "084",
-        "096"
-      ]
-    }
-  },
-  {
-    "id": 2,
-    "label": "WRF",
-    "value": "wrf",
-    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/pn/{{region}}/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/{{model}}_{{product}}_{{region}}_{{year}}{{month}}{{day}}{{turn}}z_{{forecastTime}}z.png",
-    "urlDates": "https://s1.cptec.inpe.br/grafico/Modelos/portal_previsao_numerica/mod_wrf.json",
-    "defaultValues": {
-      "region": {
-        "label": "Sul",
-        "value": "sul"
-      },
-      "product": {
-        "label": "Campo 4B",
-        "value": "c2"
-      },
-      "timeRun": 12
-    },
-    "possibleValues": {
-      "region": [
-        {
-          "label": "Sul",
-          "value": "sul"
-        },
-        {
-          "label": "Centro-Oeste",
-          "value": "co"
-        },
-        {
-          "label": "Nordeste",
-          "value": "nde"
-        }
-      ],
-      "product": [
-        {
-          "label": "Campo 3B",
-          "value": "c1"
-        },
-        {
-          "label": "Campo 4B",
-          "value": "c2"
-        },
-        {
-          "label": "Campo 7B",
-          "value": "c3"
-        }
-      ],
-      "time": [
-        "024",
-        "030",
-        "036",
-        "040",
-        "048",
-        "060",
-        "072",
-        "084",
-        "096",
-        "108",
-        "120",
-        "132",
-        "144",
-        "156",
-        "168",
-        "180",
-        "192",
-        "204",
-        "216",
-        "228",
-        "240"
-      ]
-    }
-  },
-  {
-    "id": 3,
     "label": "BRAMS 8",
     "value": "BRAMS08",
     "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/pn/{{region}}/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/{{model}}_{{product}}_{{region}}_{{year}}{{month}}{{day}}{{turn}}z_{{forecastTime}}z.png",
     "urlDates": "https://s1.cptec.inpe.br/grafico/Modelos/portal_previsao_numerica/mod_brams.json",
-    "defaultValues": {
-      "region": {
-        "label": "América do Sul",
-        "value": "ams"
-      },
+    "timeRun": 12,
+    "periodHours": 3,
+    "periodStart": "000",
+    "periodEnd": "180",
+    "default": {
       "product": {
-        "label": "Precipitação, pressão e espessura",
-        "value": "prec_pnmm"
-      },
-      "timeRun": 12
+        "value": "prec_pnmm",
+        "group": "prec_pnmm",
+        "region": "ams"
+      }
     },
-    "possibleValues": {
-      "region": [
-        {
-          "label": "América do Sul",
-          "value": "ams"
-        },
-        {
-          "label": "Brasil",
-          "value": "bra"
-        },
-        {
-          "label": "Sul",
-          "value": "sul"
-        },
-        {
-          "label": "Sudeste",
-          "value": "sud"
-        },
-        {
-          "label": "Centro-Oeste",
-          "value": "coe"
-        },
-        {
-          "label": "Nordeste",
-          "value": "nde"
-        },
-        {
-          "label": "Norte",
-          "value": "nte"
-        },
-        {
-          "label": "Brasil",
-          "value": "bra"
-        }
-      ],
-      "product": [
+    "options": {
+      "groups": [
         {
           "label": "Precipitação, pressão e espessura",
           "value": "prec_pnmm"
@@ -195,70 +25,214 @@
         {
           "label": "Água Precipitável",
           "value": "aprec"
+        },
+        {
+          "label": "Altura Geopotencial",
+          "value": "ageop"
+        },
+        {
+          "label": "Lapserate (formato novo)",
+          "value": "lapserate"
+        },
+        {
+          "label": "Cisalhamento do Vento",
+          "value": "cis_vento"
         }
       ],
-      "time": [
-        "000",
-        "003",
-        "006",
-        "009",
-        "012",
-        "015",
-        "018",
-        "021",
-        "024",
-        "027",
-        "030",
-        "033",
-        "036",
-        "039",
-        "042",
-        "045",
-        "048",
-        "051",
-        "054",
-        "057",
-        "060",
-        "063",
-        "066",
-        "069",
-        "072",
-        "075",
-        "078",
-        "081",
-        "084",
-        "087",
-        "090",
-        "093",
-        "096",
-        "099",
-        "102",
-        "105",
-        "108",
-        "111",
-        "114",
-        "117",
-        "120",
-        "123",
-        "126",
-        "129",
-        "132",
-        "135",
-        "138",
-        "141",
-        "144",
-        "147",
-        "150",
-        "153",
-        "156",
-        "159",
-        "162",
-        "165",
-        "168",
-        "171",
-        "174",
-        "177",
-        "180"
+      "products": [
+        {
+          "label": null,
+          "value": "prec_pnmm",
+          "group": "prec_pnmm",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": null,
+          "value": "aprec",
+          "group": "aprec",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Nível de 250",
+          "value": "ageop_250",
+          "group": "ageop",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 500",
+          "value": "ageop_500",
+          "group": "ageop",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 700",
+          "value": "ageop_700",
+          "group": "ageop",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 850",
+          "value": "ageop_850",
+          "group": "ageop",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 925",
+          "value": "ageop_925",
+          "group": "ageop",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": null,
+          "value": "lapserate",
+          "group": "lapserate",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 1000",
+          "value": "cis_vento_1000",
+          "group": "cis_vento",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 2000",
+          "value": "cis_vento_2000",
+          "group": "cis_vento",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 3000",
+          "value": "cis_vento_3000",
+          "group": "cis_vento",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 2,
+    "label": "BAM",
+    "value": "bam",
+    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/pn/{{region}}/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/{{model}}_{{product}}_{{region}}_{{year}}{{month}}{{day}}{{turn}}z_{{forecastTime}}z.png",
+    "urlDates": "http://localhost:5173/src/data/bam_dates.json",
+    "timeRun": 24,
+    "periodHours": 6,
+    "periodStart": "000",
+    "periodEnd": "240",
+    "default": {
+      "product": {
+        "value": "bam",
+        "group": "bam",
+        "region": "ams"
+      }
+    },
+    "options": {
+      "groups": [
+        {
+          "label": "BAM",
+          "value": "bam"
+        }
+      ],
+      "products": [
+        {
+          "label": null,
+          "value": "bam",
+          "group": null,
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 3,
+    "label": "WRF",
+    "value": "wrf",
+    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/pn/{{region}}/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/{{model}}_{{product}}_{{region}}_{{year}}{{month}}{{day}}{{turn}}z_{{forecastTime}}z.png",
+    "urlDates": "https://s1.cptec.inpe.br/grafico/Modelos/portal_previsao_numerica/mod_wrf.json",
+    "timeRun": 12,
+    "periodHours": 3,
+    "periodStart": "000",
+    "periodEnd": "180",
+    "default": {
+      "product": {
+        "value": "wrf",
+        "group": "wrf",
+        "region": "ams"
+      }
+    },
+    "options": {
+      "groups": [
+        {
+          "label": "WRF",
+          "value": "wrf"
+        }
+      ],
+      "products": [
+        {
+          "label": null,
+          "value": "wrf",
+          "group": null,
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        }
       ]
     }
   },
@@ -267,70 +241,40 @@
     "label": "Eta",
     "value": "eta",
     "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/pn/{{region}}/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/{{model}}_{{product}}_{{region}}_{{year}}{{month}}{{day}}{{turn}}z_{{forecastTime}}z.png",
-    "urlDates": "https://s1.cptec.inpe.br/grafico/Modelos/portal_previsao_numerica/mod_eta.json",
-    "defaultValues": {
-      "region": {
-        "label": "Norte",
-        "value": "norte"
-      },
+    "urlDates": "http://localhost:5173/src/data/eta_dates.json",
+    "timeRun": 12,
+    "periodHours": 3,
+    "periodStart": "000",
+    "periodEnd": "240",
+    "default": {
       "product": {
-        "label": "Campo 3D",
-        "value": "c1"
-      },
-      "timeRun": 12
+        "value": "eta",
+        "group": "eta",
+        "region": "ams"
+      }
     },
-    "possibleValues": {
-      "region": [
+    "options": {
+      "groups": [
         {
-          "label": "Norte",
-          "value": "norte"
-        },
-        {
-          "label": "Sul",
-          "value": "sul"
-        },
-        {
-          "label": "Centro-Oeste",
-          "value": "co"
-        },
-        {
-          "label": "Nordeste",
-          "value": "nde"
-        },
-        {
-          "label": "Sudeste",
-          "value": "sde"
+          "label": "Eta",
+          "value": "eta"
         }
       ],
-      "product": [
+      "products": [
         {
-          "label": "Campo 3D",
-          "value": "c1"
-        },
-        {
-          "label": "Campo 4D",
-          "value": "c2"
-        },
-        {
-          "label": "Campo 7D",
-          "value": "c3"
+          "label": null,
+          "value": "eta",
+          "group": null,
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
         }
-      ],
-      "time": [
-        "040",
-        "048",
-        "060",
-        "072",
-        "084",
-        "096",
-        "108",
-        "120",
-        "132",
-        "144",
-        "156",
-        "168",
-        "180",
-        "192"
       ]
     }
   }

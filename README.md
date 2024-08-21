@@ -130,3 +130,13 @@ A solução é criar um arquivo .htaccess no mesmo diretório que estão os arqu
     Header set Access-Control-Allow-Methods "GET, POST, OPTIONS, PUT, DELETE"
     Header set Access-Control-Allow-Headers "Content-Type, Authorization"
 </IfModule>
+
+Sugestão de melhorias futuras:
+
+* Um select no topo, ao lado do botão de animação de todos os quadros, para selecionar quantidade de horas de forecast de cada figura (1 em 1 hora, 2 em 2 horas, 3 em 3 horas, 6 em 6 horas)
+* Log para acompanhar o que o usuário acessa
+* Uso de Next.js
+
+Requisitos:
+
+* Se um modelo for até 180 horas e de 3 em 3 horas, todos os produtos e variáveis ou níveis deste modelo deverão ser assim.

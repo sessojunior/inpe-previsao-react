@@ -1,9 +1,20 @@
 [
   {
     "id": 1,
+    "model": "BRAMS08",
+    "product": "prec_pnmm",
+    "group": "prec_pnmm",
+    "region": "ams",
+    "forecastTime": null,
+    "isPlaying": false,
+    "init": null
+  },
+  {
+    "id": 3,
     "model": "bam",
+    "product": "bam",
+    "group": "bam",
     "region": "sul",
-    "product": "c1",
     "forecastTime": null,
     "isPlaying": false,
     "init": null
@@ -11,17 +22,9 @@
   {
     "id": 2,
     "model": "wrf",
+    "product": "wrf",
+    "group": "wrf",
     "region": "sul",
-    "product": "c2",
-    "forecastTime": null,
-    "isPlaying": false,
-    "init": null
-  },
-  {
-    "id": 3,
-    "model": "BRAMS08",
-    "region": "ams",
-    "product": "prec_pnmm",
     "forecastTime": null,
     "isPlaying": false,
     "init": null
@@ -29,8 +32,9 @@
   {
     "id": 4,
     "model": "eta",
-    "region": "norte",
-    "product": "c1",
+    "product": "eta",
+    "group": "eta",
+    "region": "nte",
     "forecastTime": null,
     "isPlaying": false,
     "init": null

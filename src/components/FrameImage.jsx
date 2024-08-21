@@ -7,7 +7,7 @@ export default function FrameImage({ frame, model, dates }) {
   const month = init?.slice(5, 7)
   const day = init?.slice(8, 10)
   const turn = init?.slice(11, 13)
-  const forecastTime = frame.forecastTime ?? model.possibleValues.time[0]
+  const forecastTime = frame.forecastTime ?? model.periodStart
 
   // console.log("init", init)
   // console.log("FrameImage dates", dates)
@@ -20,7 +20,7 @@ export default function FrameImage({ frame, model, dates }) {
     .replaceAll("{{region}}", frame.region)
     .replaceAll("{{product}}", frame.product)
     .replaceAll("{{forecastTime}}", forecastTime)
-    .replaceAll("{{timeRun}}", model.defaultValues.timeRun)
+    .replaceAll("{{timeRun}}", model.timeRun)
     .replaceAll("{{turn}}", turn)
     .replaceAll("{{year}}", year)
     .replaceAll("{{month}}", month)

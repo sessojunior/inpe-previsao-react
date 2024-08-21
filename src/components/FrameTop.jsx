@@ -12,19 +12,30 @@ import { formatDate } from '../lib/formatDate'
 export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
 
   // console.log("FrameTop")
-
   // console.log("FrameTop dates", dates)
 
-  const { config, setConfig } = useContext(ConfigContext)
+  const { config, setConfig, regions } = useContext(ConfigContext)
+
+  const region = regions.find(region => region.value === frame.region)
+  const group = model.options.groups.find(group => group.value === frame.group)
+  const product = model.options.products.find(product => product.value === frame.product)
+
+  // console.log("model", model)
+  // console.log("group", group)
+  // console.log("product", product)
+
+  // Cria um array de horas iniciando com model.periodStart (geralmente "000") e terminando com model.periodEnd (geralmente "180" ou "240")
+  // Precisa ter 3 caracteres, e ficaria assim: ["000", "003", "006", ..., "240"]
+  // O intervalo de horas é baseado em model.periodHours (geralmente 3 ou 6)
+  const hours = Array.from({ length: (model.periodEnd - model.periodStart) / model.periodHours + 1 }, (_, i) => String(i * model.periodHours).padStart(3, '0'))
 
   const classButton = "size-9 md:size-[38px] inline-flex justify-center items-center gap-2 rounded-md font-medium bg-white border border-gray-200 text-gray-700 hover:bg-gray-100 text-xs md:text-sm"
-
   const classButtonActive = "size-9 md:size-[38px] inline-flex justify-center items-center gap-2 rounded-md font-medium bg-blue-600 border border-gray-200 text-gray-50 hover:bg-blue-500 text-xs md:text-sm"
 
   const [openDropdownConfig, setOpenDropdownConfig] = useState(false)
   const [openDropdownTime, setOpenDropdownTime] = useState(false)
 
-  const [forecastTime, setForecastTime] = useState(frame.forecastTime ?? model.possibleValues.time[0])
+  const [forecastTime, setForecastTime] = useState(frame.forecastTime ?? model.periodStart)
   const [isPlaying, setIsPlaying] = useState(frame.isPlaying ?? false)
 
   const handleDropdownConfig = () => {
@@ -38,11 +49,11 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
   const handleDecreaseTime = () => {
     // console.log("decreaseTime")
     // console.log("frame.forecastTime", frame.forecastTime)
-    // console.log("model.possibleValues.time", model.possibleValues.time)
-    // console.log("model.possibleValues.time.length", model.possibleValues.time.length)
-    if (model.possibleValues.time.indexOf(forecastTime) > 0) {
-      // console.log("model.possibleValues.time[model.possibleValues.time.indexOf(frame.forecastTime) - 1]", model.possibleValues.time[model.possibleValues.time.indexOf(frame.forecastTime) - 1])
-      const previousTime = model.possibleValues.time[model.possibleValues.time.indexOf(forecastTime) - 1]
+    // console.log("hours", hours)
+    // console.log("hours.length", hours.length)
+    if (hours.indexOf(forecastTime) > 0) {
+      // console.log("hours[hours.indexOf(frame.forecastTime) - 1]", hours[hours.indexOf(frame.forecastTime) - 1])
+      const previousTime = hours[hours.indexOf(forecastTime) - 1]
       // console.log("previousTime", previousTime)
       setForecastTime(previousTime)
       setFrame({ ...frame, forecastTime: previousTime })
@@ -52,12 +63,12 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
   const handleIncreaseTime = () => {
     // console.log("increaseTime")
     // console.log("frame.forecastTime", frame.forecastTime)
-    // console.log("model.possibleValues.time", model.possibleValues.time)
-    // console.log("indexOf(frame.forecastTime)", model.possibleValues.time.indexOf(frame.forecastTime))
-    // console.log("model.possibleValues.time.length", model.possibleValues.time.length)
-    if (model.possibleValues.time.indexOf(forecastTime) < model.possibleValues.time.length - 1) {
-      // console.log("model.possibleValues.time[model.possibleValues.time.indexOf(frame.forecastTime) + 1]", model.possibleValues.time[model.possibleValues.time.indexOf(frame.forecastTime) + 1])
-      const nextTime = model.possibleValues.time[model.possibleValues.time.indexOf(forecastTime) + 1]
+    // console.log("hours", hours)
+    // console.log("indexOf(frame.forecastTime)", hours.indexOf(frame.forecastTime))
+    // console.log("hours.length", hours.length)
+    if (hours.indexOf(forecastTime) < hours.length - 1) {
+      // console.log("hours[hours.indexOf(frame.forecastTime) + 1]", hours[hours.indexOf(frame.forecastTime) + 1])
+      const nextTime = hours[hours.indexOf(forecastTime) + 1]
       // console.log("nextTime", nextTime)
       setForecastTime(nextTime)
       setFrame({ ...frame, forecastTime: nextTime })
@@ -84,18 +95,18 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
     // console.log("startTimer")
     if (config.isAllPlaying) {
       clearInterval(timeInterval)
-      setForecastTime(model.possibleValues.time[0])
+      setForecastTime(model.periodStart)
       setIsPlaying(true)
     }
     setTimeInterval(setInterval(() => {
       let ft = null
       setTimer((prev) => prev + 1)
       setForecastTime((prev) => {
-        if (prev === model.possibleValues.time[model.possibleValues.time.length - 1]) {
-          ft = model.possibleValues.time[0]
+        if (prev === hours[hours.length - 1]) {
+          ft = hours[0]
           return ft
         } else {
-          ft = model.possibleValues.time[model.possibleValues.time.indexOf(prev) + 1]
+          ft = hours[hours.indexOf(prev) + 1]
           return ft
         }
       })
@@ -116,7 +127,7 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
     // console.log("resetTimer")
     setTimer(0)
     pauseTimer()
-    setForecastTime(time ?? model.possibleValues.time[0])
+    setForecastTime(time ?? model.periodStart)
     setIsPlaying(false)
     // console.log("model", model)
     // console.log("forecastTime", forecastTime)
@@ -132,9 +143,16 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
         <button className={openDropdownConfig ? classButtonActive : classButton} onClick={handleDropdownConfig} title="Configurações"><FaCog /></button>
         {openDropdownConfig && <DropDownConfig frame={frame} setFrame={setFrame} model={model} setModel={setModel} dates={dates} resetTimer={resetTimer} />}
         <div className="mx-2">
-          <div className="font-bold text-sm">{/* {frame.model} */} {model.label} {">"} Região {/* {frame.region} */} {model.possibleValues.region.find(region => region.value === frame.region).label}
+          <div className="font-bold text-sm">{model.label} · {region?.label}</div>
+          <div className="text-xs">
+            <span className={group.value !== model.value || group.value !== product.value ? "hidden" : ""}>{frame.init ? formatDate(frame.init) : dates.length > 0 ? formatDate(dates[0]) : "Data não definida"}</span>
+            <span>
+              {group.value !== model.value && (<>{group.label}</>)}
+              {group.value !== product.value && (<> · {product.label}</>)}
+            </span>
           </div>
-          <div className="text-xs">{frame.init ? formatDate(frame.init) : dates.length > 0 ? formatDate(dates[0]) : "Data não definida"}</div>
+          <div className="text-xs">
+          </div>
         </div>
       </div>
       <div className="flex relative">
@@ -145,13 +163,13 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
           ) : (
             <button className={classButton} onClick={startTimer} title="Iniciar animação do tempo de previsão"><FaPlay /></button>
           )}
-          {/* <button className={classButton} onClick={() => resetTimer(model.possibleValues.time[0])} title="Resetar">Resetar</button> */}
+          {/* <button className={classButton} onClick={() => resetTimer(hours[0])} title="Resetar">Resetar</button> */}
           <button className={classButton} onClick={handleIncreaseTime} title="Avançar o tempo de previsão atual - forecast time"><FaChevronRight /></button>
         </div>
         <div className="flex items-center">
           <div className="font-bold text-sm px-2" title="Tempo de previsão atual - forecast time">{forecastTime} horas</div>
           <button className={openDropdownTime ? classButtonActive : classButton} onClick={handleDropdownTime} title="Selecionar o tempo de previsão - forecast time"><FaClock /></button>
-          {openDropdownTime && <DropDownTime forecastTime={forecastTime} setForecastTime={setForecastTime} frame={frame} setFrame={setFrame} model={model} />}
+          {openDropdownTime && <DropDownTime forecastTime={forecastTime} setForecastTime={setForecastTime} frame={frame} setFrame={setFrame} hours={hours} />}
         </div>
       </div>
     </div>
