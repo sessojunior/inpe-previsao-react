@@ -1,6 +1,10 @@
+import { useEffect, useState } from "react"
+
 export default function FrameImage({ frame, model, dates }) {
 
   // console.log("FrameImage")
+
+  const publicImage = "image-not-found.jpg"
 
   const init = frame.init ?? dates[0]
   const year = init?.slice(0, 4)
@@ -9,11 +13,10 @@ export default function FrameImage({ frame, model, dates }) {
   const turn = init?.slice(11, 13)
   const forecastTime = frame.forecastTime ?? model.periodStart
 
+  // console.log("frame", frame)
   // console.log("init", init)
-  // console.log("FrameImage dates", dates)
-  // console.log("FrameImage frame", frame)
+  // console.log("dates", dates)
   // console.log("FrameImage model", model)
-
   // console.log("model.urlImage", model.urlImage)
 
   const urlImage = model.urlImage.replaceAll("{{model}}", model.value)
@@ -29,6 +32,7 @@ export default function FrameImage({ frame, model, dates }) {
   const altImage = `${frame.model} - ${frame.region}`
 
   // console.log("frame.forecastTime", frame.forecastTime)
+  // console.log("urlImage", urlImage)
 
   return (
     <div>
@@ -62,7 +66,7 @@ export default function FrameImage({ frame, model, dates }) {
       <p>[day: <b>{day}</b>]</p>
       <p>[turn: <b>{turn}</b>]</p> */}
       <div className="w-full">
-        <img src={urlImage} alt={altImage} className="rounded-md mt-4 w-full" />
+        <img src={urlImage} onError={(e) => { e.target.onError = null; e.target.src = publicImage }} alt={altImage} className="rounded-md mt-4 w-full" />
         <div className="mt-4 flex justify-end">
           <a href={urlImage} download="imagem-de-previsao.png" target="_blank" rel="noreferrer" className="px-4 py-2 rounded bg-gray-600 text-white hover:bg-gray-700">Download da imagem</a>
         </div>
