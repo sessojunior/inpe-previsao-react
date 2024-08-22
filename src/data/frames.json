@@ -10,7 +10,7 @@
     "init": null
   },
   {
-    "id": 3,
+    "id": 2,
     "model": "bam",
     "product": "bam",
     "group": "bam",
@@ -20,7 +20,7 @@
     "init": null
   },
   {
-    "id": 2,
+    "id": 3,
     "model": "wrf",
     "product": "wrf",
     "group": "wrf",
