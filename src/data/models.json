@@ -12,15 +12,15 @@
     "default": {
       "product": {
         "value": "prec_pnmm",
-        "group": "prec_pnmm",
+        "group": "prec",
         "region": "ams"
       }
     },
     "options": {
       "groups": [
         {
-          "label": "Precipitação, pressão e espessura",
-          "value": "prec_pnmm"
+          "label": "Precipitação",
+          "value": "prec"
         },
         {
           "label": "Água Precipitável",
@@ -41,9 +41,37 @@
       ],
       "products": [
         {
-          "label": null,
+          "label": "Precipitação, pressão e espessura",
           "value": "prec_pnmm",
-          "group": "prec_pnmm",
+          "group": "prec",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Precipitação a cada 3 horas",
+          "value": "prec_3h",
+          "group": "prec",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Precipitação acumulada em 24h, a cada 3h",
+          "value": "prec",
+          "group": "prec",
           "regions": [
             "ams",
             "bra",

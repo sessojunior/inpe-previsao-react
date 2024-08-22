@@ -975,6 +975,14 @@ video {
     height: 38px;
   }
 
+  .md\:w-80 {
+    width: 20rem;
+  }
+
+  .md\:w-96 {
+    width: 24rem;
+  }
+
   .md\:w-72 {
     width: 18rem;
   }

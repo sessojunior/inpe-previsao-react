@@ -4,6 +4,8 @@ export default function FrameImage({ frame, model, dates }) {
 
   // console.log("FrameImage")
 
+  if (frame === undefined || model === undefined || dates.length === 0) return false
+
   const publicImage = "image-not-found.jpg"
 
   const init = frame.init ?? dates[0]

@@ -124,7 +124,7 @@ export default function DropDownConfig({ frame, setFrame, model, setModel, dates
                   </select>
                 </div>
               </>)}
-              {frame.product !== frame.group && (
+              {productGroups.length > 1 && (
                 <div>
                   <select name="product" value={frame.product} onChange={e => handleChangeProduct(e)} className={classSelect}>
                     {productGroups.map((product, index) => (

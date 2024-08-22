@@ -3,7 +3,7 @@
     "id": 1,
     "model": "BRAMS08",
     "product": "prec_pnmm",
-    "group": "prec_pnmm",
+    "group": "prec",
     "region": "ams",
     "forecastTime": null,
     "isPlaying": false,
