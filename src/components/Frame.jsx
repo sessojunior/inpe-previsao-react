@@ -43,10 +43,8 @@ export default function Frame({ id }) {
   // console.log("model.value dates", model.value, dates)
 
   let classFrame = ""
-  if (config.quantityFrames === 1) {
-    classFrame = "flex flex-col p-4"
-  } else {
-    classFrame = "flex flex-col border-r border-b border-gray-r-300 p-4"
+  if (config.quantityFrames !== 1) {
+    classFrame = "border-r border-b border-gray-r-300"
   }
 
   // console.log("frame", frame)
@@ -57,7 +55,7 @@ export default function Frame({ id }) {
   // console.log("Frame dates", dates)
 
   return (
-    <div className={classFrame}>
+    <div className={`flex flex-col p-4 hover:bg-gray-50 ${classFrame}`}>
       <FrameTop frame={frame} setFrame={setFrame} model={model} setModel={setModel} dates={dates} />
       <FrameImage frame={frame} model={model} dates={dates} />
     </div>

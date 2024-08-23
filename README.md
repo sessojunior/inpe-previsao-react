@@ -178,7 +178,7 @@ Exemplo:
   - **products** - *(array de objetos: Object[])*. Produtos do modelo que podem selecionados pelo usuário.
     - **label** - *(string ou null: string | null)*. Nome do produto que irá aparecer para o usuário. Exemplos: *"Nível de 250"*, onde o grupo é *"ageop"*. Pode ser *null* também, se não tiver variações. Por exemplo: *null*, onde o *value* e o *group* são do mesmo nome, como *"prec_pnmm"*.
     - **value** - *(string)*. Valor de slug do produto. Exemplos: "prec_pnmm", "aprec", "ageop_500", "ageop_850", "lapserate", "cis_vento_1000", "cis_vento_3000".
-    - **group** - *(string)*. Valor de slug do grupo que o produto pertence. Exemplo: "prec_pnmm", "cis_vento", "lapserate", "ageop".
+    - **group** - *(string)*. Valor de slug do grupo que o produto pertence. Exemplo: "prec", "cis_vento", "lapserate", "ageop".
     - **regions** - (array de strings: string[]). Os valores possíveis são os que estão nos parâmetros **value** do arquivo JSON **regions.json**. Exemplo: *["ams", "bra", "nte"]*. No caso, aqui são somente os valores de região que este produto possui.
 
 Exemplo:
@@ -198,15 +198,15 @@ Exemplo:
     "default": {
       "product": {
         "value": "prec_pnmm",
-        "group": "prec_pnmm",
+        "group": "prec",
         "region": "ams"
       }
     },
     "options": {
       "groups": [
         {
-          "label": "Precipitação, pressão e espessura",
-          "value": "prec_pnmm"
+          "label": "Precipitação",
+          "value": "prec"
         },
         {
           "label": "Água Precipitável",
@@ -227,9 +227,37 @@ Exemplo:
       ],
       "products": [
         {
-          "label": null,
+          "label": "Precipitação, pressão e espessura",
           "value": "prec_pnmm",
-          "group": "prec_pnmm",
+          "group": "prec",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Precipitação a cada 3 horas",
+          "value": "prec_3h",
+          "group": "prec",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Precipitação acumulada em 24h, a cada 3h",
+          "value": "prec",
+          "group": "prec",
           "regions": [
             "ams",
             "bra",
