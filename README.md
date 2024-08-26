@@ -30,7 +30,6 @@ O projeto também está organizado em diversos arquivos e diretórios, onde:
         - **FrameImage.jsx** - Arquivo de componente que exibe a imagem de previsão e um botão para download da imagem em uma nova aba do navegador.
   - **/contexts** - Diretório contendo arquivo com Context API de configurações do aplicativo. Reúne e disponibiliza de forma global o conteúdo dos arquivos JSON, define e salva configurações como exibir ou ocultar cabeçalho e rodapé, quantidade de frames (quadros) na tela, configurações de cada frame etc.
   - **/data** - Diretório contendo arquivos JSON essenciais para o funcionamento do aplicativo. Contém os seguintes arquivos:
-    - **frames.json** - Arquivo JSON com configurações dos frames.
     - **models.json** - Arquivo JSON com dados e configurações dos modelos.
     - **regions.json** - Arquivo JSON com uma lista de informações sobre regiões.
   - **/layouts** - Diretório contendo arquivos de componentes de layout. Contém os seguintes arquivos:
@@ -88,7 +87,6 @@ A solução mais fácil para esse problema é criar um arquivo **.htaccess** no 
 O projeto necessita de arquivos JSON que estão no diretório **/data** para rodar o aplicativo. São eles:
 
 - **regions.json** - Arquivo JSON contendo nome e slug de cada região
-- **frames.json** - Arquivo JSON contendo a configuração inicial de cada frame (quadro), como modelo, produto, grupo, região etc.
 - **models.json** - Arquivo JSON contendo as configurações padrão e opções possíveis de cada modelo, nome, slug da URL, template da URL da imagem, URL do arquivo JSON no servidor de backend contendo as datas, tempo de rodada, período ou intervalo (em horas) que tem cada imagem, período ou intervalo inicial e final, nome e valor dos grupos possíveis, nome, valor, grupo e regiões de cada produto.
 
 Entrando mais em detalhes, abaixo a descrição de cada arquivo.
@@ -107,38 +105,6 @@ Exemplo:
   {
     "label": "América do Sul",
     "value": "ams"
-  },
-
-  ...
-]
-```
-
-### Arquivo JSON *frames.json*
-
-É um array de objetos contendo a configuração inical de cada frame do aplicativo:
-
-- **id** - *(number)*. É o identificador único do frame (quadro). Pode ir de 1 até 4
-- **model** - *(string)*. É o valor de slug da URL do modelo. Necessário para comparações com os parâmetros **value** em alguns arquivos JSON e demais arquivos.
-- **product** - *(string)*. Valor de slug do produto. Necessário para comparações com os parâmetros **value** em alguns arquivos JSON e demais arquivos.
-- **group** - *(string)*. Valor de slug do grupo. Necessário para comparações com os parâmetros **value** em alguns arquivos JSON e demais arquivos.
-- **region** - *(string)*. Valor de slug da região. Necessário para comparações com os parâmetros **value** no arquivo JSON **regions.json** e demais arquivos.
-- **forecastTime** - *(null)*. Tempo de previsão atual. É obrigatório que seja *null* inicialmente.
-- **isPlaying** - *(false)*. Define se a animação foi iniciada. É obrigatório que seja *false* inicialmente.
-- **init** - *(null)*. Data inicial para obter as imagens do modelo. É obrigatório que seja *null* inicialmente.
-
-Exemplo:
-
-```bash
-[
-  {
-    "id": 1,
-    "model": "BRAMS08",
-    "product": "prec_pnmm",
-    "group": "prec_pnmm",
-    "region": "ams",
-    "forecastTime": null,
-    "isPlaying": false,
-    "init": null
   },
 
   ...
