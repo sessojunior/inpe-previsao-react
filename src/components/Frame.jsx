@@ -13,14 +13,17 @@ export default function Frame({ id }) {
   // console.log("Frame (id, frame.forecastTime)", id, frame.forecastTime)
   // console.log("id", id)
   // console.log("frames", frames)
+
+  // console.log("models", models)
+
   const [frame, setFrame] = useState(frames.find(item => item.id === id))
   // console.log("frames.find(item => item.id === id)", frames.find(item => item.id === id))
   // console.log("frame", frame)
+
   const [model, setModel] = useState(models.find(model => model.value === frame.model))
   // console.log("model", model)
 
   // console.log("frame.model", frame.model)
-  // console.log("models", models)
 
   // console.log("model", model)
 
@@ -34,6 +37,9 @@ export default function Frame({ id }) {
         setDates(data.datesRun)
       } catch (error) {
         console.log(error)
+
+        // Limpa o localStorage para retirar variáveis armazenadas no localStorage que possam ter valores inválidos
+        localStorage.clear()
       }
     }
 

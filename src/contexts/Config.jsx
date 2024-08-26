@@ -17,6 +17,8 @@ export default function ConfigProvider({ children }) {
   const models = jsonModels
   const regions = jsonRegions
 
+  // console.log("jsonFrames", jsonFrames)
+
   useEffect(() => {
     // console.log("frames", frames)
     localStorage.setItem('config', JSON.stringify({ showHeaderFooter: config.showHeaderFooter, quantityFrames: config.quantityFrames }))
@@ -26,16 +28,16 @@ export default function ConfigProvider({ children }) {
   // console.log("config", config)
 
   useEffect(() => {
-    const adjustedFrames = frames.map(frame => ({
-      "id": frame.id,
-      "model": frame.model,
-      "group": frame.group,
-      "product": frame.product,
-      "region": frame.region,
-    }));
+    // const adjustedFrames = frames.map(frame => ({
+    //   "id": frame.id,
+    //   "model": frame.model,
+    //   "group": frame.group,
+    //   "product": frame.product,
+    //   "region": frame.region,
+    // }));
     // console.log("frames", frames)
     // console.log("adjustedFrames", adjustedFrames)
-    localStorage.setItem('frames', JSON.stringify(adjustedFrames))
+    localStorage.setItem('frames', JSON.stringify(frames))
     // console.log("salvou no localStorage: frames")
   }, [frames])
 

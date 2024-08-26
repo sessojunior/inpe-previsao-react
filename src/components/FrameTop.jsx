@@ -20,6 +20,7 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
   const group = model.options.groups.find(group => group.value === frame.group)
   const product = model.options.products.find(product => product.value === frame.product)
 
+  // console.log("frame", frame)
   // console.log("model", model)
   // console.log("group", group)
   // console.log("product", product)
