@@ -37,8 +37,8 @@ export default function ConfigProvider({ children }) {
 
   // console.log("jsonFrames", jsonFrames)
 
+
   useEffect(() => {
-    // console.log("frames", frames)
     localStorage.setItem('config', JSON.stringify({ showHeaderFooter: config.showHeaderFooter, quantityFrames: config.quantityFrames }))
     // console.log("salvou no localStorage: config")
   }, [config])
