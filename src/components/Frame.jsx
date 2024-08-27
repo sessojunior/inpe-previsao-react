@@ -18,13 +18,13 @@ export default function Frame({ id }) {
   const [frame, setFrame] = useState(frames.find(item => item.id === id))
 
   // console.log("frames.find(item => item.id === id)", frames.find(item => item.id === id))
-  console.log("frame", frame)
+  // console.log("frame", frame)
 
   const [model, setModel] = useState(models.find(model => model.value === frame.model))
 
   // console.log("model", model)
   // console.log("frame.model", frame.model)
-  console.log("model", model)
+  // console.log("model", model)
 
   // Corrigindo bug de values errados no model ou frame
   if (frame === undefined || model === undefined) {

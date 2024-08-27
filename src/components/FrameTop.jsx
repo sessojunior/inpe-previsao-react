@@ -146,11 +146,11 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
         <div className="mx-2">
           <div className="font-bold text-sm">{model.label} · {region?.label}</div>
           <div className="text-xs">
-            <span className={group.value !== model.value || group.value !== product.value ? "hidden" : ""}>{frame.init ? formatDate(frame.init) : dates.length > 0 ? formatDate(dates[0]) : "Data não definida"}</span>
+            {/* <span className={group.value !== model.value || group.value !== product.value ? "hidden" : ""}>{frame.init ? formatDate(frame.init) : dates.length > 0 ? formatDate(dates[0]) : "Data não definida"}</span> */}
             <span>
-              {group.value !== model.value && (<>{group.label}</>)}
-              {group.value !== product.value && (<> · {product.label}</>)}
+              {/* {group.value !== product.value ? (<>{product.label}</>) : (<>{group.label}</>)} */}
             </span>
+            <span>{frame.init ? formatDate(frame.init) : dates.length > 0 ? formatDate(dates[0]) : "Data não definida"}</span>
           </div>
           <div className="text-xs">
           </div>
@@ -168,7 +168,7 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
           <button className={classButton} onClick={handleIncreaseTime} title="Avançar o tempo de previsão atual - forecast time"><FaChevronRight /></button>
         </div>
         <div className="flex items-center">
-          <div className="font-bold text-sm px-2" title="Tempo de previsão atual - forecast time">{forecastTime} horas</div>
+          <div className="font-bold text-sm px-2 text-ellipsis overflow-hidden min-w-24" title="Tempo de previsão atual - forecast time">{forecastTime} horas</div>
           <button className={openDropdownTime ? classButtonActive : classButton} onClick={handleDropdownTime} title="Selecionar o tempo de previsão - forecast time"><FaClock /></button>
           {openDropdownTime && <DropDownTime forecastTime={forecastTime} setForecastTime={setForecastTime} frame={frame} setFrame={setFrame} hours={hours} />}
         </div>
