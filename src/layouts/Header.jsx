@@ -8,21 +8,20 @@ export default function Header() {
   const { config } = useContext(ConfigContext)
 
   const linksTop = [
-    { label: 'Órgãos do governo', url: '#' },
-    { label: 'Acesso à Informação', url: '#' },
-    { label: 'Legislação', url: '#' },
-    { label: 'Acessibilidade', url: '#' },
+    { label: 'Órgãos do governo', url: 'https://www.gov.br/pt-br/orgaos-do-governo' },
+    { label: 'Acesso à Informação', url: 'https://www.gov.br/acessoainformacao/pt-br' },
+    { label: 'Legislação', url: 'http://www4.planalto.gov.br/legislacao' },
+    { label: 'Acessibilidade', url: 'https://www.gov.br/governodigital/pt-br/acessibilidade-digital' },
   ]
 
   const linksBottom = [
-    { label: 'Previsão Numérica', url: '#' },
-    { label: 'Clima', url: '#' },
-    { label: 'Nowcasting', url: '#' },
-    { label: 'Satélite', url: '#' },
-    { label: 'Ondas', url: '#' },
-    { label: 'Bacias', url: '#' },
-    { label: 'Qualidade do Ar', url: '#' },
-    { label: 'Pós Graduação', url: '#' },
+    { label: 'Tempo', url: 'http://tempo.cptec.inpe.br' },
+    { label: 'Clima', url: 'http://clima.cptec.inpe.br' },
+    { label: 'Satélite', url: 'http://satelite.cptec.inpe.br/home/novoSite/index.jsp' },
+    { label: 'Ondas', url: 'http://ondas.cptec.inpe.br' },
+    { label: 'Bacias', url: 'https://bacias.cptec.inpe.br' },
+    { label: 'Qualidade do Ar', url: 'http://meioambiente.cptec.inpe.br' },
+    { label: 'Pós Graduação', url: 'http://www.inpe.br/posgraduacao/met/' },
   ]
 
   return (
@@ -30,12 +29,12 @@ export default function Header() {
       {config.showHeaderFooter &&
         <header className="bg-white w-full px-4 py-4">
           <div className="flex justify-between mb-3 h-10">
-            <div className="flex items-center">
-              <div><img src={imgLogo} alt="Logo" /></div>
               <div className="flex items-center">
-                <span className="pl-2 ml-2 border-l-2 border-l-gray-400 text-md">Ministério da Ciência, Tecnologia e Inovação</span>
+                <div><a href="https://www.gov.br/pt-br"><img src={imgLogo} alt="Logo" /></a></div>
+                <div className="flex items-center">
+                  <span className="pl-2 ml-2 border-l-2 border-l-gray-400 text-md">Ministério da Ciência, Tecnologia e Inovação</span>
+                </div>
               </div>
-            </div>
             <div className="flex items-center text-right">
               <nav className="hidden lg:flex">
                 <ul>
