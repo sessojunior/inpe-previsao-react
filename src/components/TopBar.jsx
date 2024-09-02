@@ -1,4 +1,5 @@
 import { BsArrowsFullscreen, BsWindow, BsWindowSplit, BsBorderAll } from "react-icons/bs"
+import { TbColumns1, TbColumns2, TbColumns3 } from "react-icons/tb"
 import { FaPause, FaPlay } from "react-icons/fa"
 
 import { useEffect, useContext } from 'react'
@@ -53,8 +54,9 @@ export default function TopBar() {
         ) : (
           <button className={classButton} onClick={startAllTimer} title="Iniciar tudo"><FaPlay /></button>
         )}
-        <button className={config.quantityFrames === 1 ? classButtonActive : classButton} onClick={() => handleQuantityFrames({ quantity: 1 })} title="1 quadro"><BsWindow /></button>
-        <button className={config.quantityFrames === 2 ? classButtonActive : classButton} onClick={() => handleQuantityFrames({ quantity: 2 })} title="2 quadros"><BsWindowSplit /></button>
+        <button className={config.quantityFrames === 1 ? classButtonActive : classButton} onClick={() => handleQuantityFrames({ quantity: 1 })} title="1 quadro"><TbColumns1 /></button>
+        <button className={config.quantityFrames === 2 ? classButtonActive : classButton} onClick={() => handleQuantityFrames({ quantity: 2 })} title="2 quadros"><TbColumns2 /></button>
+        <button className={`${config.quantityFrames === 3 ? classButtonActive : classButton} hidden 2xl:inline-flex`} onClick={() => handleQuantityFrames({ quantity: 3 })} title="3 quadros"><TbColumns3 /></button>
         <button className={config.quantityFrames === 4 ? classButtonActive : classButton} onClick={() => handleQuantityFrames({ quantity: 4 })} title="4 quadros"><BsBorderAll /></button>
       </div>
     </header>
