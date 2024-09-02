@@ -76,6 +76,55 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
     }
   }
 
+  {/* Begin Preload Images */ }
+
+  function preloadImages(imageUrls) {
+    const preloadedImages = [];
+
+    imageUrls.forEach(url => {
+      const img = new Image();
+      img.src = url;
+
+      // img.onload = () => {
+      //   console.log(`Imagem carregada: ${url}`);
+      // };
+
+      // img.onerror = () => {
+      //   console.error(`Erro ao carregar a imagem: ${url}`);
+      // };
+
+      preloadedImages.push(img);
+    });
+    // console.log("preloadedImages", preloadedImages);
+
+    // console.log('Imagens pré-carregadas:', preloadedImages.length);
+  }
+
+  function urlImage(forecastTime) {
+    // console.log("forecastTime", forecastTime)
+    const init = frame.init ?? dates[0]
+    if (!init) return null
+
+    const year = init?.slice(0, 4)
+    const month = init?.slice(5, 7)
+    const day = init?.slice(8, 10)
+    const turn = init?.slice(11, 13)
+
+    const url = model.urlImage.replaceAll("{{model}}", model.value)
+      .replaceAll("{{region}}", frame.region)
+      .replaceAll("{{product}}", frame.product)
+      .replaceAll("{{forecastTime}}", forecastTime)
+      .replaceAll("{{timeRun}}", model.timeRun)
+      .replaceAll("{{turn}}", turn)
+      .replaceAll("{{year}}", year)
+      .replaceAll("{{month}}", month)
+      .replaceAll("{{day}}", day)
+    // console.log("url", url)
+    return url
+  }
+
+  {/* End Preload Images */ }
+
   {/* Begin Timer */ }
 
   const [timer, setTimer] = useState(0)
@@ -94,6 +143,31 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
 
   const startTimer = () => {
     // console.log("startTimer")
+
+    // Start preload images
+
+    //console.log("hours", hours)
+
+    let imageUrls = []
+
+    // console.log("frame.init", frame.init)
+    // console.log("dates", dates)
+    if (frame.init !== undefined || dates.length > 0) {
+      // console.log("frame.init 2", frame.init)
+      // console.log("dates 2", dates)
+      // Array com as URLs das imagens a serem pré-carregadas
+      imageUrls = hours.map(forecastTime => {
+        // console.log("urlImage(imageUrl)", urlImage(forecastTime))
+        return urlImage(forecastTime)
+      });
+      // console.log("imageUrls", imageUrls)
+
+      // Chama a função para pré-carregar as imagens
+      preloadImages(imageUrls);
+    }
+
+    // End preload images
+
     if (config.isAllPlaying) {
       clearInterval(timeInterval)
       setForecastTime(model.periodStart)
@@ -113,7 +187,7 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
       })
       setIsPlaying(true)
       // console.log("forecastTime", forecastTime)
-    }, 1000))
+    }, 500))
   }
 
   const pauseTimer = () => {

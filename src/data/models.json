@@ -8,7 +8,7 @@
     "timeRun": 12,
     "periodHours": 3,
     "periodStart": "000",
-    "periodEnd": "180",
+    "periodEnd": "168",
     "default": {
       "product": {
         "value": "aprec",
@@ -124,7 +124,7 @@
           ]
         },
         {
-          "label": "Nível de 1000hPa",
+          "label": "1000 metros",
           "value": "cis_vento_1000",
           "group": "cis_vento",
           "regions": [
@@ -133,7 +133,7 @@
           ]
         },
         {
-          "label": "Nível de 2000hPa",
+          "label": "2000 metros",
           "value": "cis_vento_2000",
           "group": "cis_vento",
           "regions": [
@@ -142,7 +142,7 @@
           ]
         },
         {
-          "label": "Nível de 3000hPa",
+          "label": "3000 metros",
           "value": "cis_vento_3000",
           "group": "cis_vento",
           "regions": [
@@ -407,7 +407,7 @@
     "timeRun": 12,
     "periodHours": 3,
     "periodStart": "000",
-    "periodEnd": "180",
+    "periodEnd": "168",
     "default": {
       "product": {
         "value": "aprec",
@@ -523,7 +523,7 @@
           ]
         },
         {
-          "label": "Nível de 1000hPa",
+          "label": "1000 metros",
           "value": "cis_vento_1000",
           "group": "cis_vento",
           "regions": [
@@ -532,7 +532,7 @@
           ]
         },
         {
-          "label": "Nível de 2000hPa",
+          "label": "2000 metros",
           "value": "cis_vento_2000",
           "group": "cis_vento",
           "regions": [
@@ -541,7 +541,7 @@
           ]
         },
         {
-          "label": "Nível de 3000hPa",
+          "label": "3000 metros",
           "value": "cis_vento_3000",
           "group": "cis_vento",
           "regions": [
@@ -922,7 +922,7 @@
           ]
         },
         {
-          "label": "Nível de 1000hPa",
+          "label": "1000 metros",
           "value": "cis_vento_1000",
           "group": "cis_vento",
           "regions": [
@@ -931,7 +931,7 @@
           ]
         },
         {
-          "label": "Nível de 2000hPa",
+          "label": "2000 metros",
           "value": "cis_vento_2000",
           "group": "cis_vento",
           "regions": [
@@ -940,7 +940,7 @@
           ]
         },
         {
-          "label": "Nível de 3000hPa",
+          "label": "3000 metros",
           "value": "cis_vento_3000",
           "group": "cis_vento",
           "regions": [
@@ -1321,7 +1321,7 @@
           ]
         },
         {
-          "label": "Nível de 1000hPa",
+          "label": "1000 metros",
           "value": "cis_vento_1000",
           "group": "cis_vento",
           "regions": [
@@ -1330,7 +1330,7 @@
           ]
         },
         {
-          "label": "Nível de 2000hPa",
+          "label": "2000 metros",
           "value": "cis_vento_2000",
           "group": "cis_vento",
           "regions": [
@@ -1339,7 +1339,7 @@
           ]
         },
         {
-          "label": "Nível de 3000hPa",
+          "label": "3000 metros",
           "value": "cis_vento_3000",
           "group": "cis_vento",
           "regions": [

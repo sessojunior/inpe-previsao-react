@@ -34,7 +34,7 @@ export default function FrameImage({ frame, model, dates }) {
   const altImage = `${frame.model} - ${frame.region}`
 
   // console.log("frame.forecastTime", frame.forecastTime)
-  console.log("urlImage", urlImage)
+  // console.log("urlImage", urlImage)
 
   return (
     <div>
