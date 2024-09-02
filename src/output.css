@@ -658,10 +658,6 @@ video {
   width: 100%;
 }
 
-.min-w-20 {
-  min-width: 5rem;
-}
-
 .min-w-24 {
   min-width: 6rem;
 }

@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "label": "BRAMS 8",
+    "label": "Brams 8 km",
     "value": "BRAMS08",
     "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/pn/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/{{model}}_{{product}}_{{region}}_{{year}}{{month}}{{day}}{{turn}}z_{{forecastTime}}z.png",
     "urlDates": "https://s1.cptec.inpe.br/grafico/Modelos/portal_previsao_numerica/mod_brams.json",
@@ -11,17 +11,13 @@
     "periodEnd": "180",
     "default": {
       "product": {
-        "value": "prec_pnmm",
-        "group": "prec",
+        "value": "aprec",
+        "group": "aprec",
         "region": "ams"
       }
     },
     "options": {
       "groups": [
-        {
-          "label": "Precipitação",
-          "value": "prec"
-        },
         {
           "label": "Água Precipitável",
           "value": "aprec"
@@ -31,57 +27,47 @@
           "value": "ageop"
         },
         {
-          "label": "Lapserate (formato novo)",
+          "label": "Cisalhamento do Vento",
+          "value": "cis_vento"
+        },
+        {
+          "label": "Lapserate",
           "value": "lapserate"
         },
         {
-          "label": "Cisalhamento do Vento",
-          "value": "cis_vento"
+          "label": "Precipitação",
+          "value": "prec"
+        },
+        {
+          "label": "Pressão",
+          "value": "pnmm_vento"
+        },
+        {
+          "label": "Precipitação, pressão e espessura",
+          "value": "prec_pnmm"
+        },
+        {
+          "label": "Temperatura",
+          "value": "t"
+        },
+        {
+          "label": "Umidade Relativa mínima em 2m",
+          "value": "urmin_2m"
+        },
+        {
+          "label": "Vento em 10m",
+          "value": "vento_10m"
+        },
+        {
+          "label": "Vento em níveis",
+          "value": "vento"
+        },
+        {
+          "label": "Vorticidade",
+          "value": "vort"
         }
       ],
       "products": [
-        {
-          "label": "Precipitação, pressão e espessura",
-          "value": "prec_pnmm",
-          "group": "prec",
-          "regions": [
-            "ams",
-            "bra",
-            "sul",
-            "sud",
-            "coe",
-            "nde",
-            "nte"
-          ]
-        },
-        {
-          "label": "Precipitação a cada 3 horas",
-          "value": "prec_3h",
-          "group": "prec",
-          "regions": [
-            "ams",
-            "bra",
-            "sul",
-            "sud",
-            "coe",
-            "nde",
-            "nte"
-          ]
-        },
-        {
-          "label": "Precipitação acumulada em 24h, a cada 3h",
-          "value": "prec",
-          "group": "prec",
-          "regions": [
-            "ams",
-            "bra",
-            "sul",
-            "sud",
-            "coe",
-            "nde",
-            "nte"
-          ]
-        },
         {
           "label": null,
           "value": "aprec",
@@ -97,7 +83,7 @@
           ]
         },
         {
-          "label": "Nível de 250",
+          "label": "Nível de 250hPa",
           "value": "ageop_250",
           "group": "ageop",
           "regions": [
@@ -106,7 +92,7 @@
           ]
         },
         {
-          "label": "Nível de 500",
+          "label": "Nível de 500hPa",
           "value": "ageop_500",
           "group": "ageop",
           "regions": [
@@ -115,7 +101,7 @@
           ]
         },
         {
-          "label": "Nível de 700",
+          "label": "Nível de 700hPa",
           "value": "ageop_700",
           "group": "ageop",
           "regions": [
@@ -124,7 +110,7 @@
           ]
         },
         {
-          "label": "Nível de 850",
+          "label": "Nível de 850hPa",
           "value": "ageop_850",
           "group": "ageop",
           "regions": [
@@ -133,9 +119,36 @@
           ]
         },
         {
-          "label": "Nível de 925",
+          "label": "Nível de 925hPa",
           "value": "ageop_925",
           "group": "ageop",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 1000hPa",
+          "value": "cis_vento_1000",
+          "group": "cis_vento",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 2000hPa",
+          "value": "cis_vento_2000",
+          "group": "cis_vento",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 3000hPa",
+          "value": "cis_vento_3000",
+          "group": "cis_vento",
           "regions": [
             "ams",
             "bra"
@@ -151,27 +164,236 @@
           ]
         },
         {
-          "label": "Nível de 1000",
-          "value": "cis_vento_1000",
-          "group": "cis_vento",
+          "label": "Precipitação acumulada",
+          "value": "prec_acum",
+          "group": "prec",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Precipitação acumulada em 3h",
+          "value": "prec_3h",
+          "group": "prec",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Precipitação acumulada em 24h",
+          "value": "prec",
+          "group": "prec",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": null,
+          "value": "prec_pnmm",
+          "group": "prec_pnmm",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": null,
+          "value": "pnmm_vento",
+          "group": "pnmm_vento",
           "regions": [
             "ams",
             "bra"
           ]
         },
         {
-          "label": "Nível de 2000",
-          "value": "cis_vento_2000",
-          "group": "cis_vento",
+          "label": "Temperatura mínima em 2m",
+          "value": "tmin_2m",
+          "group": "t",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Temperatura máxima em 2m",
+          "value": "tmax_2m",
+          "group": "t",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Temperatura em 2m",
+          "value": "t_2m",
+          "group": "t",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": null,
+          "value": "urmin_2m",
+          "group": "urmin_2m",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Vento em 10m",
+          "value": "vento_10m",
+          "group": "vento",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Nível de 250hPa",
+          "value": "vento_250",
+          "group": "vento",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Nível de 700hPa",
+          "value": "vento_700",
+          "group": "vento",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Nível de 850hPa",
+          "value": "vento_850",
+          "group": "vento",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Nível de 925hPa",
+          "value": "vento_925",
+          "group": "vento",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Nível de 250hPa",
+          "value": "vort_250",
+          "group": "vort",
           "regions": [
             "ams",
             "bra"
           ]
         },
         {
-          "label": "Nível de 3000",
-          "value": "cis_vento_3000",
-          "group": "cis_vento",
+          "label": "Nível de 500hPa",
+          "value": "vort_500",
+          "group": "vort",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 700hPa",
+          "value": "vort_700",
+          "group": "vort",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 850hPa",
+          "value": "vort_850",
+          "group": "vort",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 925hPa",
+          "value": "vort_925",
+          "group": "vort",
           "regions": [
             "ams",
             "bra"
@@ -182,6 +404,812 @@
   },
   {
     "id": 2,
+    "label": "WRF 07",
+    "value": "WRF07",
+    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/pn/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/{{model}}_{{product}}_{{region}}_{{year}}{{month}}{{day}}{{turn}}z_{{forecastTime}}z.png",
+    "urlDates": "https://s1.cptec.inpe.br/grafico/Modelos/portal_previsao_numerica/mod_wrf.json",
+    "timeRun": 12,
+    "periodHours": 3,
+    "periodStart": "000",
+    "periodEnd": "180",
+    "default": {
+      "product": {
+        "value": "aprec",
+        "group": "aprec",
+        "region": "ams"
+      }
+    },
+    "options": {
+      "groups": [
+        {
+          "label": "Água Precipitável",
+          "value": "aprec"
+        },
+        {
+          "label": "Altura Geopotencial",
+          "value": "ageop"
+        },
+        {
+          "label": "Cisalhamento do Vento",
+          "value": "cis_vento"
+        },
+        {
+          "label": "Lapserate",
+          "value": "lapserate"
+        },
+        {
+          "label": "Precipitação",
+          "value": "prec"
+        },
+        {
+          "label": "Pressão",
+          "value": "pnmm_vento"
+        },
+        {
+          "label": "Precipitação, pressão e espessura",
+          "value": "prec_pnmm"
+        },
+        {
+          "label": "Temperatura",
+          "value": "t"
+        },
+        {
+          "label": "Umidade Relativa mínima em 2m",
+          "value": "urmin_2m"
+        },
+        {
+          "label": "Vento em 10m",
+          "value": "vento_10m"
+        },
+        {
+          "label": "Vento em níveis",
+          "value": "vento"
+        },
+        {
+          "label": "Vorticidade",
+          "value": "vort"
+        }
+      ],
+      "products": [
+        {
+          "label": null,
+          "value": "aprec",
+          "group": "aprec",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Nível de 250hPa",
+          "value": "ageop_250",
+          "group": "ageop",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 500hPa",
+          "value": "ageop_500",
+          "group": "ageop",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 700hPa",
+          "value": "ageop_700",
+          "group": "ageop",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 850hPa",
+          "value": "ageop_850",
+          "group": "ageop",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 925hPa",
+          "value": "ageop_925",
+          "group": "ageop",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 1000hPa",
+          "value": "cis_vento_1000",
+          "group": "cis_vento",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 2000hPa",
+          "value": "cis_vento_2000",
+          "group": "cis_vento",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 3000hPa",
+          "value": "cis_vento_3000",
+          "group": "cis_vento",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": null,
+          "value": "lapserate",
+          "group": "lapserate",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Precipitação acumulada",
+          "value": "prec_acum",
+          "group": "prec",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Precipitação acumulada em 3h",
+          "value": "prec_3h",
+          "group": "prec",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Precipitação acumulada em 24h",
+          "value": "prec",
+          "group": "prec",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": null,
+          "value": "prec_pnmm",
+          "group": "prec_pnmm",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": null,
+          "value": "pnmm_vento",
+          "group": "pnmm_vento",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Temperatura mínima em 2m",
+          "value": "tmin_2m",
+          "group": "t",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Temperatura máxima em 2m",
+          "value": "tmax_2m",
+          "group": "t",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Temperatura em 2m",
+          "value": "t_2m",
+          "group": "t",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": null,
+          "value": "urmin_2m",
+          "group": "urmin_2m",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Vento em 10m",
+          "value": "vento_10m",
+          "group": "vento",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Nível de 250hPa",
+          "value": "vento_250",
+          "group": "vento",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Nível de 700hPa",
+          "value": "vento_700",
+          "group": "vento",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Nível de 850hPa",
+          "value": "vento_850",
+          "group": "vento",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Nível de 925hPa",
+          "value": "vento_925",
+          "group": "vento",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Nível de 250hPa",
+          "value": "vort_250",
+          "group": "vort",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 500hPa",
+          "value": "vort_500",
+          "group": "vort",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 700hPa",
+          "value": "vort_700",
+          "group": "vort",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 850hPa",
+          "value": "vort_850",
+          "group": "vort",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 925hPa",
+          "value": "vort_925",
+          "group": "vort",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 3,
+    "label": "Eta 8 km",
+    "value": "ETA08",
+    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/pn/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/{{model}}_{{product}}_{{region}}_{{year}}{{month}}{{day}}{{turn}}z_{{forecastTime}}z.png",
+    "urlDates": "https://s1.cptec.inpe.br/grafico/Modelos/portal_previsao_numerica/mod_eta.json",
+    "timeRun": 12,
+    "periodHours": 3,
+    "periodStart": "000",
+    "periodEnd": "240",
+    "default": {
+      "product": {
+        "value": "aprec",
+        "group": "aprec",
+        "region": "ams"
+      }
+    },
+    "options": {
+      "groups": [
+        {
+          "label": "Água Precipitável",
+          "value": "aprec"
+        },
+        {
+          "label": "Altura Geopotencial",
+          "value": "ageop"
+        },
+        {
+          "label": "Cisalhamento do Vento",
+          "value": "cis_vento"
+        },
+        {
+          "label": "Lapserate",
+          "value": "lapserate"
+        },
+        {
+          "label": "Precipitação",
+          "value": "prec"
+        },
+        {
+          "label": "Pressão",
+          "value": "pnmm_vento"
+        },
+        {
+          "label": "Precipitação, pressão e espessura",
+          "value": "prec_pnmm"
+        },
+        {
+          "label": "Temperatura",
+          "value": "t"
+        },
+        {
+          "label": "Umidade Relativa mínima em 2m",
+          "value": "urmin_2m"
+        },
+        {
+          "label": "Vento em 10m",
+          "value": "vento_10m"
+        },
+        {
+          "label": "Vento em níveis",
+          "value": "vento"
+        },
+        {
+          "label": "Vorticidade",
+          "value": "vort"
+        }
+      ],
+      "products": [
+        {
+          "label": null,
+          "value": "aprec",
+          "group": "aprec",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Nível de 250hPa",
+          "value": "ageop_250",
+          "group": "ageop",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 500hPa",
+          "value": "ageop_500",
+          "group": "ageop",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 700hPa",
+          "value": "ageop_700",
+          "group": "ageop",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 850hPa",
+          "value": "ageop_850",
+          "group": "ageop",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 925hPa",
+          "value": "ageop_925",
+          "group": "ageop",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 1000hPa",
+          "value": "cis_vento_1000",
+          "group": "cis_vento",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 2000hPa",
+          "value": "cis_vento_2000",
+          "group": "cis_vento",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 3000hPa",
+          "value": "cis_vento_3000",
+          "group": "cis_vento",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": null,
+          "value": "lapserate",
+          "group": "lapserate",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Precipitação acumulada",
+          "value": "prec_acum",
+          "group": "prec",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Precipitação acumulada em 3h",
+          "value": "prec_3h",
+          "group": "prec",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Precipitação acumulada em 24h",
+          "value": "prec",
+          "group": "prec",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": null,
+          "value": "prec_pnmm",
+          "group": "prec_pnmm",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": null,
+          "value": "pnmm_vento",
+          "group": "pnmm_vento",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Temperatura mínima em 2m",
+          "value": "tmin_2m",
+          "group": "t",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Temperatura máxima em 2m",
+          "value": "tmax_2m",
+          "group": "t",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Temperatura em 2m",
+          "value": "t_2m",
+          "group": "t",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": null,
+          "value": "urmin_2m",
+          "group": "urmin_2m",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Vento em 10m",
+          "value": "vento_10m",
+          "group": "vento",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Nível de 250hPa",
+          "value": "vento_250",
+          "group": "vento",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Nível de 700hPa",
+          "value": "vento_700",
+          "group": "vento",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Nível de 850hPa",
+          "value": "vento_850",
+          "group": "vento",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Nível de 925hPa",
+          "value": "vento_925",
+          "group": "vento",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Nível de 250hPa",
+          "value": "vort_250",
+          "group": "vort",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 500hPa",
+          "value": "vort_500",
+          "group": "vort",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 700hPa",
+          "value": "vort_700",
+          "group": "vort",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 850hPa",
+          "value": "vort_850",
+          "group": "vort",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 925hPa",
+          "value": "vort_925",
+          "group": "vort",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 4,
     "label": "BAM",
     "value": "bam",
     "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/pn/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/{{model}}_{{product}}_{{region}}_{{year}}{{month}}{{day}}{{turn}}z_{{forecastTime}}z.png",
@@ -192,23 +1220,67 @@
     "periodEnd": "240",
     "default": {
       "product": {
-        "value": "bam",
-        "group": "bam",
+        "value": "aprec",
+        "group": "aprec",
         "region": "ams"
       }
     },
     "options": {
       "groups": [
         {
-          "label": "BAM",
-          "value": "bam"
+          "label": "Água Precipitável",
+          "value": "aprec"
+        },
+        {
+          "label": "Altura Geopotencial",
+          "value": "ageop"
+        },
+        {
+          "label": "Cisalhamento do Vento",
+          "value": "cis_vento"
+        },
+        {
+          "label": "Lapserate",
+          "value": "lapserate"
+        },
+        {
+          "label": "Precipitação",
+          "value": "prec"
+        },
+        {
+          "label": "Pressão",
+          "value": "pnmm_vento"
+        },
+        {
+          "label": "Precipitação, pressão e espessura",
+          "value": "prec_pnmm"
+        },
+        {
+          "label": "Temperatura",
+          "value": "t"
+        },
+        {
+          "label": "Umidade Relativa mínima em 2m",
+          "value": "urmin_2m"
+        },
+        {
+          "label": "Vento em 10m",
+          "value": "vento_10m"
+        },
+        {
+          "label": "Vento em níveis",
+          "value": "vento"
+        },
+        {
+          "label": "Vorticidade",
+          "value": "vort"
         }
       ],
       "products": [
         {
           "label": null,
-          "value": "bam",
-          "group": null,
+          "value": "aprec",
+          "group": "aprec",
           "regions": [
             "ams",
             "bra",
@@ -218,39 +1290,92 @@
             "nde",
             "nte"
           ]
-        }
-      ]
-    }
-  },
-  {
-    "id": 3,
-    "label": "WRF",
-    "value": "wrf",
-    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/pn/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/{{model}}_{{product}}_{{region}}_{{year}}{{month}}{{day}}{{turn}}z_{{forecastTime}}z.png",
-    "urlDates": "https://s1.cptec.inpe.br/grafico/Modelos/portal_previsao_numerica/mod_wrf.json",
-    "timeRun": 12,
-    "periodHours": 3,
-    "periodStart": "000",
-    "periodEnd": "180",
-    "default": {
-      "product": {
-        "value": "wrf",
-        "group": "wrf",
-        "region": "ams"
-      }
-    },
-    "options": {
-      "groups": [
+        },
         {
-          "label": "WRF",
-          "value": "wrf"
-        }
-      ],
-      "products": [
+          "label": "Nível de 250hPa",
+          "value": "ageop_250",
+          "group": "ageop",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 500hPa",
+          "value": "ageop_500",
+          "group": "ageop",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 700hPa",
+          "value": "ageop_700",
+          "group": "ageop",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 850hPa",
+          "value": "ageop_850",
+          "group": "ageop",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 925hPa",
+          "value": "ageop_925",
+          "group": "ageop",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 1000hPa",
+          "value": "cis_vento_1000",
+          "group": "cis_vento",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 2000hPa",
+          "value": "cis_vento_2000",
+          "group": "cis_vento",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 3000hPa",
+          "value": "cis_vento_3000",
+          "group": "cis_vento",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
         {
           "label": null,
-          "value": "wrf",
-          "group": null,
+          "value": "lapserate",
+          "group": "lapserate",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Precipitação acumulada",
+          "value": "prec_acum",
+          "group": "prec",
           "regions": [
             "ams",
             "bra",
@@ -260,39 +1385,11 @@
             "nde",
             "nte"
           ]
-        }
-      ]
-    }
-  },
-  {
-    "id": 4,
-    "label": "Eta",
-    "value": "eta",
-    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/pn/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/{{model}}_{{product}}_{{region}}_{{year}}{{month}}{{day}}{{turn}}z_{{forecastTime}}z.png",
-    "urlDates": "https://s1.cptec.inpe.br/grafico/Modelos/portal_previsao_numerica/mod_eta.json",
-    "timeRun": 12,
-    "periodHours": 3,
-    "periodStart": "000",
-    "periodEnd": "240",
-    "default": {
-      "product": {
-        "value": "eta",
-        "group": "eta",
-        "region": "ams"
-      }
-    },
-    "options": {
-      "groups": [
+        },
         {
-          "label": "Eta",
-          "value": "eta"
-        }
-      ],
-      "products": [
-        {
-          "label": null,
-          "value": "eta",
-          "group": null,
+          "label": "Precipitação acumulada em 3h",
+          "value": "prec_3h",
+          "group": "prec",
           "regions": [
             "ams",
             "bra",
@@ -301,6 +1398,214 @@
             "coe",
             "nde",
             "nte"
+          ]
+        },
+        {
+          "label": "Precipitação acumulada em 24h",
+          "value": "prec",
+          "group": "prec",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": null,
+          "value": "prec_pnmm",
+          "group": "prec_pnmm",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": null,
+          "value": "pnmm_vento",
+          "group": "pnmm_vento",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Temperatura mínima em 2m",
+          "value": "tmin_2m",
+          "group": "t",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Temperatura máxima em 2m",
+          "value": "tmax_2m",
+          "group": "t",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Temperatura em 2m",
+          "value": "t_2m",
+          "group": "t",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": null,
+          "value": "urmin_2m",
+          "group": "urmin_2m",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Vento em 10m",
+          "value": "vento_10m",
+          "group": "vento",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Nível de 250hPa",
+          "value": "vento_250",
+          "group": "vento",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Nível de 700hPa",
+          "value": "vento_700",
+          "group": "vento",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Nível de 850hPa",
+          "value": "vento_850",
+          "group": "vento",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Nível de 925hPa",
+          "value": "vento_925",
+          "group": "vento",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ]
+        },
+        {
+          "label": "Nível de 250hPa",
+          "value": "vort_250",
+          "group": "vort",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 500hPa",
+          "value": "vort_500",
+          "group": "vort",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 700hPa",
+          "value": "vort_700",
+          "group": "vort",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 850hPa",
+          "value": "vort_850",
+          "group": "vort",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
+        {
+          "label": "Nível de 925hPa",
+          "value": "vort_925",
+          "group": "vort",
+          "regions": [
+            "ams",
+            "bra"
           ]
         }
       ]
