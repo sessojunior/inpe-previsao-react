@@ -1,6 +1,4 @@
-import { useState, useEffect } from 'react'
-
-import { useContext } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { ConfigContext } from '../contexts/Config'
 
 import FrameTop from './FrameTop'
@@ -20,16 +18,19 @@ export default function Frame({ id }) {
   // console.log("frames.find(item => item.id === id)", frames.find(item => item.id === id))
   // console.log("frame", frame)
 
-  const [model, setModel] = useState(models.find(model => model.value === frame.model))
+  const [model, setModel] = useState(models.find(model => model.value === frame?.model))
 
   // console.log("model", model)
   // console.log("frame.model", frame.model)
   // console.log("model", model)
 
   // Corrigindo bug de values errados no model ou frame
-  if (frame === undefined || model === undefined) {
+  // Se não foi possível carregar o arquivo JSON de Config.jsx
+  if (!frame || !model) {
     localStorage.clear()
-    window.location.reload()
+    console.error("É provável que não tenha sido possível carregar o arquivo models.json ou regions.json em Config.jsx")
+    //window.location.reload()
+    return <div className="p-8 text-red-500">Dados inválidos. Tente recarregar a página ou redefinir a configuração.</div>;
   }
 
   const [dates, setDates] = useState([])

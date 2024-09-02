@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "label": "Brams 8 km",
+    "label": "BRAMS 8 km",
     "value": "BRAMS08",
     "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/pn/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/{{model}}_{{product}}_{{region}}_{{year}}{{month}}{{day}}{{turn}}z_{{forecastTime}}z.png",
     "urlDates": "https://s1.cptec.inpe.br/grafico/Modelos/portal_previsao_numerica/mod_brams.json",
@@ -400,7 +400,7 @@
   },
   {
     "id": 2,
-    "label": "WRF 07",
+    "label": "WRF",
     "value": "WRF07",
     "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/pn/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/{{model}}_{{product}}_{{region}}_{{year}}{{month}}{{day}}{{turn}}z_{{forecastTime}}z.png",
     "urlDates": "https://s1.cptec.inpe.br/grafico/Modelos/portal_previsao_numerica/mod_wrf.json",
@@ -799,7 +799,7 @@
   },
   {
     "id": 3,
-    "label": "Eta 8 km",
+    "label": "ETA 8 km",
     "value": "ETA08",
     "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/pn/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/{{model}}_{{product}}_{{region}}_{{year}}{{month}}{{day}}{{turn}}z_{{forecastTime}}z.png",
     "urlDates": "https://s1.cptec.inpe.br/grafico/Modelos/portal_previsao_numerica/mod_eta.json",
