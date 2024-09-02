@@ -55,10 +55,6 @@
           "value": "urmin_2m"
         },
         {
-          "label": "Vento em 10m",
-          "value": "vento_10m"
-        },
-        {
           "label": "Vento em níveis",
           "value": "vento"
         },
@@ -456,10 +452,6 @@
         {
           "label": "Umidade Relativa mínima em 2m",
           "value": "urmin_2m"
-        },
-        {
-          "label": "Vento em 10m",
-          "value": "vento_10m"
         },
         {
           "label": "Vento em níveis",
@@ -861,10 +853,6 @@
           "value": "urmin_2m"
         },
         {
-          "label": "Vento em 10m",
-          "value": "vento_10m"
-        },
-        {
           "label": "Vento em níveis",
           "value": "vento"
         },
@@ -1262,10 +1250,6 @@
         {
           "label": "Umidade Relativa mínima em 2m",
           "value": "urmin_2m"
-        },
-        {
-          "label": "Vento em 10m",
-          "value": "vento_10m"
         },
         {
           "label": "Vento em níveis",
