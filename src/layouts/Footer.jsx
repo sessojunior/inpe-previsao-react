@@ -54,8 +54,8 @@ export default function Footer() {
   return (
     <>
       {config.showHeaderFooter &&
-        <footer className="w-full flex flex-col">
-          <div className="bg-blue-900 w-full flex flex-col px-4 pt-4 pb-8">
+        <footer className="w-full flex flex-col bg-blue-900">
+          <div className="bg-blue-900 w-full flex flex-col px-4 pt-4 pb-8 xl:max-w-[1280px] xl:mx-auto">
             <div className="my-6 lg:my-8">
               <img src="src/assets/govbr-logo-white.png" alt="" className="h-10 lg:h-14" />
             </div>

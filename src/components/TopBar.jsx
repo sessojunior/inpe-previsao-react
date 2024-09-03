@@ -42,13 +42,13 @@ export default function TopBar() {
 
   return (
     <header className="flex justify-between items-center px-4 w-full h-16 bg-gray-100 border border-y-gray-300">
-      <div>
+      <div className="lg:min-w-40">
         <button className={!config.showHeaderFooter ? classButtonActive : classButton} onClick={handleFullScreen}><BsArrowsFullscreen /></button>
       </div>
-      <div>
+      <div className="lg:min-w-40 lg:flex-grow text-center">
         <h2 className="text-xl font-medium">Previsão Numérica do Tempo</h2>
       </div>
-      <div className="flex gap-1">
+      <div className="lg:min-w-40 flex gap-1">
         {config.isAllPlaying ? (
           <button className={classButtonActive} onClick={pauseAllTimer} title="Pausar tudo"><FaPause /></button>
         ) : (

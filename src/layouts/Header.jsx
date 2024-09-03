@@ -27,7 +27,7 @@ export default function Header() {
   return (
     <>
       {config.showHeaderFooter &&
-        <header className="bg-white w-full px-4 py-4">
+        <header className="bg-white w-full px-4 py-4 xl:max-w-[1280px] xl:mx-auto">
           <div className="flex justify-between mb-3 h-10">
               <div className="flex items-center">
                 <div><a href="https://www.gov.br/pt-br"><img src={imgLogo} alt="Logo" /></a></div>
