@@ -59,7 +59,7 @@ export default function TopBar() {
         {config.isAllPlaying ? (
           <button className={classButtonActive} onClick={pauseAllTimer} title="Pausar a animação de todos os quadros"><FaPause /></button>
         ) : (
-          <button className={classButton} onClick={startAllTimer} title="Iniciar animação de todos os quadros, desde o início"><FaPlay /></button>
+          <button className={classButton} onClick={startAllTimer} title="Iniciar animação de todos os quadros, desde o início, de forma sincronizada"><FaPlay /></button>
         )}
         <button className={config.quantityFrames === 1 ? classButtonActive : classButton} onClick={() => handleQuantityFrames({ quantity: 1 })} title="Exibir 1 quadro na página"><TbColumns1 /></button>
         <button className={config.quantityFrames === 2 ? classButtonActive : classButton} onClick={() => handleQuantityFrames({ quantity: 2 })} title="Exibir 2 quadros na página"><TbColumns2 /></button>
