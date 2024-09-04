@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 
-import { ConfigContext } from '../contexts/Config'
+import { ConfigContext } from '../contexts/ConfigContext'
 
 import { FaCookieBite, FaXTwitter } from "react-icons/fa6";
 import { FaYoutube, FaFacebook, FaInstagramSquare } from "react-icons/fa";

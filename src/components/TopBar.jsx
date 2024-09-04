@@ -3,7 +3,7 @@ import { TbColumns1, TbColumns2, TbColumns3 } from "react-icons/tb"
 import { FaPause, FaPlay } from "react-icons/fa"
 
 import { useEffect, useContext } from 'react'
-import { ConfigContext } from '../contexts/Config'
+import { ConfigContext } from '../contexts/ConfigContext'
 
 export default function TopBar() {
 
@@ -12,7 +12,6 @@ export default function TopBar() {
   const { config, setConfig } = useContext(ConfigContext)
 
   const classButton = "size-9 md:size-[38px] inline-flex justify-center items-center gap-2 rounded-md font-medium bg-white border border-gray-200 text-gray-700 hover:bg-gray-100 text-xs md:text-sm"
-
   const classButtonActive = "size-9 md:size-[38px] inline-flex justify-center items-center gap-2 rounded-md font-medium bg-blue-600 border border-gray-200 text-gray-50 hover:bg-blue-500 text-xs md:text-sm"
 
   useEffect(() => {
@@ -30,12 +29,12 @@ export default function TopBar() {
 
   const startAllTimer = () => {
     // console.log("startAllTimer")
-    setConfig({ ...config, isAllPlaying: true })
+    setConfig({ ...config, isAllPlaying: true, framesWithImagesLoaded: [] })
   }
 
   const pauseAllTimer = () => {
     // console.log("pauseAllTimer")
-    setConfig({ ...config, isAllPlaying: false })
+    setConfig({ ...config, isAllPlaying: false, framesWithImagesLoaded: [] })
   }
 
   // console.log("config", config)

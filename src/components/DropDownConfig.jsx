@@ -1,11 +1,11 @@
 import { useContext } from 'react'
-import { ConfigContext } from '../contexts/Config'
+import { ConfigContext } from '../contexts/ConfigContext'
 
 import { formatDate } from '../lib/formatDate'
 
 export default function DropDownConfig({ frame, setFrame, model, setModel, dates, resetTimer }) {
 
-  const { frames, setFrames, models, regions } = useContext(ConfigContext)
+  const { config, setConfig, frames, setFrames, models, regions } = useContext(ConfigContext)
 
   // Regions of product selected
   const modelProductRegions = models.find(model => model.value === frame.model).options.products.find(product => product.value === frame.product).regions
@@ -62,6 +62,7 @@ export default function DropDownConfig({ frame, setFrame, model, setModel, dates
       forecastTime: model.periodStart,
       isPlaying: false,
     }, ...frames.slice(frame.id)])
+    setConfig((prev) => ({ ...prev, framesWithImagesLoaded: [] }))
     // console.log("handleChangeModel (model)", model)
     // console.log("handleChangeModel (frame)", frame)
     // console.log("frame.region", frame.region)
@@ -74,6 +75,7 @@ export default function DropDownConfig({ frame, setFrame, model, setModel, dates
     resetTimer(model.periodStart)
     setFrame({ ...frame, region: e.target.value, isPlaying: false })
     setFrames([...frames.slice(0, frame.id - 1), { ...frame, region: e.target.value, isPlaying: false }, ...frames.slice(frame.id)])
+    setConfig((prev) => ({ ...prev, framesWithImagesLoaded: [] }))
   }
 
   const handleChangeGroup = (e) => {
@@ -81,18 +83,21 @@ export default function DropDownConfig({ frame, setFrame, model, setModel, dates
     resetTimer(model.periodStart)
     setFrame({ ...frame, group: e.target.value, product: firstProductGroup.value, isPlaying: false })
     setFrames([...frames.slice(0, frame.id - 1), { ...frame, group: e.target.value, product: firstProductGroup.value, isPlaying: false }, ...frames.slice(frame.id)])
+    setConfig((prev) => ({ ...prev, framesWithImagesLoaded: [] }))
   }
 
   const handleChangeProduct = (e) => {
     resetTimer(model.periodStart)
     setFrame({ ...frame, product: e.target.value, isPlaying: false })
     setFrames([...frames.slice(0, frame.id - 1), { ...frame, product: e.target.value, isPlaying: false }, ...frames.slice(frame.id)])
+    setConfig((prev) => ({ ...prev, framesWithImagesLoaded: [] }))
   }
 
   const handleChangeInit = (e) => {
     resetTimer(model.periodStart)
     setFrame({ ...frame, init: e.target.value, isPlaying: false })
     setFrames([...frames.slice(0, frame.id - 1), { ...frame, init: e.target.value, isPlaying: false }, ...frames.slice(frame.id)])
+    setConfig((prev) => ({ ...prev, framesWithImagesLoaded: [] }))
   }
 
   // console.log("dates", dates)

@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { ConfigContext } from '../contexts/Config'
+import { ConfigContext } from '../contexts/ConfigContext'
 
 import imgLogo from "../assets/govbr-logo.png"
 

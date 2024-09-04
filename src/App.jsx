@@ -2,7 +2,7 @@ import Header from './layouts/Header'
 import Container from './layouts/Container'
 import Footer from './layouts/Footer'
 
-import ConfigProvider from './contexts/Config'
+import ConfigProvider from './contexts/ConfigContext'
 
 export default function App() {
   return (

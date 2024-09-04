@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react'
 
-import { ConfigContext } from '../contexts/Config'
+import { ConfigContext } from '../contexts/ConfigContext'
 
 import { FaChevronLeft, FaChevronRight, FaClock, FaCog, FaPause, FaPlay } from 'react-icons/fa'
 
@@ -38,6 +38,7 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
 
   const [forecastTime, setForecastTime] = useState(frame.forecastTime ?? model.periodStart)
   const [isPlaying, setIsPlaying] = useState(frame.isPlaying ?? false)
+  const [loadingImages, setLoadingImages] = useState(false)
 
   const handleDropdownConfig = () => {
     setOpenDropdownConfig(!openDropdownConfig)
@@ -78,28 +79,6 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
 
   {/* Begin Preload Images */ }
 
-  function preloadImages(imageUrls) {
-    const preloadedImages = [];
-
-    imageUrls.forEach(url => {
-      const img = new Image();
-      img.src = url;
-
-      // img.onload = () => {
-      //   console.log(`Imagem carregada: ${url}`);
-      // };
-
-      // img.onerror = () => {
-      //   console.error(`Erro ao carregar a imagem: ${url}`);
-      // };
-
-      preloadedImages.push(img);
-    });
-    // console.log("preloadedImages", preloadedImages);
-
-    // console.log('Imagens pré-carregadas:', preloadedImages.length);
-  }
-
   function urlImage(forecastTime) {
     // console.log("forecastTime", forecastTime)
     const init = frame.init ?? dates[0]
@@ -138,41 +117,90 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
   }, [timer])
 
   useEffect(() => {
-    config.isAllPlaying ? startTimer() : pauseTimer()
+    async function checkIsAllPlaying() {
+      if (config.isAllPlaying) {
+        console.log("isAllPlaying")
+        await preloadImages()
+        if (config.isAllPlaying) {
+          clearInterval(timeInterval)
+          setForecastTime(model.periodStart)
+          setIsPlaying(true)
+          if (config.framesWithImagesLoaded.length === config.quantityFrames) {
+            startAnimation()
+          }
+        }
+      } else {
+        pauseTimer()
+      }
+    }
+    checkIsAllPlaying()
   }, [config.isAllPlaying])
 
-  const startTimer = () => {
-    // console.log("startTimer")
+  useEffect(() => {
+    if (config.framesWithImagesLoaded.length === config.quantityFrames) {
+      startAnimation()
+    }
+  }, [config.framesWithImagesLoaded])
 
-    // Start preload images
+  function urlImage(forecastTime) {
+    // console.log("forecastTime", forecastTime)
+    const init = frame.init ?? dates[0]
+    if (!init) return null
+    const year = init?.slice(0, 4)
+    const month = init?.slice(5, 7)
+    const day = init?.slice(8, 10)
+    const turn = init?.slice(11, 13)
+    const url = model.urlImage.replaceAll("{{model}}", model.value)
+      .replaceAll("{{region}}", frame.region)
+      .replaceAll("{{product}}", frame.product)
+      .replaceAll("{{forecastTime}}", forecastTime)
+      .replaceAll("{{timeRun}}", model.timeRun)
+      .replaceAll("{{turn}}", turn)
+      .replaceAll("{{year}}", year)
+      .replaceAll("{{month}}", month)
+      .replaceAll("{{day}}", day)
+    // console.log("url", url)
+    return url
+  }
 
-    //console.log("hours", hours)
+  function saveImagesInCache(imageUrls) {
+    const promises = imageUrls.map(url => {
+      return new Promise((resolve, reject) => {
+        const img = new Image()
+        img.src = url
+        img.onload = () => resolve(url)
+        img.onerror = () => reject(new Error(`Erro ao carregar a imagem do frame ${frame.id}: ${url}`))
+      })
+    })
+    return Promise.all(promises)
+  }
 
+  const preloadImages = async () => {
+    setLoadingImages(true)
     let imageUrls = []
-
-    // console.log("frame.init", frame.init)
-    // console.log("dates", dates)
     if (frame.init !== undefined || dates.length > 0) {
-      // console.log("frame.init 2", frame.init)
-      // console.log("dates 2", dates)
-      // Array com as URLs das imagens a serem pré-carregadas
-      imageUrls = hours.map(forecastTime => {
-        // console.log("urlImage(imageUrl)", urlImage(forecastTime))
-        return urlImage(forecastTime)
-      });
-      // console.log("imageUrls", imageUrls)
+      let imageUrls = hours.map((forecastTime) => urlImage(forecastTime))
+      try {
+        await saveImagesInCache(imageUrls)
 
-      // Chama a função para pré-carregar as imagens
-      preloadImages(imageUrls);
+        console.log(`Imagens do frame ${frame.id} carregadas com sucesso!`)
+
+        setConfig((prev) => ({
+          ...prev, framesWithImagesLoaded: prev.framesWithImagesLoaded.includes(frame.id) ? prev.framesWithImagesLoaded : [...prev.framesWithImagesLoaded, frame.id]
+        }))
+      } catch (error) {
+        console.error(`Erro ao pré-carregar as imagens do frame ${frame.id}:`, error)
+      } finally {
+        setLoadingImages(false)
+      }
     }
+  }
 
-    // End preload images
+  const startAnimation = () => {
+    clearInterval(timeInterval)
+    setFrame({ ...frame, isPlaying: false })
+    setIsPlaying(false)
 
-    if (config.isAllPlaying) {
-      clearInterval(timeInterval)
-      setForecastTime(model.periodStart)
-      setIsPlaying(true)
-    }
     setTimeInterval(setInterval(() => {
       let ft = null
       setTimer((prev) => prev + 1)
@@ -190,12 +218,22 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
     }, 500))
   }
 
+  const startTimer = async () => {
+    // console.log("startTimer")
+    //console.log("hours", hours)
+    // console.log("frame.init", frame.init)
+    // console.log("dates", dates)
+
+    await preloadImages()
+    startAnimation()
+  }
+
   const pauseTimer = () => {
     // console.log("pauseTimer")
     clearInterval(timeInterval)
     setFrame({ ...frame, isPlaying: false })
     setIsPlaying(false)
-    setConfig({ ...config, isAllPlaying: false })
+    setConfig({ ...config, isAllPlaying: false, framesWithImagesLoaded: [] })
   }
 
   const resetTimer = (time = null) => {
@@ -236,9 +274,21 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
           {frame.isPlaying ? (
             <button className={classButtonActive} onClick={pauseTimer} title="Pausar"><FaPause /></button>
           ) : (
-            <button className={classButton} onClick={startTimer} title="Iniciar animação do tempo de previsão"><FaPlay /></button>
+            <>
+              {loadingImages ? (
+                <button className={classButton} title="Carregando imagens...">
+                  <span className="flex justify-center items-center">
+                    <svg className="animate-spin h-5 w-5 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                  </span>
+                </button>
+              ) : (
+                <button className={classButton} onClick={startTimer} title="Iniciar animação do tempo de previsão"><FaPlay /></button>
+              )}
+            </>
           )}
-          {/* <button className={classButton} onClick={() => resetTimer(hours[0])} title="Resetar">Resetar</button> */}
           <button className={classButton} onClick={handleIncreaseTime} title="Avançar o tempo de previsão atual - forecast time"><FaChevronRight /></button>
         </div>
         <div className="flex items-center">

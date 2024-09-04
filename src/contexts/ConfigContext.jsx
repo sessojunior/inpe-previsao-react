@@ -10,7 +10,8 @@ export default function ConfigProvider({ children }) {
   const [config, setConfig] = useState({
     showHeaderFooter: JSON.parse(localStorage.getItem('config'))?.showHeaderFooter ?? true,
     quantityFrames: JSON.parse(localStorage.getItem('config'))?.quantityFrames || 1,
-    isAllPlaying: false,
+    isAllPlaying: false, // Se todos os frames estão em play
+    framesWithImagesLoaded: [], // Array para armazenar os IDs dos frames que já pré-carregaram as imagens
   })
 
   const models = jsonModels
@@ -29,7 +30,7 @@ export default function ConfigProvider({ children }) {
       "region": models[0].default.product.region,
       "forecastTime": null,
       "isPlaying": false,
-      "init": null
+      "init": null,
     })
   }
 

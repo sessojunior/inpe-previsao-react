@@ -1,7 +1,7 @@
 import Frame from "./Frame"
 
 import { Suspense, useContext } from 'react'
-import { ConfigContext } from '../contexts/Config'
+import { ConfigContext } from '../contexts/ConfigContext'
 
 export default function Frames() {
 

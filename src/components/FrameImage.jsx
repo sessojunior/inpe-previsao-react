@@ -1,8 +1,11 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from 'react'
+import { ConfigContext } from '../contexts/ConfigContext'
 
 export default function FrameImage({ frame, model, dates }) {
 
   // console.log("FrameImage")
+
+  const { config } = useContext(ConfigContext)
 
   if (frame === undefined || model === undefined || dates.length === 0) return false
 
@@ -35,6 +38,9 @@ export default function FrameImage({ frame, model, dates }) {
 
   // console.log("frame.forecastTime", frame.forecastTime)
   // console.log("urlImage", urlImage)
+
+  console.log("config.isAllPlaying", config.isAllPlaying)
+  console.log("config.framesWithImagesLoaded", config.framesWithImagesLoaded)
 
   return (
     <div>
@@ -70,7 +76,7 @@ export default function FrameImage({ frame, model, dates }) {
       <div className="w-full">
         <img src={urlImage} onError={(e) => { e.target.onError = null; e.target.src = publicImage }} alt={altImage} className="rounded-md mt-4 w-full" />
         <div className="mt-4 flex justify-end">
-          <a href={urlImage} download="imagem-de-previsao.png" target="_blank" rel="noreferrer" className="px-4 py-2 rounded bg-gray-600 text-white hover:bg-gray-700">Download da imagem</a>
+          <a href={urlImage} download="imagem-de-previsao.png" target="_blank" rel="noreferrer" className="px-4 py-2 rounded bg-gray-600 text-white hover:bg-gray-700" title={urlImage}>Download da imagem</a>
         </div>
       </div>
     </div>
