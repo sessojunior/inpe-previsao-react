@@ -18,7 +18,7 @@ export default function DropDownTime({ forecastTime, setForecastTime, frame, set
           <label className="block w-full pb-3 text-sm font-bold">Horas de previsão</label>
           <div className="flex flex-wrap gap-1">
             {hours.map((time, index) => (
-              <button key={index} className={forecastTime === time ? classButtonTimeActive : classButtonTime} onClick={() => handleChangeTime(time)}>{time}</button>
+              <button key={index} className={forecastTime === time ? classButtonTimeActive : classButtonTime} onClick={() => handleChangeTime(time)} title={`Definir para ${Number(time)} horas de previsão`}>{time}</button>
             ))}
           </div>
         </div>

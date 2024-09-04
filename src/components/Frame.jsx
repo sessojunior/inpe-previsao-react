@@ -63,10 +63,13 @@ export default function Frame({ id }) {
 
   // console.log("Frame dates", dates)
 
+  const [loadingImages, setLoadingImages] = useState(false)
+  const [downloadImageUrl, setDownloadImageUrl] = useState("")
+
   return (
     <div className={`flex flex-col p-4 hover:bg-gray-50 ${classFrame}`}>
-      <FrameTop frame={frame} setFrame={setFrame} model={model} setModel={setModel} dates={dates} />
-      <FrameImage frame={frame} model={model} dates={dates} />
+      <FrameTop frame={frame} setFrame={setFrame} model={model} setModel={setModel} dates={dates} loadingImages={loadingImages} setLoadingImages={setLoadingImages} downloadImageUrl={downloadImageUrl} />
+      <FrameImage frame={frame} model={model} dates={dates} loadingImages={loadingImages} setDownloadImageUrl={setDownloadImageUrl} />
     </div>
   )
 }

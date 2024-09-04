@@ -1,15 +1,11 @@
 import { useState, useEffect, useContext } from 'react'
-
 import { ConfigContext } from '../contexts/ConfigContext'
-
-import { FaChevronLeft, FaChevronRight, FaClock, FaCog, FaPause, FaPlay } from 'react-icons/fa'
-
+import { FaChevronLeft, FaChevronRight, FaClock, FaCog, FaPause, FaPlay, FaDownload } from 'react-icons/fa'
 import DropDownConfig from './DropDownConfig'
 import DropDownTime from './DropDownTime'
-
 import { formatDate } from '../lib/formatDate'
 
-export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
+export default function FrameTop({ frame, setFrame, model, setModel, dates, loadingImages, setLoadingImages, downloadImageUrl }) {
 
   // console.log("FrameTop")
   // console.log("FrameTop dates", dates)
@@ -38,7 +34,6 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
 
   const [forecastTime, setForecastTime] = useState(frame.forecastTime ?? model.periodStart)
   const [isPlaying, setIsPlaying] = useState(frame.isPlaying ?? false)
-  const [loadingImages, setLoadingImages] = useState(false)
 
   const handleDropdownConfig = () => {
     setOpenDropdownConfig(!openDropdownConfig)
@@ -119,7 +114,7 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
   useEffect(() => {
     async function checkIsAllPlaying() {
       if (config.isAllPlaying) {
-        console.log("isAllPlaying")
+        // console.log("isAllPlaying")
         await preloadImages()
         if (config.isAllPlaying) {
           clearInterval(timeInterval)
@@ -182,9 +177,7 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
       let imageUrls = hours.map((forecastTime) => urlImage(forecastTime))
       try {
         await saveImagesInCache(imageUrls)
-
-        console.log(`Imagens do frame ${frame.id} carregadas com sucesso!`)
-
+        // console.log(`Imagens do frame ${frame.id} carregadas com sucesso!`)
         setConfig((prev) => ({
           ...prev, framesWithImagesLoaded: prev.framesWithImagesLoaded.includes(frame.id) ? prev.framesWithImagesLoaded : [...prev.framesWithImagesLoaded, frame.id]
         }))
@@ -250,10 +243,12 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
 
   {/* End Timer */ }
 
+  const publicImage = "image-not-found.jpg"
+
   return (
     <div className="flex justify-between">
       <div className="flex relative">
-        <button className={openDropdownConfig ? classButtonActive : classButton} onClick={handleDropdownConfig} title="Configurações"><FaCog /></button>
+        <button className={openDropdownConfig ? classButtonActive : classButton} onClick={handleDropdownConfig} title="Configurações do modelo, região e inicialização"><FaCog /></button>
         {openDropdownConfig && <DropDownConfig frame={frame} setFrame={setFrame} model={model} setModel={setModel} dates={dates} resetTimer={resetTimer} />}
         <div className="mx-2">
           <div className="font-bold text-sm">{model.label} · {region?.label}</div>
@@ -270,6 +265,7 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
       </div>
       <div className="flex relative">
         <div className="flex gap-1">
+          <a href={downloadImageUrl} download="imagem-de-previsao.png" target="_blank" rel="noreferrer" className={classButton} title={`Abrir a imagem abaixo em uma nova aba do navegador, para fazer o download: ${downloadImageUrl}`}><FaDownload /></a>
           <button className={classButton} onClick={handleDecreaseTime} title="Voltar o tempo de previsão atual - forecast time"><FaChevronLeft /></button>
           {frame.isPlaying ? (
             <button className={classButtonActive} onClick={pauseTimer} title="Pausar"><FaPause /></button>
@@ -292,7 +288,7 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates }) {
           <button className={classButton} onClick={handleIncreaseTime} title="Avançar o tempo de previsão atual - forecast time"><FaChevronRight /></button>
         </div>
         <div className="flex items-center">
-          <div className="font-bold text-sm px-2 text-ellipsis overflow-hidden min-w-24" title="Tempo de previsão atual - forecast time">{forecastTime} horas</div>
+          <div key={forecastTime} className="font-bold text-sm px-2 text-ellipsis overflow-hidden min-w-24 text-center animate-bounce-in" title="Tempo de previsão atual - forecast time">{forecastTime} horas</div>
           <button className={openDropdownTime ? classButtonActive : classButton} onClick={handleDropdownTime} title="Selecionar o tempo de previsão - forecast time"><FaClock /></button>
           {openDropdownTime && <DropDownTime forecastTime={forecastTime} setForecastTime={setForecastTime} frame={frame} setFrame={setFrame} hours={hours} />}
         </div>

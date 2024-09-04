@@ -1,22 +1,20 @@
 import { useEffect, useState, useContext } from 'react'
 import { ConfigContext } from '../contexts/ConfigContext'
+import { FaDownload } from "react-icons/fa"
 
-export default function FrameImage({ frame, model, dates }) {
+export default function FrameImage({ frame, model, dates, loadingImages, setDownloadImageUrl }) {
 
   // console.log("FrameImage")
 
   const { config } = useContext(ConfigContext)
 
-  if (frame === undefined || model === undefined || dates.length === 0) return false
-
   const publicImage = "image-not-found.jpg"
-
-  const init = frame.init ?? dates[0]
+  const init = frame?.init ?? dates[0]
   const year = init?.slice(0, 4)
   const month = init?.slice(5, 7)
   const day = init?.slice(8, 10)
   const turn = init?.slice(11, 13)
-  const forecastTime = frame.forecastTime ?? model.periodStart
+  const forecastTime = frame?.forecastTime ?? model?.periodStart
 
   // console.log("frame", frame)
   // console.log("init", init)
@@ -24,23 +22,29 @@ export default function FrameImage({ frame, model, dates }) {
   // console.log("FrameImage model", model)
   // console.log("model.urlImage", model.urlImage)
 
-  const urlImage = model.urlImage.replaceAll("{{model}}", model.value)
-    .replaceAll("{{region}}", frame.region)
-    .replaceAll("{{product}}", frame.product)
+  const urlImage = model?.urlImage.replaceAll("{{model}}", model?.value)
+    .replaceAll("{{region}}", frame?.region)
+    .replaceAll("{{product}}", frame?.product)
     .replaceAll("{{forecastTime}}", forecastTime)
-    .replaceAll("{{timeRun}}", model.timeRun)
+    .replaceAll("{{timeRun}}", model?.timeRun)
     .replaceAll("{{turn}}", turn)
     .replaceAll("{{year}}", year)
     .replaceAll("{{month}}", month)
     .replaceAll("{{day}}", day)
 
-  const altImage = `${frame.model} - ${frame.region}`
+  const altImage = `${frame?.model} - ${frame?.region}`
 
   // console.log("frame.forecastTime", frame.forecastTime)
   // console.log("urlImage", urlImage)
 
-  console.log("config.isAllPlaying", config.isAllPlaying)
-  console.log("config.framesWithImagesLoaded", config.framesWithImagesLoaded)
+  // console.log("config.isAllPlaying", config.isAllPlaying)
+  // console.log("config.framesWithImagesLoaded", config.framesWithImagesLoaded)
+
+  useEffect(() => {
+    setDownloadImageUrl(urlImage)
+  }, [urlImage, setDownloadImageUrl])
+
+  if (!frame || !model || dates.length === 0) return null
 
   return (
     <div>
@@ -74,10 +78,20 @@ export default function FrameImage({ frame, model, dates }) {
       <p>[day: <b>{day}</b>]</p>
       <p>[turn: <b>{turn}</b>]</p> */}
       <div className="w-full">
-        <img src={urlImage} onError={(e) => { e.target.onError = null; e.target.src = publicImage }} alt={altImage} className="rounded-md mt-4 w-full" />
-        <div className="mt-4 flex justify-end">
-          <a href={urlImage} download="imagem-de-previsao.png" target="_blank" rel="noreferrer" className="px-4 py-2 rounded bg-gray-600 text-white hover:bg-gray-700" title={urlImage}>Download da imagem</a>
+        <div className="flex justify-center items-center relative">
+          {loadingImages && (
+            <span className="absolute flex justify-center items-center" title="Após dar início na animação é necessário aguardar o carregamento das imagens...">
+              <svg className="animate-spin h-16 w-16 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+            </span>
+          )}
+          <img src={urlImage} onError={(e) => { e.target.onError = null; e.target.src = publicImage }} alt={altImage} className="rounded-md mt-4 w-full" />
         </div>
+        {/* <div className="mt-4 flex justify-center flex-grow">
+          <a href={urlImage} download="imagem-de-previsao.png" target="_blank" rel="noreferrer" className="px-4 py-2 rounded-md bg-gray-600 text-white hover:bg-gray-700" title={urlImage}><span className="flex justify-center items-center"><FaDownload /><span className="ml-2">Download da imagem</span></span></a>
+        </div> */}
       </div>
     </div>
   )
