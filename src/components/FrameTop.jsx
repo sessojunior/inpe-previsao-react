@@ -4,6 +4,7 @@ import { FaChevronLeft, FaChevronRight, FaClock, FaCog, FaPause, FaPlay, FaDownl
 import DropDownConfig from './DropDownConfig'
 import DropDownTime from './DropDownTime'
 import { formatDate } from '../lib/formatDate'
+import { toast } from 'react-toastify'
 
 export default function FrameTop({ frame, setFrame, model, setModel, dates, loadingImages, setLoadingImages, downloadImageUrl }) {
 
@@ -132,8 +133,9 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates, load
   }, [config.isAllPlaying])
 
   useEffect(() => {
-    if (config.framesWithImagesLoaded.length === config.quantityFrames) {
+    if (config.framesWithImagesLoaded.length === config.quantityFrames && config.quantityFrames > 1) {
       startAnimation()
+      toast.success("Todas as imagens de animação dos quadros foram carregadas com sucesso!", { toastId: "allFramesLoaded" })
     }
   }, [config.framesWithImagesLoaded])
 
@@ -217,7 +219,9 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates, load
     // console.log("frame.init", frame.init)
     // console.log("dates", dates)
 
+    toast.warn(`Aguarde o carregamento das imagens do quadro ${frame.id} para iniciar a animação!`)
     await preloadImages()
+    toast.success(`As imagens de animação do quadro ${frame.id} foram carregadas com sucesso!`)
     startAnimation()
   }
 
@@ -248,7 +252,7 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates, load
   return (
     <div className="flex justify-between">
       <div className="flex relative">
-        <button className={openDropdownConfig ? classButtonActive : classButton} onClick={handleDropdownConfig} title="Configurações do modelo, região e inicialização"><FaCog /></button>
+        <button className={openDropdownConfig ? classButtonActive : classButton} onClick={handleDropdownConfig} title="Configurações do modelo, região e inicialização para este quadro"><FaCog /></button>
         {openDropdownConfig && <DropDownConfig frame={frame} setFrame={setFrame} model={model} setModel={setModel} dates={dates} resetTimer={resetTimer} />}
         <div className="mx-2">
           <div className="font-bold text-sm">{model.label} · {region?.label}</div>
@@ -289,7 +293,7 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates, load
         </div>
         <div className="flex items-center">
           <div key={forecastTime} className="font-bold text-sm px-2 text-ellipsis overflow-hidden min-w-24 text-center animate-bounce-in" title="Tempo de previsão atual - forecast time">{forecastTime} horas</div>
-          <button className={openDropdownTime ? classButtonActive : classButton} onClick={handleDropdownTime} title="Selecionar o tempo de previsão - forecast time"><FaClock /></button>
+          <button className={openDropdownTime ? classButtonActive : classButton} onClick={handleDropdownTime} title="Selecionar o tempo de previsão - forecast time - para este quadro"><FaClock /></button>
           {openDropdownTime && <DropDownTime forecastTime={forecastTime} setForecastTime={setForecastTime} frame={frame} setFrame={setFrame} hours={hours} />}
         </div>
       </div>
