@@ -1199,7 +1199,7 @@
   {
     "id": 4,
     "label": "BAM",
-    "value": "bam",
+    "value": "Global_BAM",
     "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/pn/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/{{model}}_{{product}}_{{region}}_{{year}}{{month}}{{day}}{{turn}}z_{{forecastTime}}z.png",
     "urlDates": "https://s1.cptec.inpe.br/grafico/Modelos/portal_previsao_numerica/mod_bam.json",
     "timeRun": 24,
