@@ -27,10 +27,13 @@ export default function Frame({ id }) {
   // Corrigindo bug de values errados no model ou frame
   // Se não foi possível carregar o arquivo JSON de Config.jsx
   if (!frame || !model) {
-    localStorage.clear()
     console.error("É provável que não tenha sido possível carregar o arquivo models.json ou regions.json em Config.jsx")
+    localStorage.clear()
+    setTimeout(() => {
+      window.location.reload()
+    }, 15000)
     //window.location.reload()
-    return <div className="p-8 text-red-500">Dados inválidos. Tente recarregar a página ou redefinir a configuração.</div>;
+    return <div className="p-8 text-red-500">Dados do modelo inválido no arquivo JSON. Recarregue a página agora ou aguarde ela ser recarregada automaticamente em 15 segundos.</div>;
   }
 
   const [dates, setDates] = useState([])
