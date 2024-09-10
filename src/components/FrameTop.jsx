@@ -17,15 +17,40 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates, load
   const group = model.options.groups.find(group => group.value === frame.group)
   const product = model.options.products.find(product => product.value === frame.product)
 
-  // console.log("frame", frame)
+  console.log("frame", frame)
   // console.log("model", model)
   // console.log("group", group)
   // console.log("product", product)
+  console.log("model.periodHours", model.periodHours)
+  console.log("product.periodHours", product.periodHours)
+  console.log("model.periodStart", model.periodStart)
+  console.log("product.periodStart", product.periodStart)
+  console.log("model.periodEnd", model.periodEnd)
+  console.log("product.periodEnd", product.periodEnd)
+
+  // console.log("DropDownConfig product", product)
+  // console.log("DropDownConfig periodStart", periodStart)
+
+  // Se o intervalo de horas for específico para o produto, por exemplo, um produto que só roda de 24 em 24 horas, obtém a partir do produto o período de horas que o mesmo roda.
+  const periodHours = product.periodHours ?? model.periodHours
+
+  // Se o período que inicia ou termina for específico para o produto, por exemplo, um produto que inicia em "024", obtém a partir do produto o período de horas que o mesmo roda.
+  const periodStart = product.periodStart ?? model.periodStart
+  const periodEnd = product.periodEnd ?? model.periodEnd
+
+  console.log("periodHours", periodHours)
+  console.log("periodStart", periodStart)
+  console.log("periodEnd", periodEnd)
 
   // Cria um array de horas iniciando com model.periodStart (geralmente "000") e terminando com model.periodEnd (geralmente "180" ou "240")
   // Precisa ter 3 caracteres, e ficaria assim: ["000", "003", "006", ..., "240"]
-  // O intervalo de horas é baseado em model.periodHours (geralmente 3 ou 6)
-  const hours = Array.from({ length: (model.periodEnd - model.periodStart) / model.periodHours + 1 }, (_, i) => String(i * model.periodHours).padStart(3, '0'))
+  // O intervalo de horas é baseado em periodHours (geralmente 3 ou 6 quando baseado em model ou 24 quando baseado em product)
+  const hours = Array.from({
+      length: (Number(periodEnd) - Number(periodStart)) / periodHours + 1
+    }, (_, i) => String(Number(periodStart) + i * periodHours).padStart(3, '0')
+  );
+
+  console.log("hours", hours)
 
   const classButton = "size-9 md:size-[38px] inline-flex justify-center items-center gap-2 rounded-md font-medium bg-white border border-gray-200 text-gray-700 hover:bg-gray-100 text-xs md:text-sm"
   const classButtonActive = "size-9 md:size-[38px] inline-flex justify-center items-center gap-2 rounded-md font-medium bg-blue-600 border border-gray-200 text-gray-50 hover:bg-blue-500 text-xs md:text-sm"
@@ -33,8 +58,12 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates, load
   const [openDropdownConfig, setOpenDropdownConfig] = useState(false)
   const [openDropdownTime, setOpenDropdownTime] = useState(false)
 
-  const [forecastTime, setForecastTime] = useState(frame.forecastTime ?? model.periodStart)
+  const [forecastTime, setForecastTime] = useState(frame.forecastTime ?? periodStart)
   const [isPlaying, setIsPlaying] = useState(frame.isPlaying ?? false)
+
+  console.log("frame.forecastTime", frame.forecastTime)
+  console.log("forecastTime", forecastTime)
+  console.log("periodStart", periodStart)
 
   const handleDropdownConfig = () => {
     setOpenDropdownConfig(!openDropdownConfig)
@@ -119,7 +148,7 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates, load
         await preloadImages()
         if (config.isAllPlaying) {
           clearInterval(timeInterval)
-          setForecastTime(model.periodStart)
+          setForecastTime(periodStart)
           setIsPlaying(true)
           if (config.framesWithImagesLoaded.length === config.quantityFrames) {
             startAnimation()
@@ -237,7 +266,7 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates, load
     // console.log("resetTimer")
     setTimer(0)
     pauseTimer()
-    setForecastTime(time ?? model.periodStart)
+    setForecastTime(time ?? periodStart)
     setIsPlaying(false)
     // console.log("model", model)
     // console.log("forecastTime", forecastTime)
@@ -253,7 +282,7 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates, load
     <div className="flex justify-between">
       <div className="flex relative">
         <button className={openDropdownConfig ? classButtonActive : classButton} onClick={handleDropdownConfig} title="Configurações do modelo, região e inicialização para este quadro"><FaCog /></button>
-        {openDropdownConfig && <DropDownConfig frame={frame} setFrame={setFrame} model={model} setModel={setModel} dates={dates} resetTimer={resetTimer} />}
+        {openDropdownConfig && <DropDownConfig frame={frame} setFrame={setFrame} model={model} setModel={setModel} periodStart={periodStart} dates={dates} resetTimer={resetTimer} />}
         <div className="mx-2">
           <div className="font-bold text-sm">{model.label} · {region?.label}</div>
           <div className="text-xs">

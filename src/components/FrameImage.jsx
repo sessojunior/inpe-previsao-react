@@ -1,6 +1,5 @@
 import { useEffect, useState, useContext } from 'react'
 import { ConfigContext } from '../contexts/ConfigContext'
-import { FaDownload } from "react-icons/fa"
 
 export default function FrameImage({ frame, model, dates, loadingImages, setDownloadImageUrl }) {
 
@@ -8,19 +7,26 @@ export default function FrameImage({ frame, model, dates, loadingImages, setDown
 
   const { config } = useContext(ConfigContext)
 
+  // Se o período que inicia ou termina for específico para o produto, por exemplo, um produto que inicia em "024", obtém a partir do produto o período de horas que o mesmo roda.
+  const product = model.options.products.find(product => product.value === frame.product)
+  const periodStart = product.periodStart ?? model.periodStart
+
   const publicImage = "image-not-found.jpg"
-  const init = frame?.init ?? dates[0]
+  const init = frame.init ?? dates[0]
   const year = init?.slice(0, 4)
   const month = init?.slice(5, 7)
   const day = init?.slice(8, 10)
   const turn = init?.slice(11, 13)
-  const forecastTime = frame?.forecastTime ?? model?.periodStart
+  const forecastTime = frame.forecastTime ?? periodStart
 
   // console.log("frame", frame)
   // console.log("init", init)
   // console.log("dates", dates)
   // console.log("FrameImage model", model)
   // console.log("model.urlImage", model.urlImage)
+  console.log("FrameImage frame.forecastTime", frame.forecastTime)
+  console.log("FrameImage periodStart", periodStart)
+  console.log("FrameImage forecastTime", forecastTime)
 
   const urlImage = model?.urlImage.replaceAll("{{model}}", model?.value)
     .replaceAll("{{region}}", frame?.region)

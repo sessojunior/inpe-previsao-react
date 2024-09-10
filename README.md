@@ -388,7 +388,10 @@ Exemplo:
             "coe",
             "nde",
             "nte"
-          ]
+          ],
+          "periodStart": "024",
+          "periodEnd": "240",
+          "periodHours": 24
         },
         {
           "label": "Temperatura máxima em 2m",
@@ -402,7 +405,10 @@ Exemplo:
             "coe",
             "nde",
             "nte"
-          ]
+          ],
+          "periodStart": "024",
+          "periodEnd": "240",
+          "periodHours": 24
         },
         {
           "label": "Temperatura em 2m",
@@ -430,7 +436,10 @@ Exemplo:
             "coe",
             "nde",
             "nte"
-          ]
+          ],
+          "periodStart": "024",
+          "periodEnd": "240",
+          "periodHours": 24
         },
         {
           "label": "Vento em 10m",
@@ -556,9 +565,11 @@ Exemplo:
 
 ## Observações
 
-As horas de previsão *(periodStart)* e *(periodEnd)* precisam ser fixas para cada modelo. Ou seja, não devem variar na quantidade de horas ao alterar um produto ou região do modelo. Por exemplo, para o modelo BRAMS 08, todos os produtos começam com "000" e terminam com "180". Para o BAM, todos os produtos poderiam começar com "000" e terminar com "240". Não é permitido haver personalização de horas de previsão para um produto do mesmo modelo.
+Cada modelo possui as chaves *periodStart* e *periodEnd*, que funcionam para todos os produtos São fixos. Ou seja, não devem variar na quantidade de horas ao alterar um produto ou região do modelo. Por exemplo, para o modelo BRAMS 08, todos os produtos começam com "000" e terminam com "180". Para o BAM, todos os produtos poderiam começar com "000" e terminar com "240".
 
-Ou seja, se um modelo for até 180 horas e de 3 em 3 horas, todos os produtos e variáveis ou níveis deste modelo deverão ser assim.
+Ou seja, se um modelo for até 180 horas e de 3 em 3 horas, todos os produtos e variáveis ou níveis deste modelo serão assim.
+
+Entretanto, alguns produtos por serem mais específicos, possuem particularidades, como é o caso de temperatura mínima, temperatura máxima e umidade relativa mínima, que tem um intervalo maior que é de 24 horas. Ou seja, roda 1 vez por dia. Neste caso, esses produtos teriam mais algumas chaves, específicas para estes produtos, como: *periodStart*, *periodEnd* e *periodHours*.
 
 ## Sugestão de melhorias futuras
 

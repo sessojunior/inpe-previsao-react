@@ -236,7 +236,10 @@
             "coe",
             "nde",
             "nte"
-          ]
+          ],
+          "periodStart": "024",
+          "periodEnd": "168",
+          "periodHours": 24
         },
         {
           "label": "Temperatura máxima em 2m",
@@ -250,7 +253,10 @@
             "coe",
             "nde",
             "nte"
-          ]
+          ],
+          "periodStart": "024",
+          "periodEnd": "168",
+          "periodHours": 24
         },
         {
           "label": "Temperatura em 2m",
@@ -278,7 +284,10 @@
             "coe",
             "nde",
             "nte"
-          ]
+          ],
+          "periodStart": "024",
+          "periodEnd": "168",
+          "periodHours": 24
         },
         {
           "label": "Vento em 10m",
@@ -635,7 +644,10 @@
             "coe",
             "nde",
             "nte"
-          ]
+          ],
+          "periodStart": "024",
+          "periodEnd": "168",
+          "periodHours": 24
         },
         {
           "label": "Temperatura máxima em 2m",
@@ -649,7 +661,10 @@
             "coe",
             "nde",
             "nte"
-          ]
+          ],
+          "periodStart": "024",
+          "periodEnd": "168",
+          "periodHours": 24
         },
         {
           "label": "Temperatura em 2m",
@@ -677,7 +692,10 @@
             "coe",
             "nde",
             "nte"
-          ]
+          ],
+          "periodStart": "024",
+          "periodEnd": "168",
+          "periodHours": 24
         },
         {
           "label": "Vento em 10m",
@@ -1034,7 +1052,10 @@
             "coe",
             "nde",
             "nte"
-          ]
+          ],
+          "periodStart": "024",
+          "periodEnd": "240",
+          "periodHours": 24
         },
         {
           "label": "Temperatura máxima em 2m",
@@ -1048,7 +1069,10 @@
             "coe",
             "nde",
             "nte"
-          ]
+          ],
+          "periodStart": "024",
+          "periodEnd": "240",
+          "periodHours": 24
         },
         {
           "label": "Temperatura em 2m",
@@ -1076,7 +1100,10 @@
             "coe",
             "nde",
             "nte"
-          ]
+          ],
+          "periodStart": "024",
+          "periodEnd": "240",
+          "periodHours": 24
         },
         {
           "label": "Vento em 10m",
@@ -1433,7 +1460,10 @@
             "coe",
             "nde",
             "nte"
-          ]
+          ],
+          "periodStart": "024",
+          "periodEnd": "240",
+          "periodHours": 24
         },
         {
           "label": "Temperatura máxima em 2m",
@@ -1447,7 +1477,10 @@
             "coe",
             "nde",
             "nte"
-          ]
+          ],
+          "periodStart": "024",
+          "periodEnd": "240",
+          "periodHours": 24
         },
         {
           "label": "Temperatura em 2m",
@@ -1475,7 +1508,10 @@
             "coe",
             "nde",
             "nte"
-          ]
+          ],
+          "periodStart": "024",
+          "periodEnd": "240",
+          "periodHours": 24
         },
         {
           "label": "Vento em 10m",
