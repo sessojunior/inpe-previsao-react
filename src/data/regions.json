@@ -1,5 +1,9 @@
 [
   {
+    "label": "Global",
+    "value": "glo"
+  },
+  {
     "label": "América do Sul",
     "value": "ams"
   },

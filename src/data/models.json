@@ -1293,6 +1293,7 @@
           "value": "aprec",
           "group": "aprec",
           "regions": [
+            "glo",
             "ams",
             "bra",
             "sul",
@@ -1307,6 +1308,7 @@
           "value": "ageop_250",
           "group": "ageop",
           "regions": [
+            "glo",
             "ams",
             "bra"
           ]
@@ -1316,6 +1318,7 @@
           "value": "ageop_500",
           "group": "ageop",
           "regions": [
+            "glo",
             "ams",
             "bra"
           ]
@@ -1325,6 +1328,7 @@
           "value": "ageop_700",
           "group": "ageop",
           "regions": [
+            "glo",
             "ams",
             "bra"
           ]
@@ -1334,6 +1338,7 @@
           "value": "ageop_850",
           "group": "ageop",
           "regions": [
+            "glo",
             "ams",
             "bra"
           ]
@@ -1343,6 +1348,7 @@
           "value": "ageop_925",
           "group": "ageop",
           "regions": [
+            "glo",
             "ams",
             "bra"
           ]
@@ -1352,6 +1358,7 @@
           "value": "cis_vento_1000",
           "group": "cis_vento",
           "regions": [
+            "glo",
             "ams",
             "bra"
           ]
@@ -1361,6 +1368,7 @@
           "value": "cis_vento_2000",
           "group": "cis_vento",
           "regions": [
+            "glo",
             "ams",
             "bra"
           ]
@@ -1370,6 +1378,7 @@
           "value": "cis_vento_3000",
           "group": "cis_vento",
           "regions": [
+            "glo",
             "ams",
             "bra"
           ]
@@ -1379,6 +1388,7 @@
           "value": "lapserate",
           "group": "lapserate",
           "regions": [
+            "glo",
             "ams",
             "bra"
           ]
@@ -1388,6 +1398,7 @@
           "value": "prec_acum",
           "group": "prec",
           "regions": [
+            "glo",
             "ams",
             "bra",
             "sul",
@@ -1402,6 +1413,7 @@
           "value": "prec_3h",
           "group": "prec",
           "regions": [
+            "glo",
             "ams",
             "bra",
             "sul",
@@ -1416,6 +1428,7 @@
           "value": "prec",
           "group": "prec",
           "regions": [
+            "glo",
             "ams",
             "bra",
             "sul",
@@ -1430,6 +1443,7 @@
           "value": "prec_pnmm",
           "group": "prec_pnmm",
           "regions": [
+            "glo",
             "ams",
             "bra",
             "sul",
@@ -1444,6 +1458,7 @@
           "value": "pnmm_vento",
           "group": "pnmm_vento",
           "regions": [
+            "glo",
             "ams",
             "bra"
           ]
@@ -1453,6 +1468,7 @@
           "value": "tmin_2m",
           "group": "t",
           "regions": [
+            "glo",
             "ams",
             "bra",
             "sul",
@@ -1470,6 +1486,7 @@
           "value": "tmax_2m",
           "group": "t",
           "regions": [
+            "glo",
             "ams",
             "bra",
             "sul",
@@ -1487,6 +1504,7 @@
           "value": "t_2m",
           "group": "t",
           "regions": [
+            "glo",
             "ams",
             "bra",
             "sul",
@@ -1501,6 +1519,7 @@
           "value": "urmin_2m",
           "group": "urmin_2m",
           "regions": [
+            "glo",
             "ams",
             "bra",
             "sul",
@@ -1518,6 +1537,7 @@
           "value": "vento_10m",
           "group": "vento",
           "regions": [
+            "glo",
             "ams",
             "bra",
             "sul",
@@ -1532,6 +1552,7 @@
           "value": "vento_250",
           "group": "vento",
           "regions": [
+            "glo",
             "ams",
             "bra",
             "sul",
@@ -1546,6 +1567,7 @@
           "value": "vento_700",
           "group": "vento",
           "regions": [
+            "glo",
             "ams",
             "bra",
             "sul",
@@ -1560,6 +1582,7 @@
           "value": "vento_850",
           "group": "vento",
           "regions": [
+            "glo",
             "ams",
             "bra",
             "sul",
@@ -1574,6 +1597,7 @@
           "value": "vento_925",
           "group": "vento",
           "regions": [
+            "glo",
             "ams",
             "bra",
             "sul",
@@ -1588,6 +1612,7 @@
           "value": "vort_250",
           "group": "vort",
           "regions": [
+            "glo",
             "ams",
             "bra"
           ]
@@ -1597,6 +1622,7 @@
           "value": "vort_500",
           "group": "vort",
           "regions": [
+            "glo",
             "ams",
             "bra"
           ]
@@ -1606,6 +1632,7 @@
           "value": "vort_700",
           "group": "vort",
           "regions": [
+            "glo",
             "ams",
             "bra"
           ]
@@ -1615,6 +1642,7 @@
           "value": "vort_850",
           "group": "vort",
           "regions": [
+            "glo",
             "ams",
             "bra"
           ]
@@ -1624,6 +1652,7 @@
           "value": "vort_925",
           "group": "vort",
           "regions": [
+            "glo",
             "ams",
             "bra"
           ]

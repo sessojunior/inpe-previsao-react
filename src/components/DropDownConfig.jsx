@@ -40,6 +40,7 @@ export default function DropDownConfig({ frame, setFrame, model, setModel, perio
   // const classRadio = "block shrink-0 mr-1 border border-gray-200 rounded-full text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none cursor-pointer"
 
   const handleChangeModel = (e) => {
+    const model = models.find((model) => model.value === e.target.value)
     const periodStart = model.periodStart
     setModel(model)
     resetTimer(periodStart)
