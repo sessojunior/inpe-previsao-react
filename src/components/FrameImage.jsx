@@ -71,11 +71,12 @@ export default function FrameImage({ frame, model, dates, loadingImages, setDown
     if (init && urlImage) {
       loadImage()
     }
-  }, [urlImage, setDownloadImageUrl])
+  }, [urlImage])
 
   if (!frame || !model || dates.length === 0) return null
 
-  // console.log("FrameImage loadingImages", loadingImages)
+  // console.log("frame.id", frame.id)
+  // console.log("loadingImages", loadingImages)
   // console.log("loading", loading)
 
   return (
