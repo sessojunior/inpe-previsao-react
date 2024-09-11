@@ -416,7 +416,7 @@
     "timeRun": 12,
     "periodHours": 3,
     "periodStart": "000",
-    "periodEnd": "168",
+    "periodEnd": "072",
     "default": {
       "product": {
         "value": "aod550_40",
@@ -427,15 +427,15 @@
     "options": {
       "groups": [
         {
-          "label": "Espessura Óptica do Aerossol",
+          "label": "Espessura Óptica do Aerossol (550nm)",
           "value": "aod550_40"
         },
         {
-          "label": "Monóxido de Carbono",
+          "label": "Monóxido de Carbono (ppb)",
           "value": "co"
         },
         {
-          "label": "Material Particulado",
+          "label": "Material Particulado (dp<2.5um)",
           "value": "pm25"
         }
       ],
