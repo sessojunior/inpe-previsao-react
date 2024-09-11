@@ -61,7 +61,7 @@ export default function FrameImage({ frame, model, dates, loadingImages, setDown
         })
         // console.log(`Imagem do frame ${frame.id} carregada com sucesso!`)
       } catch (error) {
-        console.error(`Erro ao carregar a imagem do frame ${frame.id}:`, error)
+        console.error(error)
       } finally {
         setLoading(false)
       }
