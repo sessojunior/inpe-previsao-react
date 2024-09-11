@@ -575,6 +575,7 @@ Entretanto, alguns produtos por serem mais específicos, possuem particularidade
 
 Algumas sugestões para serem desenvolvidas posteriormente:
 
+- Quando apertamos em animar todos os modelos juntos, seria interessante olhar qual o prazo máximo de previsão de todos os modelos, entre 72, 168, 180, 240, etc. Qual for o menor, a animação de todos os quadros geral ir apenas até o menor.
 - Um select no topo, ao lado do botão de animação de todos os quadros, para selecionar quantidade de horas de forecast de cada figura (1 em 1 hora, 2 em 2 horas, 3 em 3 horas, 6 em 6 horas).
 - Arquivo de log para acompanhar o que os usuários acessam.
 - Uso do Next.js ao invés de React.js.
