@@ -450,7 +450,7 @@
           ]
         },
         {
-          "label": "Nível de 7500 ppb",
+          "label": "Nível de 7500m",
           "value": "co_7500",
           "group": "co",
           "regions": [
@@ -459,7 +459,7 @@
           ]
         },
         {
-          "label": "Nível de 5400 ppb",
+          "label": "Nível de 5400m",
           "value": "co_5400",
           "group": "co",
           "regions": [
@@ -468,7 +468,7 @@
           ]
         },
         {
-          "label": "Nível de 3300 ppb",
+          "label": "Nível de 3300m",
           "value": "co_3300",
           "group": "co",
           "regions": [
@@ -477,7 +477,7 @@
           ]
         },
         {
-          "label": "Nível de 1400 ppb",
+          "label": "Nível de 1400m",
           "value": "co_1400",
           "group": "co",
           "regions": [
@@ -486,7 +486,7 @@
           ]
         },
         {
-          "label": "Nível de 1200 ppb",
+          "label": "Nível de 1200m",
           "value": "co_1200",
           "group": "co",
           "regions": [
@@ -495,7 +495,7 @@
           ]
         },
         {
-          "label": "Nível de 700 ppb",
+          "label": "Nível de 700m",
           "value": "co_700",
           "group": "co",
           "regions": [
@@ -504,7 +504,7 @@
           ]
         },
         {
-          "label": "Nível de 40 ppb",
+          "label": "Nível de 40m",
           "value": "co_40",
           "group": "co",
           "regions": [
@@ -513,7 +513,7 @@
           ]
         },
         {
-          "label": "Nível de 7500 ppb",
+          "label": "Nível de 7500m",
           "value": "pm25_7500",
           "group": "pm25",
           "regions": [
@@ -522,7 +522,7 @@
           ]
         },
         {
-          "label": "Nível de 5400 ppb",
+          "label": "Nível de 5400m",
           "value": "pm25_5400",
           "group": "pm25",
           "regions": [
@@ -531,7 +531,7 @@
           ]
         },
         {
-          "label": "Nível de 3300 ppb",
+          "label": "Nível de 3300m",
           "value": "pm25_3300",
           "group": "pm25",
           "regions": [
@@ -540,7 +540,7 @@
           ]
         },
         {
-          "label": "Nível de 1400 ppb",
+          "label": "Nível de 1400m",
           "value": "pm25_1400",
           "group": "pm25",
           "regions": [
@@ -549,7 +549,7 @@
           ]
         },
         {
-          "label": "Nível de 1200 ppb",
+          "label": "Nível de 1200m",
           "value": "pm25_1200",
           "group": "pm25",
           "regions": [
@@ -558,7 +558,7 @@
           ]
         },
         {
-          "label": "Nível de 700 ppb",
+          "label": "Nível de 700m",
           "value": "pm25_700",
           "group": "pm25",
           "regions": [
@@ -567,7 +567,7 @@
           ]
         },
         {
-          "label": "Nível de 40 ppb",
+          "label": "Nível de 40m",
           "value": "pm25_40",
           "group": "pm25",
           "regions": [
