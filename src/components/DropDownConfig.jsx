@@ -68,7 +68,7 @@ export default function DropDownConfig({ frame, setFrame, model, setModel, perio
     // console.log("frame.region", frame.region)
     // console.log("model.possibleValues.region", model.possibleValues.region.find(region => region.value === frame.region))
     // console.log("model.possibleValues.region.find", model.possibleValues.region.find(region => region.value === frame.region))
-    console.log("DropDownConfig handleChangeModel periodStart", periodStart)
+    // console.log("DropDownConfig handleChangeModel periodStart", periodStart)
   }
 
   const handleChangeRegion = (e) => {
@@ -77,7 +77,7 @@ export default function DropDownConfig({ frame, setFrame, model, setModel, perio
     setFrame({ ...frame, region: e.target.value, isPlaying: false })
     setFrames([...frames.slice(0, frame.id - 1), { ...frame, region: e.target.value, forecastTime: periodStart, isPlaying: false }, ...frames.slice(frame.id)])
     setConfig((prev) => ({ ...prev, framesWithImagesLoaded: [] }))
-    console.log("DropDownConfig handleChangeRegion periodStart", periodStart)
+    // console.log("DropDownConfig handleChangeRegion periodStart", periodStart)
   }
 
   const handleChangeGroup = (e) => {
@@ -87,21 +87,21 @@ export default function DropDownConfig({ frame, setFrame, model, setModel, perio
     setFrame({ ...frame, group: e.target.value, product: firstProductGroup.value, forecastTime: periodStart, isPlaying: false })
     setFrames([...frames.slice(0, frame.id - 1), { ...frame, group: e.target.value, product: firstProductGroup.value, forecastTime: periodStart, isPlaying: false }, ...frames.slice(frame.id)])
     setConfig((prev) => ({ ...prev, framesWithImagesLoaded: [] }))
-    console.log("DropDownConfig handleChangeGroup periodStart", periodStart)
+    // console.log("DropDownConfig handleChangeGroup periodStart", periodStart)
   }
 
   const handleChangeProduct = (e) => {
-    console.log("model", model)
+    // console.log("model", model)
     const product = model.options.products.find(product => product.value === e.target.value)
     const periodStart = product.periodStart ?? model.periodStart
     resetTimer(periodStart)
     setFrame({ ...frame, product: e.target.value, isPlaying: false })
     setFrames([...frames.slice(0, frame.id - 1), { ...frame, product: e.target.value, forecastTime: periodStart, isPlaying: false }, ...frames.slice(frame.id)])
     setConfig((prev) => ({ ...prev, framesWithImagesLoaded: [] }))
-    console.log("e.target.value", e.target.value)
-    console.log("product", product)
-    console.log("periodStart", periodStart)
-    console.log("DropDownConfig handleChangeProduct periodStart", periodStart)
+    // console.log("e.target.value", e.target.value)
+    // console.log("product", product)
+    // console.log("periodStart", periodStart)
+    // console.log("DropDownConfig handleChangeProduct periodStart", periodStart)
   }
 
   const handleChangeInit = (e) => {
@@ -109,7 +109,7 @@ export default function DropDownConfig({ frame, setFrame, model, setModel, perio
     setFrame({ ...frame, init: e.target.value, isPlaying: false })
     setFrames([...frames.slice(0, frame.id - 1), { ...frame, init: e.target.value, forecastTime: periodStart, isPlaying: false }, ...frames.slice(frame.id)])
     setConfig((prev) => ({ ...prev, framesWithImagesLoaded: [] }))
-    console.log("DropDownConfig handleChangeInit periodStart", periodStart)
+    // console.log("DropDownConfig handleChangeInit periodStart", periodStart)
   }
 
   // console.log("dates", dates)

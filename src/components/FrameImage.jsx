@@ -75,6 +75,9 @@ export default function FrameImage({ frame, model, dates, loadingImages, setDown
 
   if (!frame || !model || dates.length === 0) return null
 
+  // console.log("FrameImage loadingImages", loadingImages)
+  // console.log("loading", loading)
+
   return (
     <div>
       {/* <p className="pb-2">URL do modelo:
@@ -108,7 +111,7 @@ export default function FrameImage({ frame, model, dates, loadingImages, setDown
       <p>[turn: <b>{turn}</b>]</p> */}
       <div className="w-full">
         <div className="flex justify-center items-center relative">
-          {loadingImages || loading && (
+          {(loadingImages || loading) && (
             <span className="absolute flex justify-center items-center" title="Após dar início na animação é necessário aguardar o carregamento das imagens...">
               <svg className="animate-spin h-16 w-16 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>

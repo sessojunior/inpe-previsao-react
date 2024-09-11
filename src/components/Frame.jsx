@@ -69,6 +69,8 @@ export default function Frame({ id }) {
   const [loadingImages, setLoadingImages] = useState(false)
   const [downloadImageUrl, setDownloadImageUrl] = useState("")
 
+  // console.log("Frame loadingImages", loadingImages)
+
   return (
     <div className={`flex flex-col p-4 hover:bg-gray-50 ${classFrame}`}>
       <FrameTop frame={frame} setFrame={setFrame} model={model} setModel={setModel} dates={dates} loadingImages={loadingImages} setLoadingImages={setLoadingImages} downloadImageUrl={downloadImageUrl} />
