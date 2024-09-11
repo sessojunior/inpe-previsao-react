@@ -207,12 +207,7 @@
           "group": "prec_pnmm",
           "regions": [
             "ams",
-            "bra",
-            "sul",
-            "sud",
-            "coe",
-            "nde",
-            "nte"
+            "bra"
           ]
         },
         {
@@ -786,12 +781,7 @@
           "group": "prec_pnmm",
           "regions": [
             "ams",
-            "bra",
-            "sul",
-            "sud",
-            "coe",
-            "nde",
-            "nte"
+            "bra"
           ]
         },
         {
@@ -1194,12 +1184,7 @@
           "group": "prec_pnmm",
           "regions": [
             "ams",
-            "bra",
-            "sul",
-            "sud",
-            "coe",
-            "nde",
-            "nte"
+            "bra"
           ]
         },
         {
@@ -1616,12 +1601,7 @@
           "regions": [
             "glo",
             "ams",
-            "bra",
-            "sul",
-            "sud",
-            "coe",
-            "nde",
-            "nte"
+            "bra"
           ]
         },
         {

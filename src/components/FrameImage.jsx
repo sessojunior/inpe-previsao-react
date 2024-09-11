@@ -5,6 +5,8 @@ export default function FrameImage({ frame, model, dates, loadingImages, setDown
 
   // console.log("FrameImage")
 
+  const [loading, setLoading] = useState(false)
+
   const { config } = useContext(ConfigContext)
 
   // Se o período que inicia ou termina for específico para o produto, por exemplo, um produto que inicia em "024", obtém a partir do produto o período de horas que o mesmo roda.
@@ -24,9 +26,9 @@ export default function FrameImage({ frame, model, dates, loadingImages, setDown
   // console.log("dates", dates)
   // console.log("FrameImage model", model)
   // console.log("model.urlImage", model.urlImage)
-  console.log("FrameImage frame.forecastTime", frame.forecastTime)
-  console.log("FrameImage periodStart", periodStart)
-  console.log("FrameImage forecastTime", forecastTime)
+  // console.log("FrameImage frame.forecastTime", frame.forecastTime)
+  // console.log("FrameImage periodStart", periodStart)
+  // console.log("FrameImage forecastTime", forecastTime)
 
   const urlImage = model?.urlImage.replaceAll("{{model}}", model?.value)
     .replaceAll("{{region}}", frame?.region)
@@ -47,7 +49,28 @@ export default function FrameImage({ frame, model, dates, loadingImages, setDown
   // console.log("config.framesWithImagesLoaded", config.framesWithImagesLoaded)
 
   useEffect(() => {
-    setDownloadImageUrl(urlImage)
+    const loadImage = async () => {
+      setLoading(true)
+      setDownloadImageUrl(urlImage)
+
+      try {
+        const img = new Image()
+        img.src = urlImage
+        await new Promise((resolve, reject) => {
+          img.onload = () => resolve(urlImage)
+          img.onerror = () => reject(new Error(`Erro ao carregar a imagem do frame ${frame.id}: ${urlImage}`))
+        })
+        // console.log(`Imagem do frame ${frame.id} carregada com sucesso!`)
+      } catch (error) {
+        console.error(`Erro ao carregar a imagem do frame ${frame.id}:`, error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    if (init && urlImage) {
+      loadImage()
+    }
   }, [urlImage, setDownloadImageUrl])
 
   if (!frame || !model || dates.length === 0) return null
@@ -85,7 +108,7 @@ export default function FrameImage({ frame, model, dates, loadingImages, setDown
       <p>[turn: <b>{turn}</b>]</p> */}
       <div className="w-full">
         <div className="flex justify-center items-center relative">
-          {loadingImages && (
+          {loadingImages || loading && (
             <span className="absolute flex justify-center items-center" title="Após dar início na animação é necessário aguardar o carregamento das imagens...">
               <svg className="animate-spin h-16 w-16 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
