@@ -78,11 +78,10 @@ export default function FrameImage({ frame, model, dates, loadingImages, setDown
 
   if (!frame || !model || dates.length === 0) return null
 
-  console.log("frame.id", frame.id)
-  console.log("loadingImages", loadingImages)
-  console.log("loading", loading)
-  console.log("(loadingImages || loading)", (loadingImages || (loading && !loadingImages)))
-  console.log("---")
+  // console.log("frame.id", frame.id)
+  // console.log("loadingImages", loadingImages)
+  // console.log("loading", loading)
+  // console.log("(loadingImages || loading)", (loadingImages || (loading && !loadingImages)))
 
   return (
     <div>
