@@ -579,3 +579,70 @@ Algumas sugestões para serem desenvolvidas posteriormente:
 - Um select no topo, ao lado do botão de animação de todos os quadros, para selecionar quantidade de horas de forecast de cada figura (1 em 1 hora, 2 em 2 horas, 3 em 3 horas, 6 em 6 horas).
 - Arquivo de log para acompanhar o que os usuários acessam.
 - Uso do Next.js ao invés de React.js.
+
+## Instruções usadas para deploy no Github
+
+Para os passos abaixo, é necessário que o projeto já esteja em um repositório no Github.
+
+1. Instalar dependência de desenvolvimento abaixo:
+
+```bash
+npm install gh-pages --save-dev
+```
+
+2. Em package.json adicionar em "scripts", no final, exatamente as chaves "predeploy" e "deploy" com as configurações:
+
+```json
+  "scripts": {
+    ...
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
+  },
+```
+
+O "predeploy" faz com que os arquivos de produção sejam gerados, a partir disso a Git gera a build que são os arquivos finais e o "deploy" salva em uma pasta "dist".
+
+3. Em seguida adicionar em package.json, no início, antes do "name":
+
+```json
+{
+  "homepage": "https://sessojunior.github.io/inpe-previsao-react",
+  "name": ...
+}
+```
+O padrão que é seguido aqui é https://**[nomedousuario]**.github.io/**[nomedorepositorio]**.
+
+4. No arquivo vite.config.js, acrescentar o "base" com o **nomedorepositorio**, no final, pode ser após "plugins" da função defineConfig():
+
+```js
+export default defineConfig({
+  plugins: [react()],
+  base: "/inpe-previsao-react"
+});
+```
+
+Isso é necessário para o deploy com o **Vite**.
+
+5. Seria interessante, comitar e subir essas alterações no repositório, para ficar correto lá.
+
+```bash
+git add .
+git commit -m "Add deploy config"
+git push
+```
+
+5. Para colocar esse projeto no ar, executar no terminal:
+
+```bash
+npm run deploy
+```
+
+Esse comando irá gerar os arquivos de build e enviar já para o Github. Se exibir uma mensagem de "Published", quer dizer que deu certo.
+
+6. Para acessar a página, ir no navegador para a página do Github, clicar em **Settings** e na navegação lateral, do lado esquerdo, clicar em **Pages**. Irá exibir a página de **Github Pages**. Nesta página irá aparecer, após o deploy, o link da página final. Demora um pouco para aparecer (cerca de 4 ou 5 minutos). Após um tempo, recarregando a página, irá exibir uma caixinha com o link, com o seguinte:
+
+**Your site is live at [https://sessojunior.github.io/inpe-previsao-react](https://sessojunior.github.io/inpe-previsao-react)**
+Last **deployed** by...
+
+7. Basta clicar no link informado na caixinha e pronto!
