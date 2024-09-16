@@ -34,7 +34,7 @@ export default function ConfigProvider({ children }) {
     })
   }
 
-  const [frames, setFrames] = useState(JSON.parse(localStorage.getItem('frames')) || initialFrames)
+  const [frames, setFrames] = useState(JSON.parse(localStorage.getItem('framesPrevisao')) || initialFrames)
 
   // console.log("jsonFrames", jsonFrames)
 
@@ -55,7 +55,7 @@ export default function ConfigProvider({ children }) {
     }));
     // console.log("frames", frames)
     // console.log("localFrames", localFrames)
-    localStorage.setItem('frames', JSON.stringify(localFrames))
+    localStorage.setItem('framesPrevisao', JSON.stringify(localFrames))
     // console.log("salvou no localStorage: frames")
   }, [frames])
 
