@@ -3,8 +3,8 @@ export default function DropDownTime({ forecastTime, setForecastTime, frame, set
   // console.log("DropDownTime forecastTime", forecastTime)
   // console.log("forecastTime", forecastTime)
 
-  const classButtonTime = "size-9 md:size-[38px] inline-flex justify-center items-center gap-2 rounded-md font-bold bg-white text-black hover:bg-gray-100 text-xs md:text-sm"
-  const classButtonTimeActive = "size-9 md:size-[38px] inline-flex justify-center items-center gap-2 rounded-md font-bold bg-blue-600 text-gray-50 text-xs md:text-sm"
+  const classButtonTime = "size-8 md:size-[38px] inline-flex justify-center items-center gap-2 rounded-full font-bold bg-white text-black hover:bg-blue-100 text-xs md:text-sm"
+  const classButtonTimeActive = "size-8 md:size-[38px] inline-flex justify-center items-center gap-2 rounded-full font-bold bg-blue-600 hover:bg-blue-500 text-gray-50 text-xs md:text-sm"
 
   const handleChangeTime = (time) => {
     setForecastTime(time)

@@ -24,7 +24,7 @@ export default function Frames() {
         </div>
       )}
       {(config.quantityFrames === 3) && (
-        <div className="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3">
+        <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3">
           <Frame id={1} />
           <Frame id={2} />
           <Frame id={3} />

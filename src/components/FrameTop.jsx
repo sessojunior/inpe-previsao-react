@@ -52,8 +52,8 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates, load
 
   // console.log("hours", hours)
 
-  const classButton = "size-9 md:size-[38px] inline-flex justify-center items-center gap-2 rounded-md font-medium bg-white border border-gray-200 text-gray-700 hover:bg-gray-100 text-xs md:text-sm"
-  const classButtonActive = "size-9 md:size-[38px] inline-flex justify-center items-center gap-2 rounded-md font-medium bg-blue-600 border border-gray-200 text-gray-50 hover:bg-blue-500 text-xs md:text-sm"
+  const classButton = "size-9 md:size-[38px] inline-flex justify-center items-center gap-2 rounded-full font-medium text-gray-700 hover:bg-blue-100 text-xs md:text-sm"
+  const classButtonActive = "size-9 md:size-[38px] inline-flex justify-center items-center gap-2 rounded-full font-medium bg-blue-600 text-gray-50 hover:bg-blue-500 text-xs md:text-sm"
 
   const [openDropdownConfig, setOpenDropdownConfig] = useState(false)
   const [openDropdownTime, setOpenDropdownTime] = useState(false)
@@ -283,16 +283,14 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates, load
       <div className="flex relative">
         <button className={openDropdownConfig ? classButtonActive : classButton} onClick={handleDropdownConfig} title="Configurações do modelo, região e inicialização para este quadro"><FaCog /></button>
         {openDropdownConfig && <DropDownConfig frame={frame} setFrame={setFrame} model={model} setModel={setModel} periodStart={periodStart} dates={dates} resetTimer={resetTimer} />}
-        <div className="mx-2">
-          <div className="font-bold text-sm">{model.label} · {region?.label}</div>
+        <div className="mx-2 hidden sm:block">
+          <div className="font-bold text-sm">{model.label} {/* <span className="hidden 2xl:inline-block"> · {region?.label}</span> */}</div>
           <div className="text-xs">
             {/* <span className={group.value !== model.value || group.value !== product.value ? "hidden" : ""}>{frame.init ? formatDate(frame.init) : dates.length > 0 ? formatDate(dates[0]) : "Data não definida"}</span> */}
             <span>
               {/* {group.value !== product.value ? (<>{product.label}</>) : (<>{group.label}</>)} */}
             </span>
             <span>{frame.init ? formatDate(frame.init) : dates.length > 0 ? formatDate(dates[0]) : "Data não definida"}</span>
-          </div>
-          <div className="text-xs">
           </div>
         </div>
       </div>
@@ -321,7 +319,7 @@ export default function FrameTop({ frame, setFrame, model, setModel, dates, load
           <button className={classButton} onClick={handleIncreaseTime} title="Avançar o tempo de previsão atual - forecast time"><FaChevronRight /></button>
         </div>
         <div className="flex items-center">
-          <div key={forecastTime} className="font-bold text-sm px-2 text-ellipsis overflow-hidden min-w-24 text-center animate-bounce-in" title="Tempo de previsão atual - forecast time">{forecastTime} horas</div>
+          <div key={forecastTime} className="font-bold text-sm text-ellipsis overflow-hidden min-w-20 text-center animate-bounce-in" title="Tempo de previsão atual - forecast time">{forecastTime} horas</div>
           <button className={openDropdownTime ? classButtonActive : classButton} onClick={handleDropdownTime} title="Selecionar o tempo de previsão - forecast time - para este quadro"><FaClock /></button>
           {openDropdownTime && <DropDownTime forecastTime={forecastTime} setForecastTime={setForecastTime} frame={frame} setFrame={setFrame} hours={hours} />}
         </div>

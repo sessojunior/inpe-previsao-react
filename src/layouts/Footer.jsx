@@ -6,6 +6,7 @@ import { FaCookieBite, FaXTwitter } from "react-icons/fa6";
 import { FaYoutube, FaFacebook, FaInstagramSquare } from "react-icons/fa";
 
 import AcessoInformacao from "../assets/acesso-informacao.svg"
+import imgLogoWhite from "../assets/govbr-logo-white.png"
 
 export default function Footer() {
 
@@ -57,7 +58,7 @@ export default function Footer() {
         <footer className="w-full flex flex-col bg-blue-900">
           <div className="bg-blue-900 w-full flex flex-col px-4 pt-4 pb-8 xl:max-w-[1280px] xl:mx-auto">
             <div className="my-6 lg:my-8">
-              <img src="src/assets/govbr-logo-white.png" alt="" className="h-10 lg:h-14" />
+              <img src={imgLogoWhite} alt="Governo Federal" className="h-10 lg:h-14" />
             </div>
             <div className="grid lg:grid-cols-4 gap-4">
               <div className="pb-4">
