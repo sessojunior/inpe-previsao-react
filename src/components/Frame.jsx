@@ -28,7 +28,7 @@ export default function Frame({ id }) {
   // Se não foi possível carregar o arquivo JSON de Config.jsx
   if (!frame || !model) {
     console.error("É provável que não tenha sido possível carregar o arquivo models.json ou regions.json em Config.jsx")
-    localStorage.clear()
+    window.localStorage.clear()
     setTimeout(() => {
       window.location.reload()
     }, 15000)
