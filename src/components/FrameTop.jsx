@@ -88,6 +88,7 @@ export default function FrameTop({
   const [isPlaying, setIsPlaying] = useState(frame.isPlaying ?? false);
 
   const [configTimeout, setConfigTimeout] = useState(null);
+  const [timeTimeout, setTimeTimeout] = useState(null);
 
   // console.log("frame.forecastTime", frame.forecastTime)
   // console.log("forecastTime", forecastTime)
@@ -116,6 +117,23 @@ export default function FrameTop({
       setOpenDropdownConfig(false);
     }, 600); // Atraso para fechar o dropdown
     setConfigTimeout(timeout);
+  };
+
+  // Função para abrir o dropdown ao passar o mouse sobre o botão
+  const handleMouseOverTime = () => {
+    if (timeTimeout) {
+      clearTimeout(timeTimeout); // Cancelar o timeout de fechamento
+      setTimeTimeout(null);
+    }
+    setOpenDropdownTime(true); // Abre o dropdown
+  };
+
+  // Função para fechar o dropdown após um tempo
+  const handleMouseLeaveTime = () => {
+    const timeout = setTimeout(() => {
+      setOpenDropdownTime(false);
+    }, 600); // Atraso para fechar o dropdown
+    setTimeTimeout(timeout);
   };
 
   const handleDecreaseTime = useCallback(() => {
@@ -457,18 +475,25 @@ export default function FrameTop({
           <button
             className={openDropdownTime ? classButtonActive : classButton}
             onClick={handleDropdownTime}
+            onMouseOver={handleMouseOverTime}
+            onMouseLeave={handleMouseLeaveTime}
             title="Selecionar o tempo de previsão - forecast time - para este quadro"
           >
             <FaClock />
           </button>
           {openDropdownTime && (
-            <DropDownTime
-              forecastTime={forecastTime}
-              setForecastTime={setForecastTime}
-              frame={frame}
-              setFrame={setFrame}
-              hours={hours}
-            />
+            <div
+              onMouseOver={handleMouseOverTime}
+              onMouseLeave={handleMouseLeaveTime}
+            >
+              <DropDownTime
+                forecastTime={forecastTime}
+                setForecastTime={setForecastTime}
+                frame={frame}
+                setFrame={setFrame}
+                hours={hours}
+              />
+            </div>
           )}
         </div>
       </div>
