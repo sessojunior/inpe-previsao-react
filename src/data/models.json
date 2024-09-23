@@ -1676,6 +1676,10 @@
           "value": "lapserate"
         },
         {
+          "label": "Precipitação",
+          "value": "prec"
+        },
+        {
           "label": "Precipitação, pressão e espessura",
           "value": "prec_pnmm"
         },
@@ -1782,6 +1786,57 @@
             "ams",
             "bra"
           ]
+        },
+        {
+          "label": "Precipitação acumulada",
+          "value": "prec_acum",
+          "group": "prec",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ],
+          "periodStart": "024",
+          "periodEnd": "168",
+          "periodHours": 12
+        },
+        {
+          "label": "Precipitação acumulada em 24h",
+          "value": "prec_12h",
+          "group": "prec",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ],
+          "periodStart": "024",
+          "periodEnd": "168",
+          "periodHours": 12
+        },
+        {
+          "label": "Precipitação acumulada até 7 dias",
+          "value": "prec",
+          "group": "prec",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ],
+          "periodStart": "024",
+          "periodEnd": "168",
+          "periodHours": 12
         },
         {
           "label": null,
