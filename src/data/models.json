@@ -1647,7 +1647,7 @@
     "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/pn/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/{{model}}_{{product}}_{{region}}_{{year}}{{month}}{{day}}{{turn}}z_{{forecastTime}}z.png",
     "urlDates": "https://s1.cptec.inpe.br/grafico/Modelos/portal_previsao_numerica/mod_smec.json",
     "timeRun": 24,
-    "periodHours": 3,
+    "periodHours": 6,
     "periodStart": "000",
     "periodEnd": "168",
     "default": {
