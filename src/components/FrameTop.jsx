@@ -14,6 +14,8 @@ import DropDownTime from "./DropDownTime";
 import { formatDate } from "../lib/formatDate";
 import { toast } from "react-toastify";
 
+import ImageNotFound from "../assets/image-not-found.jpg";
+
 export default function FrameTop({
   frame,
   setFrame,
@@ -65,14 +67,22 @@ export default function FrameTop({
   // Cria um array de horas iniciando com model.periodStart (geralmente "000") e terminando com model.periodEnd (geralmente "180" ou "240")
   // Precisa ter 3 caracteres, e ficaria assim: ["000", "003", "006", ..., "240"]
   // O intervalo de horas é baseado em periodHours (geralmente 3 ou 6 quando baseado em model ou 24 quando baseado em product)
-  const hours = Array.from(
-    {
-      length: (Number(periodEnd) - Number(periodStart)) / periodHours + 1,
-    },
-    (_, i) => String(Number(periodStart) + i * periodHours).padStart(3, "0")
-  );
 
-  // console.log("hours", hours)
+  // Cálculo da quantidade de intervalos
+  const length =
+    Math.floor((Number(periodEnd) - Number(periodStart)) / periodHours) + 1;
+
+  // Gerar o array de horas, formatando corretamente os valores, incluindo "000"
+  const hours = Array.from({ length }, (_, i) => {
+    const value = Number(periodStart) + i * periodHours;
+
+    // Formatar com 3 dígitos e tratar "000" como valor padrão, além de positivo/negativo
+    return value === 0
+      ? "000"
+      : (value > 0 ? "" : "-") + String(Math.abs(value)).padStart(3, "0");
+  });
+
+  //console.log(hours);
 
   const classButton =
     "size-9 md:size-[38px] inline-flex justify-center items-center gap-2 rounded-full font-medium text-gray-700 hover:bg-blue-100 text-xs md:text-sm";
@@ -341,7 +351,7 @@ export default function FrameTop({
     /* End Timer */
   }
 
-  const publicImage = "image-not-found.jpg";
+  const publicImage = ImageNotFound;
 
   return (
     <div className="flex justify-between">
@@ -467,10 +477,13 @@ export default function FrameTop({
         <div className="flex items-center">
           <div
             key={forecastTime}
-            className="font-bold text-sm text-ellipsis overflow-hidden min-w-20 text-center animate-bounce-in"
+            className="font-bold text-sm text-ellipsis overflow-hidden min-w-16 text-center animate-bounce-in"
             title="Tempo de previsão atual - forecast time"
           >
-            {forecastTime} horas
+            <span>
+              {Number(forecastTime)}
+              <small>h</small>
+            </span>
           </div>
           <button
             className={openDropdownTime ? classButtonActive : classButton}

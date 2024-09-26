@@ -1,11 +1,13 @@
-import Header from './layouts/Header'
-import Container from './layouts/Container'
-import Footer from './layouts/Footer'
+import "./index.css";
 
-import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+import Header from "./layouts/Header";
+import Container from "./layouts/Container";
+import Footer from "./layouts/Footer";
 
-import ConfigProvider from './contexts/ConfigContext'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import ConfigProvider from "./contexts/ConfigContext";
 
 export default function App() {
   return (
@@ -13,7 +15,8 @@ export default function App() {
       <ConfigProvider>
         <Header />
         <Container />
-        <ToastContainer toastClassName="text-sm font-sans"
+        <ToastContainer
+          toastClassName="text-sm font-sans"
           position="bottom-center"
           autoClose={5000}
           hideProgressBar={false}
@@ -24,9 +27,9 @@ export default function App() {
           stacked
           pauseOnHover
           theme="light"
-          />
+        />
         <Footer />
       </ConfigProvider>
     </>
-  )
+  );
 }
