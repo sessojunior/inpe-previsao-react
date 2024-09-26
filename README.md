@@ -15,16 +15,16 @@ Imagem apenas ilustrativa.
 O projeto também está organizado em diversos arquivos e diretórios, onde:
 
 - **/.git** - Diretório de configurações para o git. Não é feito o upload para o Github.
-- **/dist** - Diretório que é disponibilizado para a produção após rodar o *npm run build*. É possível ver uma prévia depois com *npm run preview*
-- **/node_modules** - Diretório descartável, contendo as dependências do projeto. Não é feito o upload para o Github. Pode ser removido e depois gerado novamente utilizado *npm install*, instalando todas as dependências necessárias que estão no arquivo *package.json**.
-- **/public** - Diretório contendo as imagens de favicon e a imagem *image-not-found.jpg* que é exibida quando não é encontrada uma imagem de previsão.
+- **/dist** - Diretório que é disponibilizado para a produção após rodar o _npm run build_. É possível ver uma prévia depois com _npm run preview_
+- **/node_modules** - Diretório descartável, contendo as dependências do projeto. Não é feito o upload para o Github. Pode ser removido e depois gerado novamente utilizado _npm install_, instalando todas as dependências necessárias que estão no arquivo \*package.json\*\*.
+- **/public** - Diretório contendo as imagens de favicon e a imagem _image-not-found.jpg_ que é exibida quando não é encontrada uma imagem de previsão.
 - **/src** - Diretório contendo os arquivos principais do projeto, componentes e layout.
-  - **/assets** -  Diretório contendo as imagens de logotipos do governo para o cabeçalho e rodapé.
+  - **/assets** - Diretório contendo as imagens de logotipos do governo para o cabeçalho e rodapé.
   - **/components** - Diretório contendo todos os arquivos dos componentes do aplicativo. Está dividido em uma hierarquia, porém ambos no mesmo diretório, para fácil acesso:
     - **TopBar.jsx** - Arquivo de componente que fica na barra do topo acima dos frames e abaixo do cabeçalho. Contém um botão de exibir e ocultar cabeçalho e rodapé, título do aplicativo, e botões de dar play na animaçõa em todos os frames, botão de exibir apenas um frame, dois frames ou 4 frames de uma só vez.
     - **Frames.jsx** - Arquivo de componente que engloba exibir todos os frames.
       - **Frame.jsx** - Arquivo de componente que exibe um frame.
-        - **FrameTop.jsx** - Arquivo de componente que fica no topo de cada um dos  frames. Contém um botão de dropdown de configurar modelo, nome e região, botões de retornar, play de animação e avançar imagens de previsão do tempo, tempo de previsão (forecast) que está sendo exibido e botão de selecionar tempo de previsão manualmente.
+        - **FrameTop.jsx** - Arquivo de componente que fica no topo de cada um dos frames. Contém um botão de dropdown de configurar modelo, nome e região, botões de retornar, play de animação e avançar imagens de previsão do tempo, tempo de previsão (forecast) que está sendo exibido e botão de selecionar tempo de previsão manualmente.
           - **DropDownConfig.jsx** - Arquivo de componente de dropdown que permite selecionar o modelo, grupo do produto, produto, região e data de inicialização do modelo.
           - **DropDownTime.jsx** - Arquivo de componente que exibe as horas de previsão disponíveis para a configuração selecionada e permite trocar manualmente de previsão.
         - **FrameImage.jsx** - Arquivo de componente que exibe a imagem de previsão e um botão para download da imagem em uma nova aba do navegador.
@@ -34,13 +34,13 @@ O projeto também está organizado em diversos arquivos e diretórios, onde:
     - **regions.json** - Arquivo JSON com uma lista de informações sobre regiões.
   - **/layouts** - Diretório contendo arquivos de componentes de layout. Contém os seguintes arquivos:
     - **Header.jsx** - Arquivo de componente de cabeçalho com logotipo e links de navegação
-    - **Container.jsx** - Arquivo de componente que engloba todo o conteúdo principal, como barra do topo *(TopBar.jsx)* e os quadros *(Frames.jsx)*.
+    - **Container.jsx** - Arquivo de componente que engloba todo o conteúdo principal, como barra do topo _(TopBar.jsx)_ e os quadros _(Frames.jsx)_.
     - **Footer.jsx** - Arquivo de componente de rodapé, contendo logotipo, links de navegação e outras informações.
   - **/lib** - Diretório que contém funções que podem ser utilizadas em todo o aplicativo, como formatação de datas.
   - **App.jsx** - Arquivo principal que contém os componentes pais e engloba tudo com o Context API.
   - **input.css** - Arquivo criado para estilização com o Tailwind, conforme a documentação oficial do Taiwind.
   - **main.jsx** - Arquivo que é o ponto de entrada para o aplicativo em React.
-  - **output.css** - Arquivo de estilização do Tailwind. É gerado automaticamente ao rodar *npm run tailwind*.
+  - **output.css** - Arquivo de estilização do Tailwind. É gerado automaticamente ao rodar _npm run tailwind_.
 - **index.html** - Página inicial do aplicativo
 - **tailwind.config.js** - Arquivo contendo configurações do Tailwind, para estilização.
 - **package.json** - Arquivo contendo as dependências e configurações do projeto
@@ -49,8 +49,8 @@ O projeto também está organizado em diversos arquivos e diretórios, onde:
 
 É necessário ter arquivos JSON que serão acessados pelo aplicativo e que informarão, as datas dos produtos que foram gerados. Esses arquivos ficaram no servidor backend e deverão ter o seguinte conteúdo:
 
-- **model** - *(string)*. É o nome do modelo para a URL. Em minúsculo, sem acentuação e sem espaços
-- **datesRun** - *(array de strings: string[])*. É um array, no seguinte padrão YYYY-MM-DD HHz (onde Y é ano (4 dígitos), M é mês (2 dígitos), D é dia (2 dígitos) e H é o turno (2 dígitos) e z é fixo, após o turno.
+- **model** - _(string)_. É o nome do modelo para a URL. Em minúsculo, sem acentuação e sem espaços
+- **datesRun** - _(array de strings: string[])_. É um array, no seguinte padrão YYYY-MM-DD HHz (onde Y é ano (4 dígitos), M é mês (2 dígitos), D é dia (2 dígitos) e H é o turno (2 dígitos) e z é fixo, após o turno.
 
 O endereço de URL deste arquivo JSON deverá estar no parâmetro **urlDates** do arquivo JSON **models.json**. Cada modelo deverá ter o seu arquivo JSON.
 
@@ -59,10 +59,7 @@ O endereço de URL deste arquivo JSON deverá estar no parâmetro **urlDates** d
 ```json
 {
   "model": "bam",
-  "datesRun": [
-    "2024-04-02 12z",
-    "2024-04-02 00z"
-  ]
+  "datesRun": ["2024-04-02 12z", "2024-04-02 00z"]
 }
 ```
 
@@ -70,7 +67,7 @@ O endereço de URL deste arquivo JSON deverá estar no parâmetro **urlDates** d
 
 É necessário que no mesmo diretório contenha um arquivo **.htaccess**, caso o servidor seja Apache, para evitar o seguinte erro:
 
-*Access to fetch at 'https://s1.cptec.inpe.br/grafico/Modelos/portal_previsao_numerica/mod_wrf.json' from origin 'http://...' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.*
+_Access to fetch at 'https://s1.cptec.inpe.br/grafico/Modelos/portal_previsao_numerica/mod_wrf.json' from origin 'http://...' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled._
 
 A solução mais fácil para esse problema é criar um arquivo **.htaccess** no mesmo diretório que estão os arquivos .json do CPTEC. Esse arquivo **.htaccess** deve ter o seguinte conteúdo:
 
@@ -82,7 +79,7 @@ A solução mais fácil para esse problema é criar um arquivo **.htaccess** no 
 </IfModule>
 ```
 
-## Arquivos JSON da pasta */data*
+## Arquivos JSON da pasta _/data_
 
 O projeto necessita de arquivos JSON que estão no diretório **/data** para rodar o aplicativo. São eles:
 
@@ -91,12 +88,12 @@ O projeto necessita de arquivos JSON que estão no diretório **/data** para rod
 
 Entrando mais em detalhes, abaixo a descrição de cada arquivo.
 
-### Arquivo JSON *regions.json*
+### Arquivo JSON _regions.json_
 
 É um array contendo vários objetos com:
 
-- **label** - *(string)*. Nome da região
-- **value** - *(string)*. Slug de URL da região
+- **label** - _(string)_. Nome da região
+- **value** - _(string)_. Slug de URL da região
 
 Exemplo:
 
@@ -111,41 +108,42 @@ Exemplo:
 ]
 ```
 
-### Arquivo JSON *models.json*
+### Arquivo JSON _models.json_
 
 É um array de objetos contendo o valor padrão e demais valores possíveis de cada modelo:
 
-- **id** - *(number)*. É o identificador único do modelo. O primeiro modelo deve começar com 1 e os seguintes de forma incremental e crescente. Exemplo: 1, 2, 3...
-- **label** - *(string)*. Nome que irá aparecer para o usuário na caixa de seleção do formulário. Exemplo: "BRAMS 08".
-- **value** - *(string)*. Slug de URL e também valor do modelo. Serve para identificar o modelo também de forma única, a fins de comparação nos scripts. Também é o formato usado na URL para a obtenção da imagem. Exemplo: "BRAMS08".
-- **urlImage** - *(string)*. Template de URL contendo informações de como as variáveis de cada modelo são transferidos para a URL.
-  - **{{model}}** - *(string)*. Valor ou slug do modelo. Exemplos: "BRAMS08".
-  - **{{region}}** - *(string)*. Região do produto do modelo. Exemplos: "sul", "ams", "norte", "bra".
-  - **{{product}}** - *(string)*. Produto do modelo. Exemplos: "prec_pnmm", "aprec", "ageop_500", "cis_vento_3000".
-  - **{{year}}** - *(string)*. Ano da rodada (YYYY). Exemplo: "2024".
-  - **{{month}}** - *(string)*. Mês da rodada (MM). Exemplo: "08".
-  - **{{day}}** - *(string)*. Dia da rodada (DD). Exemplo: "14".
-  - **{{turn}}** - *(string)*. Turno da rodada (HH). Exemplos: "00", "12".
-  - **{{forecastTime}}** - *(string)*. Hora (HHH) de execução atual da imagem. Tempo de previsão (forecast time). Exemplos: "000", "003", "012", "072", "144".
-- **urlDates** - *(string)*. URL que obterá o arquivo JSON contendo as datas disponíveis do modelo com o parâmetro *datesRun*.
-- **timeRun** - *(number)*. Tempo (em horas) que leva para rodar todo o modelo, ou de quanto em quanto tempo esse modelo é rodado.
-- **periodHours** - *(number)*. As figuras são geradas em um intervalo de horas. Esse é o intervalo de horas de cada figura de previsão do modelo. É necessário para calcular e obter um array com as horas de previsão. Por exemplo, para um número de 3, será gerado um array ["000", "003", "006", ...] e para um número 6, será gerado um array ["000", "006", "012", ...]. Valores possíveis: 1, 3 ou 6.
-- **periodStart** - *(string)*. Tempo inicial da figura. Exemplo: "000".
-- **periodEnd** - *(string)*. Tempo final da figura. Exemplos: "180", "240".
-- **default** - *(Object)*. Valores padrão para o modelo.
-  - **product** - *(Object)*. Valor padrão de produto. Quando é selecionado um novo modelo, carrega esse valor padrão de produto.
-    - **value** - *(string)*. Valor de slug do produto.
-    - **group** - *(string)*. Valor de slug do grupo.
-    - **region** - *(string)*. Valor de slug da região.
-- **options** - *(Object)*. Valores possíveis do modelo que o usuário pode selecionar.
-  - **groups** - *(array de objetos: Object[])*. Grupos do modelo que podem ser selecionados pelo usuário. Aqui ficam agrupados os nomes (value) dos produtos que são parecidos. Exemplo: Grupo *ageop* para os produtos *"ageop_250"*, *"ageop_500"*, *"ageop_700"* etc.
-    - **label** - *(string)*. Nome do grupo que irá aparecer para o usuário escolher.
-    - **value** - *(string)*. Valor de slug do grupo.
-  - **products** - *(array de objetos: Object[])*. Produtos do modelo que podem selecionados pelo usuário.
-    - **label** - *(string ou null: string | null)*. Nome do produto que irá aparecer para o usuário. Exemplos: *"Nível de 250"*, onde o grupo é *"ageop"*. Pode ser *null* também, se não tiver variações. Por exemplo: *null*, onde o *value* e o *group* são do mesmo nome, como *"prec_pnmm"*.
-    - **value** - *(string)*. Valor de slug do produto. Exemplos: "prec_pnmm", "aprec", "ageop_500", "ageop_850", "lapserate", "cis_vento_1000", "cis_vento_3000".
-    - **group** - *(string)*. Valor de slug do grupo que o produto pertence. Exemplo: "prec", "cis_vento", "lapserate", "ageop".
-    - **regions** - (array de strings: string[]). Os valores possíveis são os que estão nos parâmetros **value** do arquivo JSON **regions.json**. Exemplo: *["ams", "bra", "nte"]*. No caso, aqui são somente os valores de região que este produto possui.
+- **id** - _(number)_. É o identificador único do modelo. O primeiro modelo deve começar com 1 e os seguintes de forma incremental e crescente. Exemplo: 1, 2, 3...
+- **label** - _(string)_. Nome que irá aparecer para o usuário na caixa de seleção do formulário. Exemplo: "BRAMS 08".
+- **value** - _(string)_. Slug de URL e também valor do modelo. Serve para identificar o modelo também de forma única, a fins de comparação nos scripts. Também é o formato usado na URL para a obtenção da imagem. Exemplo: "BRAMS08".
+- **urlImage** - _(string)_. Template de URL contendo informações de como as variáveis de cada modelo são transferidos para a URL.
+  - **{{model}}** - _(string)_. Valor ou slug do modelo. Exemplos: "BRAMS08".
+  - **{{region}}** - _(string)_. Região do produto do modelo. Exemplos: "sul", "ams", "norte", "bra".
+  - **{{product}}** - _(string)_. Produto do modelo. Exemplos: "prec_pnmm", "aprec", "ageop_500", "cis_vento_3000".
+  - **{{year}}** - _(string)_. Ano da rodada (YYYY). Exemplo: "2024".
+  - **{{month}}** - _(string)_. Mês da rodada (MM). Exemplo: "08".
+  - **{{day}}** - _(string)_. Dia da rodada (DD). Exemplo: "14".
+  - **{{turn}}** - _(string)_. Turno da rodada (HH). Exemplos: "00", "12".
+  - **{{forecastTime}}** - _(string)_. Hora (HHH) de execução atual da imagem. Tempo de previsão (forecast time). Exemplos: "000", "003", "012", "072", "144".
+- **urlDates** - _(string)_. URL que obterá o arquivo JSON contendo as datas disponíveis do modelo com o parâmetro _datesRun_.
+- **timeRun** - _(number)_. Tempo (em horas) que leva para rodar todo o modelo, ou de quanto em quanto tempo esse modelo é rodado.
+- **periodHours** - _(number)_. As figuras são geradas em um intervalo de horas. Esse é o intervalo de horas de cada figura de previsão do modelo. É necessário para calcular e obter um array com as horas de previsão. Por exemplo, para um número de 3, será gerado um array ["000", "003", "006", ...] e para um número 6, será gerado um array ["000", "006", "012", ...]. Valores possíveis: 1, 3 ou 6.
+- **periodStart** - _(string)_. Tempo inicial da figura para o array de tempos. Exemplo: "000".
+- **periodEnd** - _(string)_. Tempo final da figura para o array de tempos. Exemplos: "180", "240".
+- **forecastTime** - _(string)_. É o valor em horas do tempo que irá ser exibido inicialmente. Exemplos: "000", "024".
+- **default** - _(Object)_. Valores padrão para o modelo.
+  - **product** - _(Object)_. Valor padrão de produto. Quando é selecionado um novo modelo, carrega esse valor padrão de produto.
+    - **value** - _(string)_. Valor de slug do produto.
+    - **group** - _(string)_. Valor de slug do grupo.
+    - **region** - _(string)_. Valor de slug da região.
+- **options** - _(Object)_. Valores possíveis do modelo que o usuário pode selecionar.
+  - **groups** - _(array de objetos: Object[])_. Grupos do modelo que podem ser selecionados pelo usuário. Aqui ficam agrupados os nomes (value) dos produtos que são parecidos. Exemplo: Grupo _ageop_ para os produtos _"ageop_250"_, _"ageop_500"_, _"ageop_700"_ etc.
+    - **label** - _(string)_. Nome do grupo que irá aparecer para o usuário escolher.
+    - **value** - _(string)_. Valor de slug do grupo.
+  - **products** - _(array de objetos: Object[])_. Produtos do modelo que podem selecionados pelo usuário.
+    - **label** - _(string ou null: string | null)_. Nome do produto que irá aparecer para o usuário. Exemplos: _"Nível de 250"_, onde o grupo é _"ageop"_. Pode ser _null_ também, se não tiver variações. Por exemplo: _null_, onde o _value_ e o _group_ são do mesmo nome, como _"prec_pnmm"_.
+    - **value** - _(string)_. Valor de slug do produto. Exemplos: "prec_pnmm", "aprec", "ageop_500", "ageop_850", "lapserate", "cis_vento_1000", "cis_vento_3000".
+    - **group** - _(string)_. Valor de slug do grupo que o produto pertence. Exemplo: "prec", "cis_vento", "lapserate", "ageop".
+    - **regions** - (array de strings: string[]). Os valores possíveis são os que estão nos parâmetros **value** do arquivo JSON **regions.json**. Exemplo: _["ams", "bra", "nte"]_. No caso, aqui são somente os valores de região que este produto possui.
 
 Exemplo:
 
@@ -161,6 +159,7 @@ Exemplo:
     "periodHours": 3,
     "periodStart": "000",
     "periodEnd": "168",
+    "forecastTime": "000",
     "default": {
       "product": {
         "value": "aprec",
@@ -565,11 +564,11 @@ Exemplo:
 
 ## Observações
 
-Cada modelo possui as chaves *periodStart* e *periodEnd*, que funcionam para todos os produtos São fixos. Ou seja, não devem variar na quantidade de horas ao alterar um produto ou região do modelo. Por exemplo, para o modelo BRAMS 08, todos os produtos começam com "000" e terminam com "180". Para o BAM, todos os produtos poderiam começar com "000" e terminar com "240".
+Cada modelo possui as chaves _periodStart_ e _periodEnd_, que funcionam para todos os produtos São fixos. Ou seja, não devem variar na quantidade de horas ao alterar um produto ou região do modelo. Por exemplo, para o modelo BRAMS 08, todos os produtos começam com "000" e terminam com "180". Para o BAM, todos os produtos poderiam começar com "000" e terminar com "240".
 
 Ou seja, se um modelo for até 180 horas e de 3 em 3 horas, todos os produtos e variáveis ou níveis deste modelo serão assim.
 
-Entretanto, alguns produtos por serem mais específicos, possuem particularidades, como é o caso de temperatura mínima, temperatura máxima e umidade relativa mínima, que tem um intervalo maior que é de 24 horas. Ou seja, roda 1 vez por dia. Neste caso, esses produtos teriam mais algumas chaves, específicas para estes produtos, como: *periodStart*, *periodEnd* e *periodHours*.
+Entretanto, alguns produtos por serem mais específicos, possuem particularidades, como é o caso de temperatura mínima, temperatura máxima e umidade relativa mínima, que tem um intervalo maior que é de 24 horas. Ou seja, roda 1 vez por dia. Neste caso, esses produtos teriam mais algumas chaves, específicas para estes produtos, como: _periodStart_, _periodEnd_ e _periodHours_.
 
 ## Sugestão de melhorias futuras
 
@@ -611,6 +610,7 @@ O "predeploy" faz com que os arquivos de produção sejam gerados, a partir diss
   "name": ...
 }
 ```
+
 O padrão que é seguido aqui é https://**[nomedousuario]**.github.io/**[nomedorepositorio]**.
 
 4. No arquivo vite.config.js, acrescentar o "base" com o **nomedorepositorio**, no final, pode ser após "plugins" da função defineConfig():
@@ -618,7 +618,7 @@ O padrão que é seguido aqui é https://**[nomedousuario]**.github.io/**[nomedo
 ```js
 export default defineConfig({
   plugins: [react()],
-  base: "/inpe-previsao-react"
+  base: "/inpe-previsao-react",
 });
 ```
 

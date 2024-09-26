@@ -93,7 +93,7 @@ export default function FrameTop({
   const [openDropdownTime, setOpenDropdownTime] = useState(false);
 
   const [forecastTime, setForecastTime] = useState(
-    frame.forecastTime ?? periodStart
+    product.forecastTime ?? model.forecastTime ?? periodStart
   );
   const [isPlaying, setIsPlaying] = useState(frame.isPlaying ?? false);
 
@@ -339,7 +339,7 @@ export default function FrameTop({
     // console.log("resetTimer")
     setTimer(0);
     pauseTimer();
-    setForecastTime(time ?? periodStart);
+    setForecastTime(time ?? forecastTime);
     setIsPlaying(false);
     // console.log("model", model)
     // console.log("forecastTime", forecastTime)

@@ -9,6 +9,7 @@
     "periodHours": 3,
     "periodStart": "000",
     "periodEnd": "168",
+    "forecastTime": "000",
     "default": {
       "product": {
         "value": "aprec",
@@ -234,6 +235,7 @@
           ],
           "periodStart": "024",
           "periodEnd": "168",
+          "forecastTime": "024",
           "periodHours": 24
         },
         {
@@ -251,6 +253,7 @@
           ],
           "periodStart": "024",
           "periodEnd": "168",
+          "forecastTime": "024",
           "periodHours": 24
         },
         {
@@ -282,6 +285,7 @@
           ],
           "periodStart": "024",
           "periodEnd": "168",
+          "forecastTime": "024",
           "periodHours": 24
         },
         {
@@ -412,6 +416,7 @@
     "periodHours": 3,
     "periodStart": "000",
     "periodEnd": "168",
+    "forecastTime": "000",
     "default": {
       "product": {
         "value": "aprec",
@@ -637,6 +642,7 @@
           ],
           "periodStart": "024",
           "periodEnd": "168",
+          "forecastTime": "024",
           "periodHours": 24
         },
         {
@@ -654,6 +660,7 @@
           ],
           "periodStart": "024",
           "periodEnd": "168",
+          "forecastTime": "024",
           "periodHours": 24
         },
         {
@@ -685,6 +692,7 @@
           ],
           "periodStart": "024",
           "periodEnd": "168",
+          "forecastTime": "024",
           "periodHours": 24
         },
         {
@@ -815,6 +823,7 @@
     "periodHours": 3,
     "periodStart": "000",
     "periodEnd": "240",
+    "forecastTime": "000",
     "default": {
       "product": {
         "value": "aprec",
@@ -1040,6 +1049,7 @@
           ],
           "periodStart": "024",
           "periodEnd": "240",
+          "forecastTime": "024",
           "periodHours": 24
         },
         {
@@ -1057,6 +1067,7 @@
           ],
           "periodStart": "024",
           "periodEnd": "240",
+          "forecastTime": "024",
           "periodHours": 24
         },
         {
@@ -1088,6 +1099,7 @@
           ],
           "periodStart": "024",
           "periodEnd": "240",
+          "forecastTime": "024",
           "periodHours": 24
         },
         {
@@ -1218,6 +1230,7 @@
     "periodHours": 6,
     "periodStart": "000",
     "periodEnd": "240",
+    "forecastTime": "000",
     "default": {
       "product": {
         "value": "aprec",
@@ -1459,6 +1472,7 @@
           ],
           "periodStart": "024",
           "periodEnd": "240",
+          "forecastTime": "024",
           "periodHours": 24
         },
         {
@@ -1477,6 +1491,7 @@
           ],
           "periodStart": "024",
           "periodEnd": "240",
+          "forecastTime": "024",
           "periodHours": 24
         },
         {
@@ -1510,6 +1525,7 @@
           ],
           "periodStart": "024",
           "periodEnd": "240",
+          "forecastTime": "024",
           "periodHours": 24
         },
         {
@@ -1650,6 +1666,7 @@
     "periodHours": 6,
     "periodStart": "000",
     "periodEnd": "168",
+    "forecastTime": "000",
     "default": {
       "product": {
         "value": "aprec",
@@ -1802,6 +1819,7 @@
           ],
           "periodStart": "024",
           "periodEnd": "168",
+          "forecastTime": "024",
           "periodHours": 12
         },
         {
@@ -1819,6 +1837,7 @@
           ],
           "periodStart": "024",
           "periodEnd": "168",
+          "forecastTime": "024",
           "periodHours": 12
         },
         {
@@ -1836,6 +1855,7 @@
           ],
           "periodStart": "024",
           "periodEnd": "168",
+          "forecastTime": "024",
           "periodHours": 12
         },
         {
@@ -1862,6 +1882,7 @@
           ],
           "periodStart": "024",
           "periodEnd": "240",
+          "forecastTime": "024",
           "periodHours": 24
         },
         {
@@ -1879,6 +1900,7 @@
           ],
           "periodStart": "024",
           "periodEnd": "240",
+          "forecastTime": "024",
           "periodHours": 24
         },
         {
@@ -1910,6 +1932,7 @@
           ],
           "periodStart": "024",
           "periodEnd": "240",
+          "forecastTime": "024",
           "periodHours": 24
         },
         {
