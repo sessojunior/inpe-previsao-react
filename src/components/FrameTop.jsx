@@ -29,6 +29,8 @@ export default function FrameTop({
   // console.log("FrameTop")
   // console.log("FrameTop dates", dates)
 
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+
   const { config, setConfig, regions } = useContext(ConfigContext);
 
   const region = regions.find((region) => region.value === frame.region);
@@ -105,10 +107,12 @@ export default function FrameTop({
   // console.log("periodStart", periodStart)
 
   const handleDropdownConfig = useCallback(() => {
+    // console.log("openDropdownConfig", openDropdownConfig);
     setOpenDropdownConfig((prev) => !prev);
   }, []);
 
   const handleDropdownTime = useCallback(() => {
+    // console.log("openDropdownTime", openDropdownTime);
     setOpenDropdownTime((prev) => !prev);
   }, []);
 
@@ -181,6 +185,11 @@ export default function FrameTop({
 
   const [timer, setTimer] = useState(0);
   const [timeInterval, setTimeInterval] = useState(null);
+
+  // Detecta se o dispositivo é touch ao carregar o componente
+  useEffect(() => {
+    setIsTouchDevice("ontouchstart" in window || navigator.maxTouchPoints > 0);
+  }, []);
 
   useEffect(() => {
     // console.log("forecastTime", forecastTime)
@@ -358,17 +367,19 @@ export default function FrameTop({
       <div className="flex relative">
         <button
           className={openDropdownConfig ? classButtonActive : classButton}
-          onClick={handleDropdownConfig}
-          onMouseOver={handleMouseOverConfig}
-          onMouseLeave={handleMouseLeaveConfig}
           title="Configurações do modelo, região e inicialização para este quadro"
+          // No desktop, usa onMouseOver para abrir o dropdown
+          onMouseOver={!isTouchDevice ? handleMouseOverConfig : undefined}
+          onMouseLeave={!isTouchDevice ? handleMouseLeaveConfig : undefined}
+          // No mobile, usa onClick para abrir o dropdown
+          onClick={isTouchDevice ? handleDropdownConfig : undefined}
         >
           <FaCog />
         </button>
         {openDropdownConfig && (
           <div
-            onMouseOver={handleMouseOverConfig}
-            onMouseLeave={handleMouseLeaveConfig}
+            onMouseOver={!isTouchDevice ? handleMouseOverConfig : undefined}
+            onMouseLeave={!isTouchDevice ? handleMouseLeaveConfig : undefined}
           >
             <DropDownConfig
               frame={frame}
@@ -487,17 +498,19 @@ export default function FrameTop({
           </div>
           <button
             className={openDropdownTime ? classButtonActive : classButton}
-            onClick={handleDropdownTime}
-            onMouseOver={handleMouseOverTime}
-            onMouseLeave={handleMouseLeaveTime}
             title="Selecionar o tempo de previsão - forecast time - para este quadro"
+            // No desktop, usa onMouseOver para abrir o dropdown
+            onMouseOver={!isTouchDevice ? handleMouseOverTime : undefined}
+            onMouseLeave={!isTouchDevice ? handleMouseLeaveTime : undefined}
+            // No mobile, usa onClick para abrir o dropdown
+            onClick={isTouchDevice ? handleDropdownTime : undefined}
           >
             <FaClock />
           </button>
           {openDropdownTime && (
             <div
-              onMouseOver={handleMouseOverTime}
-              onMouseLeave={handleMouseLeaveTime}
+              onMouseOver={!isTouchDevice ? handleMouseOverTime : undefined}
+              onMouseLeave={!isTouchDevice ? handleMouseLeaveTime : undefined}
             >
               <DropDownTime
                 forecastTime={forecastTime}
