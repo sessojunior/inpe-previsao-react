@@ -109,11 +109,13 @@ export default function FrameTop({
   const handleDropdownConfig = useCallback(() => {
     // console.log("openDropdownConfig", openDropdownConfig);
     setOpenDropdownConfig((prev) => !prev);
+    setOpenDropdownTime(false);
   }, []);
 
   const handleDropdownTime = useCallback(() => {
     // console.log("openDropdownTime", openDropdownTime);
     setOpenDropdownTime((prev) => !prev);
+    setOpenDropdownConfig(false);
   }, []);
 
   // Função para abrir o dropdown ao passar o mouse sobre o botão
