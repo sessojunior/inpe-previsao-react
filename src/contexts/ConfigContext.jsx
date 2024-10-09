@@ -2,7 +2,7 @@ import { useState, useEffect, createContext } from "react";
 
 import jsonModels from "../data/models.json";
 import jsonRegions from "../data/regions.json";
-import jsonCities from "../data/cities.json";
+import jsonCities from "../data/cities.min.json";
 
 export const ConfigContext = createContext({});
 
