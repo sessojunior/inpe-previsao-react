@@ -17,9 +17,9 @@ export default function FrameImage({
   const [loading, setLoading] = useState(false);
 
   // Se o período que inicia ou termina for específico para o produto, por exemplo, um produto que inicia em "024", obtém a partir do produto o período de horas que o mesmo roda.
-  const product = model.options.products.find(
-    (product) => product.value === frame.product
-  );
+  const product =
+    model.options.products.find((product) => product.value === frame.product) ||
+    model.options.products[0];
   const periodStart = product.periodStart ?? model.periodStart;
 
   const publicImage = ImageNotFound;
@@ -41,9 +41,12 @@ export default function FrameImage({
 
   const urlImage = model?.urlImage
     .replaceAll("{{model}}", model?.value)
-    .replaceAll("{{region}}", frame?.region)
+    .replaceAll("{{region}}", frame?.region ?? frame?.city)
     .replaceAll("{{product}}", frame?.product)
-    .replaceAll("{{forecastTime}}", forecastTime)
+    .replaceAll(
+      "_{{forecastTime}}z",
+      frame?.forecastTime ? `_${forecastTime}z` : ""
+    )
     .replaceAll("{{timeRun}}", model?.timeRun)
     .replaceAll("{{turn}}", turn)
     .replaceAll("{{year}}", year)
@@ -53,7 +56,7 @@ export default function FrameImage({
   const altImage = `${frame?.model} - ${frame?.region}`;
 
   // console.log("frame.forecastTime", frame.forecastTime)
-  // console.log("urlImage", urlImage)
+  console.log("urlImage", urlImage);
 
   // console.log("config.isAllPlaying", config.isAllPlaying)
   // console.log("config.framesWithImagesLoaded", config.framesWithImagesLoaded)
@@ -131,7 +134,7 @@ export default function FrameImage({
       <p>[turn: <b>{turn}</b>]</p> */}
       <div className="w-full">
         <div className="flex justify-center items-center relative min-h-96">
-          {(loadingImages || loading) && (
+          {frame?.forecastTime !== null && (loadingImages || loading) && (
             <span
               className="absolute flex justify-center items-center"
               title="Após dar início na animação é necessário aguardar o carregamento das imagens..."

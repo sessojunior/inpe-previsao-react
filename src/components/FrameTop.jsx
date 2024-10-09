@@ -37,14 +37,14 @@ export default function FrameTop({
   const group = model.options.groups.find(
     (group) => group.value === frame.group
   );
-  const product = model.options.products.find(
-    (product) => product.value === frame.product
-  );
+  const product =
+    model.options.products.find((product) => product.value === frame.product) ||
+    model.options.products[0];
 
   // console.log("frame", frame)
   // console.log("model", model)
   // console.log("group", group)
-  // console.log("product", product)
+  console.log("product", product);
   // console.log("model.periodHours", model.periodHours)
   // console.log("product.periodHours", product.periodHours)
   // console.log("model.periodStart", model.periodStart)
@@ -101,8 +101,9 @@ export default function FrameTop({
 
   const [configTimeout, setConfigTimeout] = useState(null);
   const [timeTimeout, setTimeTimeout] = useState(null);
+  const [isInputFocused, setIsInputFocused] = useState(false);
 
-  // console.log("frame.forecastTime", frame.forecastTime)
+  console.log("frame.forecastTime", frame.forecastTime);
   // console.log("forecastTime", forecastTime)
   // console.log("periodStart", periodStart)
 
@@ -129,6 +130,9 @@ export default function FrameTop({
 
   // Função para fechar o dropdown após um tempo
   const handleMouseLeaveConfig = () => {
+    if (isInputFocused) {
+      return;
+    }
     const timeout = setTimeout(() => {
       setOpenDropdownConfig(false);
     }, 600); // Atraso para fechar o dropdown
@@ -391,6 +395,8 @@ export default function FrameTop({
               periodStart={periodStart}
               dates={dates}
               resetTimer={resetTimer}
+              isInputFocused={isInputFocused}
+              setIsInputFocused={setIsInputFocused}
             />
           </div>
         )}
@@ -426,104 +432,117 @@ export default function FrameTop({
           >
             <FaDownload />
           </a>
-          <button
-            className={classButton}
-            onClick={handleDecreaseTime}
-            title="Voltar o tempo de previsão atual - forecast time"
-          >
-            <FaChevronLeft />
-          </button>
-          {frame.isPlaying ? (
-            <button
-              className={classButtonActive}
-              onClick={pauseTimer}
-              title="Pausar"
-            >
-              <FaPause />
-            </button>
-          ) : (
+          {frame.forecastTime !== null && (
             <>
-              {loadingImages ? (
-                <button className={classButton} title="Carregando imagens...">
-                  <span className="flex justify-center items-center">
-                    <svg
-                      className="animate-spin h-5 w-5 text-red-600"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <circle
-                        className="opacity-25"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                      ></circle>
-                      <path
-                        className="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                      ></path>
-                    </svg>
-                  </span>
+              <button
+                className={classButton}
+                onClick={handleDecreaseTime}
+                title="Voltar o tempo de previsão atual - forecast time"
+              >
+                <FaChevronLeft />
+              </button>
+              {frame.isPlaying ? (
+                <button
+                  className={classButtonActive}
+                  onClick={pauseTimer}
+                  title="Pausar"
+                >
+                  <FaPause />
                 </button>
               ) : (
-                <button
-                  className={classButton}
-                  onClick={startTimer}
-                  title="Iniciar animação do tempo de previsão"
-                >
-                  <FaPlay />
-                </button>
+                <>
+                  {loadingImages ? (
+                    <button
+                      className={classButton}
+                      title="Carregando imagens..."
+                    >
+                      <span className="flex justify-center items-center">
+                        <svg
+                          className="animate-spin h-5 w-5 text-red-600"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          ></circle>
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                          ></path>
+                        </svg>
+                      </span>
+                    </button>
+                  ) : (
+                    <button
+                      className={classButton}
+                      onClick={startTimer}
+                      title="Iniciar animação do tempo de previsão"
+                    >
+                      <FaPlay />
+                    </button>
+                  )}
+                </>
               )}
+              <button
+                className={classButton}
+                onClick={handleIncreaseTime}
+                title="Avançar o tempo de previsão atual - forecast time"
+              >
+                <FaChevronRight />
+              </button>
             </>
           )}
-          <button
-            className={classButton}
-            onClick={handleIncreaseTime}
-            title="Avançar o tempo de previsão atual - forecast time"
-          >
-            <FaChevronRight />
-          </button>
         </div>
-        <div className="flex items-center">
-          <div
-            key={forecastTime}
-            className="font-bold text-sm text-ellipsis overflow-hidden min-w-16 text-center animate-bounce-in"
-            title="Tempo de previsão atual - forecast time"
-          >
-            <span>
-              {Number(forecastTime)}
-              <small>h</small>
-            </span>
-          </div>
-          <button
-            className={openDropdownTime ? classButtonActive : classButton}
-            title="Selecionar o tempo de previsão - forecast time - para este quadro"
-            // No desktop, usa onMouseOver para abrir o dropdown
-            onMouseOver={!isTouchDevice ? handleMouseOverTime : undefined}
-            onMouseLeave={!isTouchDevice ? handleMouseLeaveTime : undefined}
-            // No mobile, usa onClick para abrir o dropdown
-            onClick={isTouchDevice ? handleDropdownTime : undefined}
-          >
-            <FaClock />
-          </button>
-          {openDropdownTime && (
-            <div
-              onMouseOver={!isTouchDevice ? handleMouseOverTime : undefined}
-              onMouseLeave={!isTouchDevice ? handleMouseLeaveTime : undefined}
-            >
-              <DropDownTime
-                forecastTime={forecastTime}
-                setForecastTime={setForecastTime}
-                frame={frame}
-                setFrame={setFrame}
-                hours={hours}
-              />
+        {frame.forecastTime !== null && (
+          <>
+            <div className="flex items-center">
+              <div
+                key={forecastTime}
+                className="font-bold text-sm text-ellipsis overflow-hidden min-w-16 text-center animate-bounce-in"
+                title="Tempo de previsão atual - forecast time"
+              >
+                <span>
+                  {Number(forecastTime)}
+                  <small>h</small>
+                </span>
+              </div>
+              <button
+                className={openDropdownTime ? classButtonActive : classButton}
+                title="Selecionar o tempo de previsão - forecast time - para este quadro"
+                // No desktop, usa onMouseOver para abrir o dropdown
+                onMouseOver={!isTouchDevice ? handleMouseOverTime : undefined}
+                onMouseLeave={!isTouchDevice ? handleMouseLeaveTime : undefined}
+                // No mobile, usa onClick para abrir o dropdown
+                onClick={isTouchDevice ? handleDropdownTime : undefined}
+              >
+                <FaClock />
+              </button>
+              {openDropdownTime && (
+                <div
+                  onMouseOver={!isTouchDevice ? handleMouseOverTime : undefined}
+                  onMouseLeave={
+                    !isTouchDevice ? handleMouseLeaveTime : undefined
+                  }
+                >
+                  <DropDownTime
+                    forecastTime={forecastTime}
+                    setForecastTime={setForecastTime}
+                    frame={frame}
+                    setFrame={setFrame}
+                    hours={hours}
+                  />
+                </div>
+              )}
             </div>
-          )}
-        </div>
+          </>
+        )}
       </div>
     </div>
   );

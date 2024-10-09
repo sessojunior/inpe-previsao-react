@@ -2,6 +2,7 @@ import { useState, useEffect, createContext } from "react";
 
 import jsonModels from "../data/models.json";
 import jsonRegions from "../data/regions.json";
+import jsonCities from "../data/cities.json";
 
 export const ConfigContext = createContext({});
 
@@ -17,6 +18,7 @@ export default function ConfigProvider({ children }) {
 
   const models = jsonModels;
   const regions = jsonRegions;
+  const cities = jsonCities;
 
   // console.log("models", models)
   // console.log("models[0].value", models[0].value)
@@ -29,6 +31,7 @@ export default function ConfigProvider({ children }) {
       product: models[0].default.product.value,
       group: models[0].default.product.group,
       region: models[0].default.product.region,
+      city: null,
       forecastTime: models[0].forecastTime,
       isPlaying: false,
       init: null,
@@ -61,6 +64,7 @@ export default function ConfigProvider({ children }) {
       product: frame.product,
       group: frame.group,
       region: frame.region,
+      city: frame.city ?? null,
       forecastTime: frame.forecastTime,
     }));
     // console.log("frames", frames)
@@ -73,7 +77,7 @@ export default function ConfigProvider({ children }) {
 
   return (
     <ConfigContext.Provider
-      value={{ config, setConfig, models, regions, frames, setFrames }}
+      value={{ config, setConfig, models, regions, cities, frames, setFrames }}
     >
       {children}
     </ConfigContext.Provider>
