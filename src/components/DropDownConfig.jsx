@@ -187,7 +187,7 @@ export default function DropDownConfig({
       const firstProductGroup = modelProducts.find(
         (product) => product.group === e.target.value
       );
-      console.log("firstProductGroup", firstProductGroup);
+      // console.log("firstProductGroup", firstProductGroup);
       const forecastTime =
         firstProductGroup.forecastTime !== undefined
           ? firstProductGroup.forecastTime
@@ -236,7 +236,7 @@ export default function DropDownConfig({
         product.forecastTime !== undefined
           ? product.forecastTime
           : model.forecastTime;
-      console.log("forecastTime", forecastTime);
+      // console.log("forecastTime", forecastTime);
       resetTimer(forecastTime);
       setFrame({ ...frame, product: e.target.value, isPlaying: false });
       setFrames([
