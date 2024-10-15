@@ -23,8 +23,8 @@ export default function DropDownConfig({
   const [selectedCity, setSelectedCity] = useState("");
   const [selectedCityId, setSelectedCityId] = useState(null); // Armazena o idIbge da cidade
 
-  // Load city from localStorage when the component mounts
-  useEffect(() => {
+  const loadCityId = useCallback(() => {
+    setSelectedCity(selectedCity.length > 0 ? selectedCity : cityUf);
     const savedCity = localStorage.getItem("selectedCity");
     if (savedCity) {
       setSelectedCity(savedCity);
@@ -35,6 +35,11 @@ export default function DropDownConfig({
         setSelectedCityId(savedCityId);
       }
     }
+  }, [cities]);
+
+  // Load city from localStorage when the component mounts
+  useEffect(() => {
+    loadCityId();
   }, [cities]);
 
   // City selected
@@ -77,7 +82,7 @@ export default function DropDownConfig({
 
   // console.log("models", models)
   // console.log("model", model)
-  console.log("frame", frame);
+  // console.log("frame", frame);
   // console.log("frame.group", frame.group)
   // console.log("frame.product", frame.product)
   // console.log("modelProductRegions", modelProductRegions)
@@ -133,7 +138,7 @@ export default function DropDownConfig({
   const handleCitySelected = useCallback(
     (idIbge) => {
       setSelectedCityId(idIbge); // Atualiza o idIbge ao selecionar a cidade
-      console.log("handleCitySelected", idIbge);
+      // console.log("handleCitySelected", idIbge);
 
       resetTimer(model.forecastTime);
       setFrame({
@@ -378,7 +383,7 @@ export default function DropDownConfig({
                 </label>
                 <ComboBox
                   cities={cities}
-                  selectedCity={selectedCity.length > 0 ? selectedCity : cityUf}
+                  selectedCity={selectedCity.length > 0 ? selectedCity : ""}
                   setSelectedCity={setSelectedCity}
                   onCitySelected={handleCitySelected} // Passa a função para receber o idIbge
                   isInputFocused={isInputFocused}

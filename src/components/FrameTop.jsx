@@ -44,7 +44,7 @@ export default function FrameTop({
   // console.log("frame", frame)
   // console.log("model", model)
   // console.log("group", group)
-  console.log("product", product);
+  // console.log("product", product);
   // console.log("model.periodHours", model.periodHours)
   // console.log("product.periodHours", product.periodHours)
   // console.log("model.periodStart", model.periodStart)
@@ -103,7 +103,7 @@ export default function FrameTop({
   const [timeTimeout, setTimeTimeout] = useState(null);
   const [isInputFocused, setIsInputFocused] = useState(false);
 
-  console.log("frame.forecastTime", frame.forecastTime);
+  // console.log("frame.forecastTime", frame.forecastTime);
   // console.log("forecastTime", forecastTime)
   // console.log("periodStart", periodStart)
 
@@ -135,7 +135,7 @@ export default function FrameTop({
     }
     const timeout = setTimeout(() => {
       setOpenDropdownConfig(false);
-    }, 600); // Atraso para fechar o dropdown
+    }, 250); // Atraso para fechar o dropdown
     setConfigTimeout(timeout);
   };
 
@@ -152,7 +152,7 @@ export default function FrameTop({
   const handleMouseLeaveTime = () => {
     const timeout = setTimeout(() => {
       setOpenDropdownTime(false);
-    }, 600); // Atraso para fechar o dropdown
+    }, 250); // Atraso para fechar o dropdown
     setTimeTimeout(timeout);
   };
 
@@ -328,7 +328,7 @@ export default function FrameTop({
 
   const startTimer = useCallback(async () => {
     // console.log("startTimer")
-    //console.log("hours", hours)
+    // console.log("hours", hours)
     // console.log("frame.init", frame.init)
     // console.log("dates", dates)
 

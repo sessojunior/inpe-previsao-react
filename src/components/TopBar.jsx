@@ -66,12 +66,12 @@ export default function TopBar() {
   useEffect(() => {
     const existsForecastTimeNull =
       frames.filter((frame) => frame.forecastTime === null).length > 0;
-    console.log("existsForecastTimeNull", existsForecastTimeNull);
+    // console.log("existsForecastTimeNull", existsForecastTimeNull);
     setShowButtonAllPlaying(!existsForecastTimeNull);
   }, [frames]);
 
-  console.log("config", config);
-  console.log("frames", frames);
+  // console.log("config", config);
+  // console.log("frames", frames);
 
   return (
     <header className="flex justify-start md:justify-between items-center px-4 w-full h-16 bg-gray-100 border border-y-gray-300">

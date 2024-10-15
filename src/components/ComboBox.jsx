@@ -59,11 +59,11 @@ export default function ComboBox({
         onFocus={() => {
           setIsOpen(true);
           setIsInputFocused(true);
-          console.log("isInputFocused", true);
+          // console.log("isInputFocused", true);
         }} // Abre a lista suspensa ao focar no input
         onBlur={() => {
           setIsInputFocused(false);
-          console.log("isInputFocused", false);
+          // console.log("isInputFocused", false);
         }}
         className={classSelect}
         autoComplete="off"
