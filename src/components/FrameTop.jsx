@@ -9,6 +9,7 @@ import {
   FaPlay,
   FaDownload,
 } from "react-icons/fa";
+import { IoClose } from "react-icons/io5";
 import DropDownConfig from "./DropDownConfig";
 import DropDownTime from "./DropDownTime";
 import { formatDate } from "../lib/formatDate";
@@ -28,8 +29,6 @@ export default function FrameTop({
 }) {
   // console.log("FrameTop")
   // console.log("FrameTop dates", dates)
-
-  const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   const { config, setConfig, regions } = useContext(ConfigContext);
 
@@ -119,43 +118,6 @@ export default function FrameTop({
     setOpenDropdownConfig(false);
   }, []);
 
-  // Função para abrir o dropdown ao passar o mouse sobre o botão
-  const handleMouseOverConfig = () => {
-    if (configTimeout) {
-      clearTimeout(configTimeout); // Cancelar o timeout de fechamento
-      setConfigTimeout(null);
-    }
-    setOpenDropdownConfig(true); // Abre o dropdown
-  };
-
-  // Função para fechar o dropdown após um tempo
-  const handleMouseLeaveConfig = () => {
-    if (isInputFocused) {
-      return;
-    }
-    const timeout = setTimeout(() => {
-      setOpenDropdownConfig(false);
-    }, 250); // Atraso para fechar o dropdown
-    setConfigTimeout(timeout);
-  };
-
-  // Função para abrir o dropdown ao passar o mouse sobre o botão
-  const handleMouseOverTime = () => {
-    if (timeTimeout) {
-      clearTimeout(timeTimeout); // Cancelar o timeout de fechamento
-      setTimeTimeout(null);
-    }
-    setOpenDropdownTime(true); // Abre o dropdown
-  };
-
-  // Função para fechar o dropdown após um tempo
-  const handleMouseLeaveTime = () => {
-    const timeout = setTimeout(() => {
-      setOpenDropdownTime(false);
-    }, 250); // Atraso para fechar o dropdown
-    setTimeTimeout(timeout);
-  };
-
   const handleDecreaseTime = useCallback(() => {
     // console.log("decreaseTime")
     // console.log("frame.forecastTime", frame.forecastTime)
@@ -192,11 +154,6 @@ export default function FrameTop({
   const [timer, setTimer] = useState(0);
   const [timeInterval, setTimeInterval] = useState(null);
 
-  // Detecta se o dispositivo é touch ao carregar o componente
-  useEffect(() => {
-    setIsTouchDevice("ontouchstart" in window || navigator.maxTouchPoints > 0);
-  }, []);
-
   useEffect(() => {
     // console.log("forecastTime", forecastTime)
     if (timer > 0) {
@@ -207,7 +164,6 @@ export default function FrameTop({
   useEffect(() => {
     async function checkIsAllPlaying() {
       if (config.isAllPlaying) {
-        // console.log("isAllPlaying")
         await preloadImages();
         if (config.isAllPlaying) {
           clearInterval(timeInterval);
@@ -371,34 +327,35 @@ export default function FrameTop({
   return (
     <div className="flex justify-between">
       <div className="flex relative">
-        <button
-          className={openDropdownConfig ? classButtonActive : classButton}
-          title="Configurações do modelo, região e inicialização para este quadro"
-          // No desktop, usa onMouseOver para abrir o dropdown
-          onMouseOver={!isTouchDevice ? handleMouseOverConfig : undefined}
-          onMouseLeave={!isTouchDevice ? handleMouseLeaveConfig : undefined}
-          // No mobile, usa onClick para abrir o dropdown
-          onClick={isTouchDevice ? handleDropdownConfig : undefined}
-        >
-          <FaCog />
-        </button>
-        {openDropdownConfig && (
-          <div
-            onMouseOver={!isTouchDevice ? handleMouseOverConfig : undefined}
-            onMouseLeave={!isTouchDevice ? handleMouseLeaveConfig : undefined}
+        {openDropdownConfig ? (
+          <button
+            className={classButtonActive}
+            title="Clique aqui para fechar"
+            onClick={handleDropdownConfig}
           >
-            <DropDownConfig
-              frame={frame}
-              setFrame={setFrame}
-              model={model}
-              setModel={setModel}
-              periodStart={periodStart}
-              dates={dates}
-              resetTimer={resetTimer}
-              isInputFocused={isInputFocused}
-              setIsInputFocused={setIsInputFocused}
-            />
-          </div>
+            <IoClose size={24} />
+          </button>
+        ) : (
+          <button
+            className={classButton}
+            title="Clique aqui para alterar as configurações"
+            onClick={handleDropdownConfig}
+          >
+            <FaCog size={20} />
+          </button>
+        )}
+        {openDropdownConfig && (
+          <DropDownConfig
+            frame={frame}
+            setFrame={setFrame}
+            model={model}
+            setModel={setModel}
+            periodStart={periodStart}
+            dates={dates}
+            resetTimer={resetTimer}
+            isInputFocused={isInputFocused}
+            setIsInputFocused={setIsInputFocused}
+          />
         )}
         <div className="mx-2 hidden sm:block">
           <div className="font-bold text-sm">
@@ -513,32 +470,31 @@ export default function FrameTop({
                   <small>h</small>
                 </span>
               </div>
-              <button
-                className={openDropdownTime ? classButtonActive : classButton}
-                title="Selecionar o tempo de previsão - forecast time - para este quadro"
-                // No desktop, usa onMouseOver para abrir o dropdown
-                onMouseOver={!isTouchDevice ? handleMouseOverTime : undefined}
-                onMouseLeave={!isTouchDevice ? handleMouseLeaveTime : undefined}
-                // No mobile, usa onClick para abrir o dropdown
-                onClick={isTouchDevice ? handleDropdownTime : undefined}
-              >
-                <FaClock />
-              </button>
-              {openDropdownTime && (
-                <div
-                  onMouseOver={!isTouchDevice ? handleMouseOverTime : undefined}
-                  onMouseLeave={
-                    !isTouchDevice ? handleMouseLeaveTime : undefined
-                  }
+              {openDropdownTime ? (
+                <button
+                  className={classButtonActive}
+                  title="Clique aqui para fechar"
+                  onClick={handleDropdownTime}
                 >
-                  <DropDownTime
-                    forecastTime={forecastTime}
-                    setForecastTime={setForecastTime}
-                    frame={frame}
-                    setFrame={setFrame}
-                    hours={hours}
-                  />
-                </div>
+                  <IoClose size={24} />
+                </button>
+              ) : (
+                <button
+                  className={classButton}
+                  title="Clique aqui para selecionar o tempo (forecast) de previsão"
+                  onClick={handleDropdownTime}
+                >
+                  <FaClock size={20} />
+                </button>
+              )}
+              {openDropdownTime && (
+                <DropDownTime
+                  forecastTime={forecastTime}
+                  setForecastTime={setForecastTime}
+                  frame={frame}
+                  setFrame={setFrame}
+                  hours={hours}
+                />
               )}
             </div>
           </>

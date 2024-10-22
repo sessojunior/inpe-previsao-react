@@ -119,7 +119,7 @@ export default function FrameImage({
   }
 
   return (
-    <div>
+    <div className="w-full">
       {/* <p className="pb-2">URL do modelo:
         <br /><b>{model.urlImage.replaceAll("{{", " {{").replaceAll("}}", "}} ")}</b></p>
       <p className="pb-2">URL convertida:
@@ -149,49 +149,47 @@ export default function FrameImage({
       <p>[month: <b>{month}</b>]</p>
       <p>[day: <b>{day}</b>]</p>
       <p>[turn: <b>{turn}</b>]</p> */}
-      <div className="w-full">
-        <div className="flex justify-center items-center relative min-h-96">
-          {frame?.forecastTime !== null && (loadingImages || loading) && (
-            <span
-              className="absolute flex justify-center items-center"
-              title="Após dar início na animação é necessário aguardar o carregamento das imagens..."
+      <div className="flex justify-center items-center relative min-h-96">
+        {frame?.forecastTime !== null && (loadingImages || loading) && (
+          <span
+            className="absolute flex justify-center items-center"
+            title="Após dar início na animação é necessário aguardar o carregamento das imagens..."
+          >
+            <svg
+              className="animate-spin h-16 w-16 text-gray-600"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
             >
-              <svg
-                className="animate-spin h-16 w-16 text-gray-600"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                ></circle>
-                <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                ></path>
-              </svg>
-            </span>
-          )}
-          <img
-            src={urlImage}
-            onError={(e) => {
-              e.target.onError = null;
-              e.target.src = publicImage;
-            }}
-            alt={altImage}
-            className="rounded-md mt-4 w-full"
-          />
-        </div>
-        {/* <div className="mt-4 flex justify-center flex-grow">
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              ></circle>
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              ></path>
+            </svg>
+          </span>
+        )}
+        <img
+          src={urlImage}
+          onError={(e) => {
+            e.target.onError = null;
+            e.target.src = publicImage;
+          }}
+          alt={altImage}
+          className="rounded-md mt-4 max-w-full"
+        />
+      </div>
+      {/* <div className="mt-4 flex justify-center flex-grow">
           <a href={urlImage} download="imagem-de-previsao.png" target="_blank" rel="noreferrer" className="px-4 py-2 rounded-md bg-gray-600 text-white hover:bg-gray-700" title={urlImage}><span className="flex justify-center items-center"><FaDownload /><span className="ml-2">Download da imagem</span></span></a>
         </div> */}
-      </div>
     </div>
   );
 }
