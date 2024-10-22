@@ -21,10 +21,10 @@ export default function DropDownConfig({
 
   // Cities
   const [selectedCity, setSelectedCity] = useState("");
-  const [selectedCityId, setSelectedCityId] = useState(null); // Armazena o idIbge da cidade
+  const [selectedCityId, setSelectedCityId] = useState(null); // Armazena o id da cidade
 
-  const loadCityId = useCallback(() => {
-    setSelectedCity(selectedCity.length > 0 ? selectedCity : cityUf);
+  const loadCityId = () => {
+    setSelectedCity(selectedCity.length > 0 ? selectedCity : cityUf());
     const savedCity = localStorage.getItem("selectedCity");
     if (savedCity) {
       setSelectedCity(savedCity);
@@ -35,18 +35,21 @@ export default function DropDownConfig({
         setSelectedCityId(savedCityId);
       }
     }
-  }, [cities]);
+  };
 
   // Load city from localStorage when the component mounts
   useEffect(() => {
     loadCityId();
+    // console.log("frame.city", frame.city);
+    // console.log("cities", cities);
+    // console.log("cityUf", cityUf());
   }, [cities]);
 
   // City selected
-  const cityUf = useMemo(() => {
-    const city = cities.find((city) => city.idIbge === frame.city);
+  const cityUf = () => {
+    const city = cities.find((city) => city.id === frame.city);
     return city ? `${city.name} - ${city.uf}` : "";
-  }, [cities, frame.city]);
+  };
 
   // Regions of product selected
   const modelProductRegions = useMemo(() => {
@@ -136,15 +139,15 @@ export default function DropDownConfig({
   );
 
   const handleCitySelected = useCallback(
-    (idIbge) => {
-      setSelectedCityId(idIbge); // Atualiza o idIbge ao selecionar a cidade
-      // console.log("handleCitySelected", idIbge);
+    (id) => {
+      setSelectedCityId(id); // Atualiza o id ao selecionar a cidade
+      // console.log("handleCitySelected", id);
 
       resetTimer(model.forecastTime);
       setFrame({
         ...frame,
         isPlaying: false,
-        city: idIbge,
+        city: id,
         region: null,
       });
       setFrames([
@@ -152,7 +155,7 @@ export default function DropDownConfig({
         {
           ...frame,
           isPlaying: false,
-          city: idIbge,
+          city: id,
         },
         ...frames.slice(frame.id),
       ]);
@@ -385,7 +388,7 @@ export default function DropDownConfig({
                   cities={cities}
                   selectedCity={selectedCity.length > 0 ? selectedCity : ""}
                   setSelectedCity={setSelectedCity}
-                  onCitySelected={handleCitySelected} // Passa a função para receber o idIbge
+                  onCitySelected={handleCitySelected} // Passa a função para receber o id
                   isInputFocused={isInputFocused}
                   setIsInputFocused={setIsInputFocused}
                 />

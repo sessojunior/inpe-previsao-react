@@ -1,7 +1,8 @@
 import { useEffect, useState, useContext } from "react";
 import { ConfigContext } from "../contexts/ConfigContext";
 
-import ImageNotFound from "../assets/image-not-found.jpg";
+import ImageNotFound from "../assets/not-found.png";
+import FrameCharts from "./FrameCharts";
 
 export default function FrameImage({
   frame,
@@ -30,7 +31,7 @@ export default function FrameImage({
   const turn = init?.slice(11, 13);
   const forecastTime = frame.forecastTime ?? periodStart;
 
-  // console.log("frame", frame)
+  // console.log("frame", frame);
   // console.log("init", init)
   // console.log("dates", dates)
   // console.log("FrameImage model", model)
@@ -55,11 +56,13 @@ export default function FrameImage({
 
   const altImage = `${frame?.model} - ${frame?.region}`;
 
-  // console.log("frame.forecastTime", frame.forecastTime)
+  // console.log("frame.forecastTime 1", frame.forecastTime);
   // console.log("urlImage", urlImage);
 
   // console.log("config.isAllPlaying", config.isAllPlaying)
   // console.log("config.framesWithImagesLoaded", config.framesWithImagesLoaded)
+
+  // console.log("model", model);
 
   useEffect(() => {
     const loadImage = async () => {
@@ -85,6 +88,8 @@ export default function FrameImage({
       }
     };
 
+    // console.log("frame", frame);
+
     if (init && urlImage) {
       setDownloadImageUrl(urlImage);
 
@@ -100,6 +105,18 @@ export default function FrameImage({
   // console.log("loadingImages", loadingImages)
   // console.log("loading", loading)
   // console.log("(loadingImages || loading)", (loadingImages || (loading && !loadingImages)))
+
+  // Se é um meteograma, mostrar o gráfico
+  if (frame?.city && model?.urlCharts) {
+    // console.log("frame.city", frame.city);
+    return (
+      <FrameCharts
+        date={{ year, month, day, turn }}
+        cityId={frame.city}
+        urlCharts={model.urlCharts}
+      />
+    );
+  }
 
   return (
     <div>

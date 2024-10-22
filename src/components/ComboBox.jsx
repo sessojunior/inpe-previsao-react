@@ -4,7 +4,7 @@ export default function ComboBox({
   cities,
   selectedCity,
   setSelectedCity,
-  onCitySelected, // Nova função para emitir o idIbge da cidade selecionada
+  onCitySelected, // Nova função para emitir o id da cidade selecionada
   isInputFocused,
   setIsInputFocused,
 }) {
@@ -30,7 +30,7 @@ export default function ComboBox({
   const handleCityClick = (city) => {
     setSelectedCity(`${city.name} - ${city.uf}`);
     setIsOpen(false); // Fecha a lista suspensa após selecionar
-    onCitySelected(city.idIbge); // Chama a função ao selecionar a cidade
+    onCitySelected(city.id); // Chama a função ao selecionar a cidade
   };
 
   // Fechar a lista ao clicar fora
@@ -47,6 +47,8 @@ export default function ComboBox({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [comboBoxRef]);
+
+  // console.log("selectedCity", selectedCity);
 
   return (
     <div ref={comboBoxRef}>
@@ -67,14 +69,14 @@ export default function ComboBox({
         }}
         className={classSelect}
         autoComplete="off"
-        placeholder="Comece digitando sua cidade..."
+        placeholder="Digite a cidade..."
       />
 
       {isOpen && filteredCities.length > 0 && (
         <ul className="absolute z-10 w-[calc(100%-30px)] bg-white border border-gray-300 rounded-md max-h-48 overflow-auto">
           {filteredCities.map((city) => (
             <li
-              key={city.idIbge}
+              key={city.id}
               className="cursor-pointer px-2 py-2 text-sm hover:bg-indigo-500 hover:text-white"
               onClick={() => handleCityClick(city)}
             >

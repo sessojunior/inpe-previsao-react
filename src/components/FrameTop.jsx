@@ -14,7 +14,7 @@ import DropDownTime from "./DropDownTime";
 import { formatDate } from "../lib/formatDate";
 import { toast } from "react-toastify";
 
-import ImageNotFound from "../assets/image-not-found.jpg";
+import ImageNotFound from "../assets/not-found.png";
 
 export default function FrameTop({
   frame,
@@ -422,18 +422,18 @@ export default function FrameTop({
       </div>
       <div className="flex relative">
         <div className="flex gap-1">
-          <a
-            href={downloadImageUrl}
-            download="imagem-de-previsao.png"
-            target="_blank"
-            rel="noreferrer"
-            className={classButton}
-            title={`Abrir a imagem abaixo em uma nova aba do navegador, para fazer o download: ${downloadImageUrl}`}
-          >
-            <FaDownload />
-          </a>
           {frame.forecastTime !== null && (
             <>
+              <a
+                href={downloadImageUrl}
+                download="imagem-de-previsao.png"
+                target="_blank"
+                rel="noreferrer"
+                className={classButton}
+                title={`Abrir a imagem abaixo em uma nova aba do navegador, para fazer o download: ${downloadImageUrl}`}
+              >
+                <FaDownload />
+              </a>
               <button
                 className={classButton}
                 onClick={handleDecreaseTime}

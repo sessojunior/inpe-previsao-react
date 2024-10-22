@@ -125,6 +125,12 @@ Exemplo:
   - **{{turn}}** - _(string)_. Turno da rodada (HH). Exemplos: "00", "12".
   - **{{forecastTime}}** - _(string)_. Hora (HHH) de execução atual da imagem. Tempo de previsão (forecast time). Exemplos: "000", "003", "012", "072", "144".
 - **urlDates** - _(string)_. URL que obterá o arquivo JSON contendo as datas disponíveis do modelo com o parâmetro _datesRun_.
+- **urlCharts** - _(string)_. Template de URL que obterá o arquivo JSON para geração dos gráficos com highcharts.
+  - **{{year}}** - _(string)_. Ano da rodada (YYYY). Exemplo: "2024".
+  - **{{month}}** - _(string)_. Mês da rodada (MM). Exemplo: "08".
+  - **{{day}}** - _(string)_. Dia da rodada (DD). Exemplo: "14".
+  - **{{turn}}** - _(string)_. Turno da rodada (HH). Exemplos: "00", "12".
+  - **{{cityId}}** - _(string)_. ID da cidade. Exemplo: "1083".
 - **timeRun** - _(number)_. Tempo (em horas) que leva para rodar todo o modelo, ou de quanto em quanto tempo esse modelo é rodado.
 - **periodHours** - _(number)_. As figuras são geradas em um intervalo de horas. Esse é o intervalo de horas de cada figura de previsão do modelo. É necessário para calcular e obter um array com as horas de previsão. Por exemplo, para um número de 3, será gerado um array ["000", "003", "006", ...] e para um número 6, será gerado um array ["000", "006", "012", ...]. Valores possíveis: 1, 3 ou 6.
 - **periodStart** - _(string)_. Tempo inicial da figura para o array de tempos. Exemplo: "000".
@@ -156,6 +162,7 @@ Exemplo:
     "value": "BRAMS08",
     "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/pn/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/{{model}}_{{product}}_{{region}}_{{year}}{{month}}{{day}}{{turn}}z_{{forecastTime}}z.png",
     "urlDates": "https://s1.cptec.inpe.br/grafico/Modelos/portal_previsao_numerica/mod_brams.json",
+    "urlCharts": "https://ftp.cptec.inpe.br/modelos/produtos/BRAMS/ams_08km/grh/json2/{{year}}/{{month}}/{{day}}/{{turn}}/{{cityId}}.json",
     "timeRun": 12,
     "periodHours": 3,
     "periodStart": "000",
