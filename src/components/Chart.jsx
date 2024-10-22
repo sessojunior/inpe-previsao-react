@@ -3,9 +3,13 @@ import HighchartsReact from "highcharts-react-official";
 import highchartsMore from "highcharts/highcharts-more";
 import highchartsWindbarb from "highcharts/modules/windbarb";
 import highchartsAcessibility from "highcharts/modules/accessibility";
+import highchartsExport from "highcharts/modules/exporting";
+import highchartsExportData from "highcharts/modules/export-data";
 highchartsMore(Highcharts);
 highchartsWindbarb(Highcharts);
 highchartsAcessibility(Highcharts);
+highchartsExport(Highcharts);
+highchartsExportData(Highcharts);
 
 export default function Chart({ date, chart, type }) {
   const dateTime = `${date.year}-${date.month}-${date.day} ${date.turn}:00:00`;
@@ -81,6 +85,7 @@ export default function Chart({ date, chart, type }) {
       resetZoom: "Resetar zoom",
       resetZoomTitle: "Resetar zoom para original",
       viewFullscreen: "Ver em tela cheia",
+      exitFullscreen: "Sair da tela cheia",
       viewData: "Ver tabela de dados",
       hideData: "Ocultar tabela de dados",
     },
