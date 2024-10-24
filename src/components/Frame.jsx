@@ -7,12 +7,13 @@ import FrameImage from "./FrameImage";
 export default function Frame({ id }) {
   const { config, models, frames } = useContext(ConfigContext);
 
-  // console.log("Frame (id, frame.forecastTime)", id, frame.forecastTime)
   // console.log("id", id)
   // console.log("frames", frames)
   // console.log("models", models)
 
   const [frame, setFrame] = useState(frames.find((item) => item.id === id));
+
+  // console.log("Frame (id, frame.forecastTime)", id, frame.forecastTime)
 
   // console.log("frames.find(item => item.id === id)", frames.find(item => item.id === id))
   // console.log("frame", frame)

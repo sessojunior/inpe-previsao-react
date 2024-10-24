@@ -1,5 +1,4 @@
 import { useEffect, useState, useContext } from "react";
-import { ConfigContext } from "../contexts/ConfigContext";
 
 import ImageNotFound from "../assets/not-found.png";
 import FrameCharts from "./FrameCharts";
@@ -11,10 +10,6 @@ export default function FrameImage({
   loadingImages,
   setDownloadImageUrl,
 }) {
-  // console.log("FrameImage")
-
-  const { config } = useContext(ConfigContext);
-
   const [loading, setLoading] = useState(false);
 
   // Se o período que inicia ou termina for específico para o produto, por exemplo, um produto que inicia em "024", obtém a partir do produto o período de horas que o mesmo roda.
@@ -31,7 +26,11 @@ export default function FrameImage({
   const turn = init?.slice(11, 13);
   const forecastTime = frame.forecastTime ?? periodStart;
 
-  // console.log("frame", frame);
+  // console.log("frame.init", frame.init);
+  // console.log("year", year);
+  // console.log("month", month);
+  // console.log("day", day);
+  // console.log("turn", turn);
   // console.log("init", init)
   // console.log("dates", dates)
   // console.log("FrameImage model", model)
@@ -93,7 +92,7 @@ export default function FrameImage({
     if (init && urlImage) {
       setDownloadImageUrl(urlImage);
 
-      if (!frame.isPlaying) {
+      if (frame && !frame.isPlaying) {
         loadImage();
       }
     }
@@ -114,13 +113,13 @@ export default function FrameImage({
         date={{ year, month, day, turn }}
         cityId={frame.city}
         urlCharts={model.urlCharts}
+        urlCsv={model.urlCsv}
       />
     );
-  }
-
-  return (
-    <div className="w-full">
-      {/* <p className="pb-2">URL do modelo:
+  } else {
+    return (
+      <div className="w-full">
+        {/* <p className="pb-2">URL do modelo:
         <br /><b>{model.urlImage.replaceAll("{{", " {{").replaceAll("}}", "}} ")}</b></p>
       <p className="pb-2">URL convertida:
         <br />[<b>{
@@ -149,47 +148,48 @@ export default function FrameImage({
       <p>[month: <b>{month}</b>]</p>
       <p>[day: <b>{day}</b>]</p>
       <p>[turn: <b>{turn}</b>]</p> */}
-      <div className="flex justify-center items-center relative min-h-96">
-        {frame?.forecastTime !== null && (loadingImages || loading) && (
-          <span
-            className="absolute flex justify-center items-center"
-            title="Após dar início na animação é necessário aguardar o carregamento das imagens..."
-          >
-            <svg
-              className="animate-spin h-16 w-16 text-gray-600"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
+        <div className="flex justify-center items-center relative min-h-96">
+          {frame?.forecastTime !== null && (loadingImages || loading) && (
+            <span
+              className="absolute flex justify-center items-center"
+              title="Após dar início na animação é necessário aguardar o carregamento das imagens..."
             >
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-              ></circle>
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-              ></path>
-            </svg>
-          </span>
-        )}
-        <img
-          src={urlImage}
-          onError={(e) => {
-            e.target.onError = null;
-            e.target.src = publicImage;
-          }}
-          alt={altImage}
-          className="rounded-md mt-4 max-w-full"
-        />
-      </div>
-      {/* <div className="mt-4 flex justify-center flex-grow">
+              <svg
+                className="animate-spin h-16 w-16 text-gray-600"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+            </span>
+          )}
+          <img
+            src={urlImage}
+            onError={(e) => {
+              e.target.onError = null;
+              e.target.src = publicImage;
+            }}
+            alt={altImage}
+            className="rounded-md mt-4 max-w-full"
+          />
+        </div>
+        {/* <div className="mt-4 flex justify-center flex-grow">
           <a href={urlImage} download="imagem-de-previsao.png" target="_blank" rel="noreferrer" className="px-4 py-2 rounded-md bg-gray-600 text-white hover:bg-gray-700" title={urlImage}><span className="flex justify-center items-center"><FaDownload /><span className="ml-2">Download da imagem</span></span></a>
         </div> */}
-    </div>
-  );
+      </div>
+    );
+  }
 }

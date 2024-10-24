@@ -2,13 +2,19 @@ import { useEffect, useState } from "react";
 
 import Chart from "./Chart";
 
-export default function Charts({ date, urlCharts }) {
-  const [chart, setChart] = useState({});
+export default function Charts({ date, urlCharts, urlCsv }) {
+  const [dataCharts, setDataCharts] = useState(null);
+  const [dataCsv, setDataCsv] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // console.log("date", date);
+  // console.log("urlCharts", urlCharts);
+  // console.log("urlCsv", urlCsv);
+
   useEffect(() => {
-    async function fetchJson() {
+    async function fetchCharts() {
+      setError(null);
       setLoading(true);
       try {
         const response = await fetch(urlCharts);
@@ -16,30 +22,51 @@ export default function Charts({ date, urlCharts }) {
         if (data.datasets?.length == 0) {
           throw new Error("Dados não encontrados no JSON");
         }
-        setChart(data.datasets[0]);
+        setDataCharts(data.datasets[0]);
       } catch (error) {
-        console.log("Erro ao obter dados do JSON: " + url + ".", error);
+        console.log("Erro ao obter dados do JSON: " + urlCharts);
+        // console.log(error);
         setError(error);
       } finally {
         setLoading(false);
       }
     }
 
-    if (urlCharts) {
-      fetchJson();
+    async function fetchCsv() {
+      setError(null);
+      setLoading(true);
+      try {
+        const response = await fetch(urlCsv);
+        const text = await response.text();
+        if (text == "") {
+          throw new Error("Dados não encontrados no CSV");
+        }
+        setDataCsv(text);
+      } catch (error) {
+        console.log("Erro ao obter dados do CSV: " + urlCsv);
+        // console.log(error);
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
     }
-  }, [date, urlCharts]);
+
+    if (urlCharts) fetchCharts();
+    if (urlCsv) fetchCsv();
+  }, [date]);
 
   if (loading) {
     return <div className="text-center pt-4">Carregando...</div>;
   }
 
   if (error) {
-    return <div className="text-center pt-4">{error.message}</div>;
+    return (
+      <div className="text-center pt-4">
+        Ocorreu um erro ao obter os dados para o dia {date.day}/{date.month}/
+        {date.year}.
+      </div>
+    );
   }
-
-  // console.log("urlCharts", urlCharts);
-  // console.log(chart);
 
   // Tipos de charts:
   // tempPressPrec - Temperatura, pressão e precipitação
@@ -51,22 +78,40 @@ export default function Charts({ date, urlCharts }) {
   // cloud - Nuvens
   // co - Monóxido de carbono
   // pm25 - Material micro-particulado
-
-  if (loading) {
-    return <div className="text-center pt-4">Carregando...</div>;
-  }
+  // csvCo - Heatmap de monóxido de carbono
+  // csvPm25 - Heatmap de material micro-particulado
+  // csvNox - Heatmap de óxido de nitrogenio
+  // csvWdir - Heatmap de direção do vento
+  // csvSpeed - Heatmap de velocidade
 
   return (
     <div>
-      <Chart date={date} chart={chart} type="tempPressPrec" />
-      <Chart date={date} chart={chart} type="tempMinMaxMedia" />
-      <Chart date={date} chart={chart} type="press" />
-      <Chart date={date} chart={chart} type="prec" />
-      <Chart date={date} chart={chart} type="wind" />
-      <Chart date={date} chart={chart} type="ur" />
-      <Chart date={date} chart={chart} type="cloud" />
-      <Chart date={date} chart={chart} type="co" />
-      <Chart date={date} chart={chart} type="pm25" />
+      {dataCharts !== null && (
+        <>
+          <Chart date={date} dataCharts={dataCharts} product="tempPressPrec" />
+          <Chart
+            date={date}
+            dataCharts={dataCharts}
+            product="tempMinMaxMedia"
+          />
+          <Chart date={date} dataCharts={dataCharts} product="press" />
+          <Chart date={date} dataCharts={dataCharts} product="prec" />
+          <Chart date={date} dataCharts={dataCharts} product="wind" />
+          <Chart date={date} dataCharts={dataCharts} product="ur" />
+          <Chart date={date} dataCharts={dataCharts} product="cloud" />
+          <Chart date={date} dataCharts={dataCharts} product="co" />
+          <Chart date={date} dataCharts={dataCharts} product="pm25" />
+        </>
+      )}
+      {dataCsv !== null && (
+        <>
+          <Chart date={date} dataCsv={dataCsv} product="csvCo" />
+          <Chart date={date} dataCsv={dataCsv} product="csvPm25" />
+          <Chart date={date} dataCsv={dataCsv} product="csvNox" />
+          <Chart date={date} dataCsv={dataCsv} product="csvWdir" />
+          <Chart date={date} dataCsv={dataCsv} product="csvSpeed" />
+        </>
+      )}
     </div>
   );
 }

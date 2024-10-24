@@ -135,7 +135,7 @@ export default function DropDownConfig({
       // console.log("model.possibleValues.region.find", model.possibleValues.region.find(region => region.value === frame.region))
       // console.log("DropDownConfig handleChangeModel periodStart", periodStart)
     },
-    [models, frame, resetTimer, setFrames, setConfig]
+    [models, frame, resetTimer]
   );
 
   const handleCitySelected = useCallback(
@@ -161,7 +161,7 @@ export default function DropDownConfig({
       ]);
       setConfig((prev) => ({ ...prev, framesWithImagesLoaded: [] }));
     },
-    [model.forecastTime, frame, resetTimer, setFrames, setConfig]
+    [model.forecastTime, frame, resetTimer]
   );
 
   const handleChangeRegion = useCallback(
@@ -182,7 +182,7 @@ export default function DropDownConfig({
       ]);
       setConfig((prev) => ({ ...prev, framesWithImagesLoaded: [] }));
     },
-    [model.forecastTime, frame, resetTimer, setFrames, setConfig]
+    [model.forecastTime, frame, resetTimer]
   );
 
   const handleChangeGroup = useCallback(
@@ -226,7 +226,7 @@ export default function DropDownConfig({
       ]);
       setConfig((prev) => ({ ...prev, framesWithImagesLoaded: [] }));
     },
-    [modelProducts, model.forecastTime, frame, resetTimer, setFrames, setConfig]
+    [modelProducts, model.forecastTime, frame, resetTimer]
   );
 
   const handleChangeProduct = useCallback(
@@ -256,14 +256,7 @@ export default function DropDownConfig({
       ]);
       setConfig((prev) => ({ ...prev, framesWithImagesLoaded: [] }));
     },
-    [
-      model.options.products,
-      model.forecastTime,
-      frame,
-      resetTimer,
-      setFrames,
-      setConfig,
-    ]
+    [model.options.products, model.forecastTime, frame, resetTimer]
   );
 
   const handleChangeInit = useCallback(

@@ -41,7 +41,7 @@ export default function TopBar() {
   };
 
   const handleQuantityFrames = ({ quantity }) => {
-    console.log("handleQuantityFrames", quantity);
+    // console.log("handleQuantityFrames", quantity);
     setConfig({ ...config, quantityFrames: quantity });
     toast.info(
       `Exibindo ${
