@@ -82,7 +82,9 @@ export default function Charts({ date, urlCharts, urlCsv }) {
   // csvPm25 - Heatmap de material micro-particulado
   // csvNox - Heatmap de óxido de nitrogenio
   // csvWind - Vector plot de vento
-  // csvCoWind - Heatmap e vector plot de vento e monóxido de carbono
+  // csvWindCo - Heatmap e vector plot de vento e monóxido de carbono
+  // csvWindPm25 - Heatmap e vector plot de vento e material micro-particulado
+  // csvWindNox - Heatmap e vector plot de vento e óxido de nitrogenio
 
   return (
     <div>
@@ -105,11 +107,13 @@ export default function Charts({ date, urlCharts, urlCsv }) {
       )}
       {dataCsv !== null && (
         <>
-          <Chart date={date} dataCsv={dataCsv} product="csvCo" />
+          {/* <Chart date={date} dataCsv={dataCsv} product="csvCo" />
           <Chart date={date} dataCsv={dataCsv} product="csvPm25" />
           <Chart date={date} dataCsv={dataCsv} product="csvNox" />
-          <Chart date={date} dataCsv={dataCsv} product="csvWind" />
-          <Chart date={date} dataCsv={dataCsv} product="csvCoWind" />
+          <Chart date={date} dataCsv={dataCsv} product="csvWind" /> */}
+          <Chart date={date} dataCsv={dataCsv} product="csvWindCo" />
+          <Chart date={date} dataCsv={dataCsv} product="csvWindPm25" />
+          <Chart date={date} dataCsv={dataCsv} product="csvWindNox" />
         </>
       )}
     </div>

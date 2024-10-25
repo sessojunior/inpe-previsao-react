@@ -1184,6 +1184,10 @@ export default function Chart({
           format: "{value} ppm",
         },
       },
+      legend: {
+        align: "center",
+        symbolWidth: 420,
+      },
       series: [
         {
           data: data, // Função que processa o CSV e gera os dados
@@ -1300,6 +1304,10 @@ export default function Chart({
         labels: {
           format: "{value} ug/m³",
         },
+      },
+      legend: {
+        align: "center",
+        symbolWidth: 420,
       },
       series: [
         {
@@ -1418,6 +1426,10 @@ export default function Chart({
           format: "{value} ppb",
         },
       },
+      legend: {
+        align: "center",
+        symbolWidth: 420,
+      },
       series: [
         {
           data: data, // Função que processa o CSV e gera os dados
@@ -1426,7 +1438,7 @@ export default function Chart({
           nullColor: "#EFEFEF",
           colsize: 3 * 36e5, // Intervalo de 3 horas (ajuste conforme necessidade)
           tooltip: {
-            headerFormat: "Concentração de PM25<br/>",
+            headerFormat: "Óxido de nitrogênio<br/>",
             pointFormatter: function () {
               const level = this.y; // Obtem o nível da elevação
               return `${Highcharts.dateFormat(
@@ -1446,8 +1458,6 @@ export default function Chart({
   // Vector plot de vento
   if (product === "csvWind") {
     const { data, minDate, maxDate } = parseCsvToHeatmapData(dataCsv, "wind");
-    console.log("data", data);
-    // console.log("data", data);
     const customLabels = {
       1: "39.2 m",
       2: "122.4 m",
@@ -1562,7 +1572,624 @@ export default function Chart({
   }
 
   // Heatmap e vector plot de vento e monóxido de carbono
-  if (product === "csvCoWind") {
+  if (product === "csvWindCo") {
+    const {
+      data: dataCo,
+      minDate,
+      maxDate,
+    } = parseCsvToHeatmapData(dataCsv, "co");
+    const { data: dataWind } = parseCsvToHeatmapData(dataCsv, "wind");
+    const customLabels = {
+      1: "39.2 m",
+      2: "122.4 m",
+      3: "212.2 m",
+      4: "309.1 m",
+      5: "413.9 m",
+      6: "527.0 m",
+      7: "649.1 m",
+      8: "781.1 m",
+      9: "923.5 m",
+      10: "1077.4 m",
+      11: "1243.6 m",
+      12: "1423.1 m",
+      13: "1617.0 m",
+      14: "1826.3 m",
+      15: "2052.4 m",
+      16: "2296.6 m",
+      17: "2560.3 m",
+      18: "2845.2 m",
+      19: "3152.8 m",
+      20: "3485.0 m",
+      21: "3843.8 m",
+      22: "4231.3 m",
+      23: "4649.8 m",
+      24: "5101.8 m",
+      25: "5590.0 m",
+      26: "6117.1 m",
+      27: "6686.5 m",
+      28: "7301.4 m",
+      29: "7965.6 m",
+      30: "8682.8 m",
+      31: "9458.6 m",
+      32: "10289.8 m",
+    };
+    const optionsHeatmapVectorWindCo = {
+      chart: {
+        backgroundColor: "transparent",
+        height: "100%",
+      },
+      boost: {
+        useGPUTranslations: true, // Utiliza GPU para renderização
+        seriesThreshold: 1, // Ativa o boost para qualquer gráfico
+      },
+      plotOptions: {
+        series: {
+          turboThreshold: 5000, // Necessário para exibir as setinhas. Deve ser igual ou maior que a quantidade de elementos do array "data" que vem do parseCsvToHeatmapData(dataCsv, "wind"). Se tiver 1056 elementos esse array, deve ser maior ou igual a 1056. É bom deixar um valor bem alto para que sejam exibidas as setinhas.
+        },
+      },
+      title: {
+        text: "Vento e Monóxido de Carbono (CO)",
+        align: "center",
+        x: 40,
+      },
+      subtitle: {
+        text: "Variação ao longo da elevação e do tempo com vento e monóxido de carbono",
+        align: "center",
+        x: 40,
+      },
+      xAxis: {
+        type: "datetime", // O eixo x será baseado na data e hora
+        min: minDate, // Valor mínimo da data
+        max: maxDate, // Valor máximo da data
+        labels: {
+          align: "left",
+          x: 5,
+          y: 14,
+          format: "{value:%d/%m %Hh}", // Formato da data
+        },
+        showLastLabel: false,
+        tickLength: 16,
+      },
+      yAxis: {
+        title: {
+          text: "Elevação em 32 níveis (m)", // O eixo y representa a elevação
+        },
+        labels: {
+          formatter: function () {
+            return customLabels[this.value] || this.value; // Retorna o label personalizado
+          },
+        },
+        minPadding: 0,
+        maxPadding: 0,
+        startOnTick: false,
+        endOnTick: false,
+        tickPositions: [4, 8, 12, 16, 20, 24, 28, 32], // Posições do eixo y em níveis
+        tickWidth: 1,
+        min: 1,
+        max: 32, // Configuração para 32 níveis de elevação
+        reversed: false,
+      },
+      colorAxis: {
+        stops: [
+          [0, "rgba(48, 96, 207, 0.75)"], // Azul translúcido para valores baixos
+          [0.25, "rgba(173, 216, 230, 0.75)"], // Azul claro para intermediários
+          [0.5, "rgba(255, 251, 188, 0.75)"], // Amarelo translúcido para médios
+          [0.75, "rgba(255, 165, 0, 0.75)"], // Laranja translúcido para altos
+          [0.9, "rgba(196, 70, 58, 0.75)"], // Vermelho translúcido para valores altos
+        ],
+        min: 0,
+        max: 500,
+        tickInterval: 100, // Intervalo fixo para o eixo colorAxis
+        startOnTick: false,
+        endOnTick: false,
+        labels: {
+          format: "{value} ppm",
+        },
+      },
+      legend: {
+        align: "center",
+        symbolWidth: 420,
+      },
+      series: [
+        {
+          data: dataCo, // Função que processa o CSV e gera os dados
+          name: "Monóxido de carbono (CO)",
+          type: "heatmap",
+          borderWidth: 0,
+          colsize: 3 * 36e5, // Intervalo de 3 horas (ajuste conforme necessidade)
+          tooltip: {
+            shared: true, // Compartilha o tooltip com heatmap e vetor
+            headerFormat:
+              "Direção e velocidade do vento com monóxido de carbono<br/>",
+            pointFormatter: function () {
+              const date = Highcharts.dateFormat("%d/%m %H:%M", this.x);
+              const elevationLevel = this.y;
+
+              // Encontra os dados na série heatmap
+              const heatmapIndex = dataCo.findIndex(
+                (item) => item[0] === this.x && item[1] === this.y
+              );
+              const co =
+                heatmapIndex !== -1
+                  ? dataCo[heatmapIndex][2]
+                  : "não disponível";
+
+              // Encontra a velocidade e direção do vento na série vector (dataWind)
+              const windPoint = dataWind.find(
+                (item) => item[0] === this.x && item[1] === this.y
+              );
+              const speed = windPoint ? windPoint[2] : "não disponível";
+              const direction = windPoint ? windPoint[3] : "não disponível";
+
+              return (
+                `Data: ${date}<br/>` +
+                `Elevação: nível ${elevationLevel}: <b>${customLabels[elevationLevel]}</b><br/>` +
+                `Velocidade: <b>${speed} m/s</b><br/>` +
+                `Direção: <b>${direction}°</b><br/>` +
+                `Concentração de CO: <b>${co} ppm</b>`
+              );
+            },
+          },
+          point: {
+            events: {
+              mouseOver: function () {
+                // Destaca as setas correspondentes no vetor
+                const vectorData = this.series.chart.series[1]; // A série do vetor
+                const correspondingWind = vectorData.data.find(
+                  (point) => point.x === this.x && point.y === this.y
+                );
+                if (correspondingWind) {
+                  correspondingWind.setState("hover"); // Aplica o estado hover
+                }
+              },
+              mouseOut: function () {
+                // Restaura o estado das setas
+                const vectorData = this.series.chart.series[1];
+                vectorData.data.forEach((point) => {
+                  point.setState("");
+                });
+              },
+            },
+          },
+          enableMouseTracking: true,
+        },
+        {
+          data: dataWind,
+          type: "vector",
+          name: "Direção e velocidade do vento",
+          color: Highcharts.getOptions().colors[1],
+          tooltip: {
+            enabled: false, // Desabilita o tooltip para a série de vetor
+          },
+          enableMouseTracking: false,
+          states: {
+            inactive: {
+              opacity: 1, // Mantém a série de vetor totalmente opaca quando outra série está em foco
+            },
+            hover: {
+              enabled: true,
+              brightness: 0.25, // Ajuste de brilho para hover
+              color: "#000000", // Cor para o hover
+            },
+          },
+        },
+      ],
+    };
+    options = optionsHeatmapVectorWindCo;
+  }
+
+  // Heatmap e vector plot de vento e material micro-particulado
+  if (product === "csvWindPm25") {
+    const {
+      data: dataPm25,
+      minDate,
+      maxDate,
+    } = parseCsvToHeatmapData(dataCsv, "pm25");
+    const { data: dataWind } = parseCsvToHeatmapData(dataCsv, "wind");
+    const customLabels = {
+      1: "39.2 m",
+      2: "122.4 m",
+      3: "212.2 m",
+      4: "309.1 m",
+      5: "413.9 m",
+      6: "527.0 m",
+      7: "649.1 m",
+      8: "781.1 m",
+      9: "923.5 m",
+      10: "1077.4 m",
+      11: "1243.6 m",
+      12: "1423.1 m",
+      13: "1617.0 m",
+      14: "1826.3 m",
+      15: "2052.4 m",
+      16: "2296.6 m",
+      17: "2560.3 m",
+      18: "2845.2 m",
+      19: "3152.8 m",
+      20: "3485.0 m",
+      21: "3843.8 m",
+      22: "4231.3 m",
+      23: "4649.8 m",
+      24: "5101.8 m",
+      25: "5590.0 m",
+      26: "6117.1 m",
+      27: "6686.5 m",
+      28: "7301.4 m",
+      29: "7965.6 m",
+      30: "8682.8 m",
+      31: "9458.6 m",
+      32: "10289.8 m",
+    };
+    const optionsHeatmapVectorWindPm25 = {
+      chart: {
+        backgroundColor: "transparent",
+        height: "100%",
+      },
+      boost: {
+        useGPUTranslations: true, // Utiliza GPU para renderização
+        seriesThreshold: 1, // Ativa o boost para qualquer gráfico
+      },
+      plotOptions: {
+        series: {
+          turboThreshold: 5000, // Necessário para exibir as setinhas. Deve ser igual ou maior que a quantidade de elementos do array "data" que vem do parseCsvToHeatmapData(dataCsv, "wind"). Se tiver 1056 elementos esse array, deve ser maior ou igual a 1056. É bom deixar um valor bem alto para que sejam exibidas as setinhas.
+        },
+      },
+      title: {
+        text: "Vento e Material Micro-particulado 2.5nm (ug/m³)",
+        align: "center",
+        x: 40,
+      },
+      subtitle: {
+        text: "Variação ao longo da elevação e do tempo com vento e material micro-particulado 2.5nm",
+        align: "center",
+        x: 40,
+      },
+      xAxis: {
+        type: "datetime", // O eixo x será baseado na data e hora
+        min: minDate, // Valor mínimo da data
+        max: maxDate, // Valor máximo da data
+        labels: {
+          align: "left",
+          x: 5,
+          y: 14,
+          format: "{value:%d/%m %Hh}", // Formato da data
+        },
+        showLastLabel: false,
+        tickLength: 16,
+      },
+      yAxis: {
+        title: {
+          text: "Elevação em 32 níveis (m)", // O eixo y representa a elevação
+        },
+        labels: {
+          formatter: function () {
+            return customLabels[this.value] || this.value; // Retorna o label personalizado
+          },
+        },
+        minPadding: 0,
+        maxPadding: 0,
+        startOnTick: false,
+        endOnTick: false,
+        tickPositions: [4, 8, 12, 16, 20, 24, 28, 32], // Posições do eixo y em níveis
+        tickWidth: 1,
+        min: 1,
+        max: 32, // Configuração para 32 níveis de elevação
+        reversed: false,
+      },
+      colorAxis: {
+        stops: [
+          [0, "rgba(48, 96, 207, 0.75)"], // Azul translúcido para valores baixos
+          [0.25, "rgba(173, 216, 230, 0.75)"], // Azul claro para intermediários
+          [0.5, "rgba(255, 251, 188, 0.75)"], // Amarelo translúcido para médios
+          [0.75, "rgba(255, 165, 0, 0.75)"], // Laranja translúcido para altos
+          [0.9, "rgba(196, 70, 58, 0.75)"], // Vermelho translúcido para valores altos
+        ],
+        min: 0,
+        max: 10,
+        tickInterval: 2, // Intervalo fixo para o eixo colorAxis
+        startOnTick: false,
+        endOnTick: false,
+        labels: {
+          format: "{value} ug/m³",
+        },
+      },
+      legend: {
+        align: "center",
+        symbolWidth: 420,
+      },
+      series: [
+        {
+          data: dataPm25, // Função que processa o CSV e gera os dados
+          name: "Material Micro-particulado 2.5nm (ug/m³)",
+          type: "heatmap",
+          borderWidth: 0,
+          colsize: 3 * 36e5, // Intervalo de 3 horas (ajuste conforme necessidade)
+          tooltip: {
+            shared: true, // Compartilha o tooltip com heatmap e vetor
+            headerFormat:
+              "Direção e velocidade do vento com material micro-particulado 2.5nm<br/>",
+            pointFormatter: function () {
+              const date = Highcharts.dateFormat("%d/%m %H:%M", this.x);
+              const elevationLevel = this.y;
+
+              // Encontra os dados na série heatmap
+              const heatmapIndex = dataPm25.findIndex(
+                (item) => item[0] === this.x && item[1] === this.y
+              );
+              const pm25 =
+                heatmapIndex !== -1
+                  ? dataPm25[heatmapIndex][2]
+                  : "não disponível";
+
+              // Encontra a velocidade e direção do vento na série vector (dataWind)
+              const windPoint = dataWind.find(
+                (item) => item[0] === this.x && item[1] === this.y
+              );
+              const speed = windPoint ? windPoint[2] : "não disponível";
+              const direction = windPoint ? windPoint[3] : "não disponível";
+
+              return (
+                `Data: ${date}<br/>` +
+                `Elevação: nível ${elevationLevel}: <b>${customLabels[elevationLevel]}</b><br/>` +
+                `Velocidade: <b>${speed} m/s</b><br/>` +
+                `Direção: <b>${direction}°</b><br/>` +
+                `Material Micro-particulado 2.5nm: <b>${pm25} ug/m³</b>`
+              );
+            },
+          },
+          point: {
+            events: {
+              mouseOver: function () {
+                // Destaca as setas correspondentes no vetor
+                const vectorData = this.series.chart.series[1]; // A série do vetor
+                const correspondingWind = vectorData.data.find(
+                  (point) => point.x === this.x && point.y === this.y
+                );
+                if (correspondingWind) {
+                  correspondingWind.setState("hover"); // Aplica o estado hover
+                }
+              },
+              mouseOut: function () {
+                // Restaura o estado das setas
+                const vectorData = this.series.chart.series[1];
+                vectorData.data.forEach((point) => {
+                  point.setState("");
+                });
+              },
+            },
+          },
+          enableMouseTracking: true,
+        },
+        {
+          data: dataWind,
+          type: "vector",
+          name: "Direção e velocidade do vento",
+          color: Highcharts.getOptions().colors[1],
+          tooltip: {
+            enabled: false, // Desabilita o tooltip para a série de vetor
+          },
+          enableMouseTracking: false,
+          states: {
+            inactive: {
+              opacity: 1, // Mantém a série de vetor totalmente opaca quando outra série está em foco
+            },
+            hover: {
+              enabled: true,
+              brightness: 0.25, // Ajuste de brilho para hover
+              color: "#000000", // Cor para o hover
+            },
+          },
+        },
+      ],
+    };
+    options = optionsHeatmapVectorWindPm25;
+  }
+
+  // Heatmap e vector plot de vento e óxido de nitrogênio
+  if (product === "csvWindNox") {
+    const {
+      data: dataNox,
+      minDate,
+      maxDate,
+    } = parseCsvToHeatmapData(dataCsv, "nox");
+    const { data: dataWind } = parseCsvToHeatmapData(dataCsv, "wind");
+    const customLabels = {
+      1: "39.2 m",
+      2: "122.4 m",
+      3: "212.2 m",
+      4: "309.1 m",
+      5: "413.9 m",
+      6: "527.0 m",
+      7: "649.1 m",
+      8: "781.1 m",
+      9: "923.5 m",
+      10: "1077.4 m",
+      11: "1243.6 m",
+      12: "1423.1 m",
+      13: "1617.0 m",
+      14: "1826.3 m",
+      15: "2052.4 m",
+      16: "2296.6 m",
+      17: "2560.3 m",
+      18: "2845.2 m",
+      19: "3152.8 m",
+      20: "3485.0 m",
+      21: "3843.8 m",
+      22: "4231.3 m",
+      23: "4649.8 m",
+      24: "5101.8 m",
+      25: "5590.0 m",
+      26: "6117.1 m",
+      27: "6686.5 m",
+      28: "7301.4 m",
+      29: "7965.6 m",
+      30: "8682.8 m",
+      31: "9458.6 m",
+      32: "10289.8 m",
+    };
+    const optionsHeatmapVectorWindPm25 = {
+      chart: {
+        backgroundColor: "transparent",
+        height: "100%",
+      },
+      boost: {
+        useGPUTranslations: true, // Utiliza GPU para renderização
+        seriesThreshold: 1, // Ativa o boost para qualquer gráfico
+      },
+      plotOptions: {
+        series: {
+          turboThreshold: 5000, // Necessário para exibir as setinhas. Deve ser igual ou maior que a quantidade de elementos do array "data" que vem do parseCsvToHeatmapData(dataCsv, "wind"). Se tiver 1056 elementos esse array, deve ser maior ou igual a 1056. É bom deixar um valor bem alto para que sejam exibidas as setinhas.
+        },
+      },
+      title: {
+        text: "Vento e Óxido de Nitrogenio (NOx)",
+        align: "center",
+        x: 40,
+      },
+      subtitle: {
+        text: "Variação ao longo da elevação e do tempo com vento e óxido de nitrogênio",
+        align: "center",
+        x: 40,
+      },
+      xAxis: {
+        type: "datetime", // O eixo x será baseado na data e hora
+        min: minDate, // Valor mínimo da data
+        max: maxDate, // Valor máximo da data
+        labels: {
+          align: "left",
+          x: 5,
+          y: 14,
+          format: "{value:%d/%m %Hh}", // Formato da data
+        },
+        showLastLabel: false,
+        tickLength: 16,
+      },
+      yAxis: {
+        title: {
+          text: "Elevação em 32 níveis (m)", // O eixo y representa a elevação
+        },
+        labels: {
+          formatter: function () {
+            return customLabels[this.value] || this.value; // Retorna o label personalizado
+          },
+        },
+        minPadding: 0,
+        maxPadding: 0,
+        startOnTick: false,
+        endOnTick: false,
+        tickPositions: [4, 8, 12, 16, 20, 24, 28, 32], // Posições do eixo y em níveis
+        tickWidth: 1,
+        min: 1,
+        max: 32, // Configuração para 32 níveis de elevação
+        reversed: false,
+      },
+      colorAxis: {
+        stops: [
+          [0, "rgba(48, 96, 207, 0.75)"], // Azul translúcido para valores baixos
+          [0.25, "rgba(173, 216, 230, 0.75)"], // Azul claro para intermediários
+          [0.5, "rgba(255, 251, 188, 0.75)"], // Amarelo translúcido para médios
+          [0.75, "rgba(255, 165, 0, 0.75)"], // Laranja translúcido para altos
+          [0.9, "rgba(196, 70, 58, 0.75)"], // Vermelho translúcido para valores altos
+        ],
+        min: 0,
+        max: 1,
+        tickInterval: 0.25, // Intervalo fixo para o eixo colorAxis
+        startOnTick: false,
+        endOnTick: false,
+        labels: {
+          format: "{value} ppb",
+        },
+      },
+      legend: {
+        align: "center",
+        symbolWidth: 420,
+      },
+      series: [
+        {
+          data: dataNox, // Função que processa o CSV e gera os dados
+          name: "Óxido de nitrogênio (NOx)",
+          type: "heatmap",
+          borderWidth: 0,
+          colsize: 3 * 36e5, // Intervalo de 3 horas (ajuste conforme necessidade)
+          tooltip: {
+            shared: true, // Compartilha o tooltip com heatmap e vetor
+            headerFormat:
+              "Direção e velocidade do vento com óxido de nitrogênio<br/>",
+            pointFormatter: function () {
+              const date = Highcharts.dateFormat("%d/%m %H:%M", this.x);
+              const elevationLevel = this.y;
+
+              // Encontra os dados na série heatmap
+              const heatmapIndex = dataNox.findIndex(
+                (item) => item[0] === this.x && item[1] === this.y
+              );
+              const nox =
+                heatmapIndex !== -1
+                  ? dataNox[heatmapIndex][2]
+                  : "não disponível";
+
+              // Encontra a velocidade e direção do vento na série vector (dataWind)
+              const windPoint = dataWind.find(
+                (item) => item[0] === this.x && item[1] === this.y
+              );
+              const speed = windPoint ? windPoint[2] : "não disponível";
+              const direction = windPoint ? windPoint[3] : "não disponível";
+
+              return (
+                `Data: ${date}<br/>` +
+                `Elevação: nível ${elevationLevel}: <b>${customLabels[elevationLevel]}</b><br/>` +
+                `Velocidade: <b>${speed} m/s</b><br/>` +
+                `Direção: <b>${direction}°</b><br/>` +
+                `Óxido de nitrogénio (NOx): <b>${nox} ug/m³</b>`
+              );
+            },
+          },
+          point: {
+            events: {
+              mouseOver: function () {
+                // Destaca as setas correspondentes no vetor
+                const vectorData = this.series.chart.series[1]; // A série do vetor
+                const correspondingWind = vectorData.data.find(
+                  (point) => point.x === this.x && point.y === this.y
+                );
+                if (correspondingWind) {
+                  correspondingWind.setState("hover"); // Aplica o estado hover
+                }
+              },
+              mouseOut: function () {
+                // Restaura o estado das setas
+                const vectorData = this.series.chart.series[1];
+                vectorData.data.forEach((point) => {
+                  point.setState("");
+                });
+              },
+            },
+          },
+          enableMouseTracking: true,
+        },
+        {
+          data: dataWind,
+          type: "vector",
+          name: "Direção e velocidade do vento",
+          color: Highcharts.getOptions().colors[1],
+          tooltip: {
+            enabled: false, // Desabilita o tooltip para a série de vetor
+          },
+          enableMouseTracking: false,
+          states: {
+            inactive: {
+              opacity: 1, // Mantém a série de vetor totalmente opaca quando outra série está em foco
+            },
+            hover: {
+              enabled: true,
+              brightness: 0.25, // Ajuste de brilho para hover
+              color: "#000000", // Cor para o hover
+            },
+          },
+        },
+      ],
+    };
+    options = optionsHeatmapVectorWindPm25;
   }
 
   return (
