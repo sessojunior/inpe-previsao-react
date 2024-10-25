@@ -158,7 +158,7 @@ Exemplo:
     - **regions** - (array de strings: string[]). Os valores possíveis são os que estão nos parâmetros **value** do arquivo JSON **regions.json**. Exemplo: _["ams", "bra", "nte"]_. No caso, aqui são somente os valores de região que este produto possui. Pode ser _null_ em caso de não ser seleção por região e sim um campo de texto com seleção por cidade.
     - **forecastTime** - _(null)_. Opcional, deve ser fornecido como _null_ caso não tenha o forecastTime, como é o caso dos meteogramas.
 
-Exemplo:
+Exemplo de arquivo JSON:
 
 ```json
 [
@@ -586,6 +586,19 @@ Exemplo:
   },
 
   ...
+```
+
+Exemplo de arquivo CSV utilizado pelo highcharts:
+
+```cs
+date,elevation,co,pm25,nox,wdir,speed
+2024-10-23 00:00,1,150.965,2.70715,0.19681,182.043695569137,1.59292
+2024-10-23 00:00,2,150.728,2.62285,0.158678,177.583693659282,2.02849
+2024-10-23 00:00,3,150.422,2.55216,0.119856,162.551241405653,2.30325
+2024-10-23 00:00,4,150.219,2.51806,0.0973635,150.560752482811,2.73483
+2024-10-23 00:00,5,150.117,2.52637,0.0893525,130.964152024446,2.96654
+
+...
 ```
 
 ## URLs válidas

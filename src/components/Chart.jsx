@@ -1579,6 +1579,13 @@ export default function Chart({
       maxDate,
     } = parseCsvToHeatmapData(dataCsv, "co");
     const { data: dataWind } = parseCsvToHeatmapData(dataCsv, "wind");
+    const dataWindColor = dataWind.map((point) => ({
+      x: point[0], // Assumindo que a primeira posição é x
+      y: point[1], // Assumindo que a segunda posição é y
+      length: point[2], // Assumindo que a terceira posição é a velocidade
+      direction: point[3], // Assumindo que a quarta posição é a direção
+      color: "#000000", // Cor preta para as setas
+    }));
     const customLabels = {
       1: "39.2 m",
       2: "122.4 m",
@@ -1754,7 +1761,7 @@ export default function Chart({
           enableMouseTracking: true,
         },
         {
-          data: dataWind,
+          data: dataWindColor,
           type: "vector",
           name: "Direção e velocidade do vento",
           color: Highcharts.getOptions().colors[1],
@@ -1786,6 +1793,13 @@ export default function Chart({
       maxDate,
     } = parseCsvToHeatmapData(dataCsv, "pm25");
     const { data: dataWind } = parseCsvToHeatmapData(dataCsv, "wind");
+    const dataWindColor = dataWind.map((point) => ({
+      x: point[0], // Assumindo que a primeira posição é x
+      y: point[1], // Assumindo que a segunda posição é y
+      length: point[2], // Assumindo que a terceira posição é a velocidade
+      direction: point[3], // Assumindo que a quarta posição é a direção
+      color: "#000000", // Cor preta para as setas
+    }));
     const customLabels = {
       1: "39.2 m",
       2: "122.4 m",
@@ -1961,7 +1975,7 @@ export default function Chart({
           enableMouseTracking: true,
         },
         {
-          data: dataWind,
+          data: dataWindColor,
           type: "vector",
           name: "Direção e velocidade do vento",
           color: Highcharts.getOptions().colors[1],
@@ -1993,6 +2007,13 @@ export default function Chart({
       maxDate,
     } = parseCsvToHeatmapData(dataCsv, "nox");
     const { data: dataWind } = parseCsvToHeatmapData(dataCsv, "wind");
+    const dataWindColor = dataWind.map((point) => ({
+      x: point[0], // Assumindo que a primeira posição é x
+      y: point[1], // Assumindo que a segunda posição é y
+      length: point[2], // Assumindo que a terceira posição é a velocidade
+      direction: point[3], // Assumindo que a quarta posição é a direção
+      color: "#000000", // Cor preta para as setas
+    }));
     const customLabels = {
       1: "39.2 m",
       2: "122.4 m",
@@ -2168,7 +2189,7 @@ export default function Chart({
           enableMouseTracking: true,
         },
         {
-          data: dataWind,
+          data: dataWindColor,
           type: "vector",
           name: "Direção e velocidade do vento",
           color: Highcharts.getOptions().colors[1],
