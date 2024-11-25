@@ -30,7 +30,8 @@ export default function FrameTop({
   // console.log("FrameTop")
   // console.log("FrameTop dates", dates)
 
-  const { config, setConfig, regions } = useContext(ConfigContext);
+  const { config, setConfig, regions, startAllTimer, pauseAllTimer } =
+    useContext(ConfigContext);
 
   const region = regions.find((region) => region.value === frame.region);
   const group = model.options.groups.find(
@@ -322,6 +323,66 @@ export default function FrameTop({
     /* End Timer */
   }
 
+  // Capturar eventos de teclado
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      const activeElement = document.activeElement;
+      const isInputFocused =
+        activeElement &&
+        (activeElement.tagName === "INPUT" ||
+          activeElement.tagName === "TEXTAREA" ||
+          activeElement.isContentEditable);
+
+      if (isInputFocused) {
+        return; // Não processa as teclas se um input estiver focado
+      }
+
+      switch (event.key) {
+        case "ArrowLeft":
+          event.preventDefault();
+          handleDecreaseTime();
+          break;
+        case "ArrowRight":
+          event.preventDefault();
+          handleIncreaseTime();
+          break;
+        case " ":
+        case "Spacebar": // Para compatibilidade com navegadores antigos
+          event.preventDefault();
+          if (isPlaying) {
+            pauseAllTimer();
+          } else {
+            startAllTimer();
+          }
+          break;
+        case "p":
+        case "P":
+          event.preventDefault();
+          if (isPlaying) {
+            pauseAllTimer();
+          } else {
+            startAllTimer();
+          }
+          break;
+        default:
+          break;
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    // Cleanup: remove o event listener ao desmontar o componente
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [
+    handleDecreaseTime,
+    handleIncreaseTime,
+    isPlaying,
+    pauseTimer,
+    startTimer,
+  ]);
+
   const publicImage = ImageNotFound;
 
   return (
@@ -394,7 +455,7 @@ export default function FrameTop({
               <button
                 className={classButton}
                 onClick={handleDecreaseTime}
-                title="Voltar o tempo de previsão atual - forecast time"
+                title="Voltar o tempo de previsão atual (Tecla de seta esquerda)"
               >
                 <FaChevronLeft />
               </button>
@@ -402,7 +463,7 @@ export default function FrameTop({
                 <button
                   className={classButtonActive}
                   onClick={pauseTimer}
-                  title="Pausar"
+                  title="Pausar (Tecla de espaço)"
                 >
                   <FaPause />
                 </button>
@@ -440,7 +501,7 @@ export default function FrameTop({
                     <button
                       className={classButton}
                       onClick={startTimer}
-                      title="Iniciar animação do tempo de previsão"
+                      title="Iniciar animação do tempo de previsão (Tecla de espaço)"
                     >
                       <FaPlay />
                     </button>
@@ -450,7 +511,7 @@ export default function FrameTop({
               <button
                 className={classButton}
                 onClick={handleIncreaseTime}
-                title="Avançar o tempo de previsão atual - forecast time"
+                title="Avançar o tempo de previsão atual (Tecla de seta direito)"
               >
                 <FaChevronRight />
               </button>

@@ -1,5 +1,5 @@
-import Frames from "../components/Frames"
-import TopBar from "../components/TopBar"
+import Frames from "../components/Frames";
+import TopBar from "../components/TopBar";
 
 export default function Container() {
   return (
@@ -7,5 +7,5 @@ export default function Container() {
       <TopBar />
       <Frames />
     </main>
-  )
+  );
 }
