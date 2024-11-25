@@ -12,6 +12,8 @@ export function formatDate(date) {
   const day = date.slice(8, 10);
   const turn = date.slice(11, 13);
 
+  console.log("formatDate", date, year, month, day, turn);
+
   // Criar um objeto Date em UTC
   const fullDate = new Date(`${year}-${month}-${day}T${turn}:00:00Z`);
 
