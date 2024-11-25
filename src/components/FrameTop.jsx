@@ -463,7 +463,7 @@ export default function FrameTop({
                 <button
                   className={classButtonActive}
                   onClick={pauseTimer}
-                  title="Pausar (Tecla de espaço)"
+                  title="Pausar"
                 >
                   <FaPause />
                 </button>
@@ -501,7 +501,7 @@ export default function FrameTop({
                     <button
                       className={classButton}
                       onClick={startTimer}
-                      title="Iniciar animação do tempo de previsão (Tecla de espaço)"
+                      title="Iniciar animação do tempo de previsão"
                     >
                       <FaPlay />
                     </button>
@@ -524,7 +524,7 @@ export default function FrameTop({
               <div
                 key={forecastTime}
                 className="font-bold text-sm text-ellipsis overflow-hidden min-w-16 text-center animate-bounce-in"
-                title="Tempo de previsão atual - forecast time"
+                title="Tempo de previsão atual"
               >
                 <span>
                   {Number(forecastTime)}
