@@ -19,6 +19,10 @@ export default function Footer() {
 
   const linksAcesso = [
     {
+      label: "Acesso a Informação",
+      url: "https://www.gov.br/inpe/pt-br/acesso-a-informacao/",
+    },
+    {
       label: "Institucional",
       url: "https://www.gov.br/inpe/pt-br/acesso-a-informacao/institucional",
     },
@@ -67,12 +71,16 @@ export default function Footer() {
       url: "https://www.gov.br/inpe/pt-br/acesso-a-informacao/dados-abertos",
     },
     {
-      label: "Transparência e Prestação de Contas",
-      url: "https://www.gov.br/inpe/pt-br/acesso-a-informacao/transparencia-e-prestacao-de-contas",
+      label: "Cooperações Nacionais e Internacionais",
+      url: "https://www.gov.br/inpe/pt-br/acesso-a-informacao/cooperacoes-nacionais-e-internacionais",
     },
   ];
 
   const linksAssuntos = [
+    {
+      label: "Assuntos",
+      url: "https://www.gov.br/inpe/pt-br/assuntos",
+    },
     {
       label: "Últimas Notícias",
       url: "https://www.gov.br/inpe/pt-br/assuntos/ultimas-noticias",
@@ -84,19 +92,19 @@ export default function Footer() {
     { label: "Eventos", url: "https://www.gov.br/inpe/pt-br/assuntos/eventos" },
     {
       label: "Capacitação Pós-Graduação",
-      url: "https://www.gov.br/inpe/pt-br/area-conhecimento/posgraduacao/",
+      url: "http://antigo.inpe.br/posgraduacao/",
     },
     {
       label: "Anúncio de Oportunidades",
       url: "https://www.gov.br/inpe/pt-br/assuntos/anuncio-de-oportunidades",
     },
-    {
-      label: "Atuação do INPE no Desastre do RS",
-      url: "https://www.gov.br/inpe/pt-br/assuntos/atuacao-do-inpe-no-desastre-no-rs",
-    },
   ];
 
   const linksCentral = [
+    {
+      label: "Central de conteúdo",
+      url: "https://www.gov.br/inpe/pt-br/central-de-conteudo/",
+    },
     {
       label: "Cartilhas Educacionais",
       url: "https://www.gov.br/inpe/pt-br/central-de-conteudo/cartilhas-educacionais",
@@ -110,17 +118,13 @@ export default function Footer() {
       url: "https://www.gov.br/inpe/pt-br/area-conhecimento/biblioteca",
     },
     { label: "Vídeos", url: "http://www.youtube.com/inpemct" },
-    {
-      label: "Área de Conhecimento",
-      url: "https://www.gov.br/inpe/pt-br/area-conhecimento",
-    },
-    {
-      label: "Vídeos Institucionais",
-      url: "https://www.gov.br/inpe/pt-br/central-de-conteudo/videos-institucionais",
-    },
   ];
 
   const linksCanais = [
+    {
+      label: "Canais de atendimento",
+      url: "https://www.gov.br/inpe/pt-br/canais_atendimento",
+    },
     {
       label: "Ouvidoria",
       url: "https://www.gov.br/inpe/pt-br/canais_atendimento/ouvidoria",
