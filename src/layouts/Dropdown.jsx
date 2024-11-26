@@ -27,7 +27,7 @@ export default function Dropdown({ label, subitems, isFullWidth }) {
   }, [isOpen]);
 
   return (
-    <div className={`relative ${!isFullWidth && "-my-2"}`} ref={dropdownRef}>
+    <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
         aria-label={`${label} Menu`}

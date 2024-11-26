@@ -205,7 +205,7 @@ export default function Header() {
                       ) : (
                         <a
                           href={link.url}
-                          className="hover:bg-[#D9E3F2] py-2 px-3 rounded"
+                          className="inline-block hover:bg-[#D9E3F2] py-2 px-3 rounded"
                         >
                           {link.label}
                         </a>
