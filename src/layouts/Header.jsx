@@ -100,7 +100,7 @@ export default function Header() {
   return (
     <>
       {config.showHeaderFooter && (
-        <header className="bg-white w-full px-4 py-4 xl:max-w-[1280px] xl:mx-auto">
+        <header className="bg-white w-full p-4 xl:max-w-[1280px] xl:mx-auto">
           {/* Parte Superior do Header */}
           <div className="flex justify-between mb-3 h-10">
             <div className="flex items-center">
@@ -153,7 +153,7 @@ export default function Header() {
                 {/* Menu Dropdown para telas pequenas */}
                 {isTopMenuOpen && (
                   <div className="absolute right-0 mt-2 w-44 bg-white border border-gray-300 rounded shadow-lg z-50">
-                    <h3 className="px-4 py-3 font-medium">Acesso Rápido</h3>
+                    <h3 className="px-3 py-2 font-medium">Acesso Rápido</h3>
                     <nav>
                       <ul className="flex flex-col">
                         {linksTop.map((link, index) => (
@@ -166,7 +166,7 @@ export default function Header() {
                             ) : (
                               <a
                                 href={link.url}
-                                className="block font-thin hover:bg-[#D9E3F3] px-4 py-3 border-b border-[#CCCCCC]"
+                                className="block text-sm font-thin hover:bg-[#D9E3F3] px-3 py-2 border-b border-[#CCCCCC]"
                                 onClick={() => setIsTopMenuOpen(false)} // Fecha o menu ao clicar
                               >
                                 {link.label}
