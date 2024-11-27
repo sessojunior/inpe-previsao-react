@@ -172,7 +172,7 @@
           "periodHours": 12
         },
         {
-          "label": "Precipitação acumulada em 24h",
+          "label": "Precipitação acumulada em 12h",
           "value": "prec_12h",
           "group": "prec",
           "regions": [
@@ -190,7 +190,7 @@
           "periodHours": 12
         },
         {
-          "label": "Precipitação acumulada até 7 dias",
+          "label": "Precipitação acumulada em 24h",
           "value": "prec",
           "group": "prec",
           "regions": [
