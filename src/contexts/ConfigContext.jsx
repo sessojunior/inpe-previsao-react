@@ -7,21 +7,19 @@ import jsonCities from "../data/cities.json";
 export const ConfigContext = createContext({});
 
 export default function ConfigProvider({ children }) {
-  const [config, setConfig] = useState({
-    showHeaderFooter:
-      JSON.parse(localStorage.getItem("config"))?.showHeaderFooter ?? true,
-    quantityFrames:
-      JSON.parse(localStorage.getItem("config"))?.quantityFrames || 1,
-    isAllPlaying: false, // Se todos os frames estão em play
-    framesWithImagesLoaded: [], // Array para armazenar os IDs dos frames que já pré-carregaram as imagens
-  });
-
   const models = jsonModels;
   const regions = jsonRegions;
   const cities = jsonCities;
 
-  // console.log("models", models)
-  // console.log("models[0].value", models[0].value)
+  let initialConfig = {
+    showHeaderFooter: true,
+    quantityFrames: 1,
+    isAllPlaying: false, // Se todos os frames estão em play
+    framesWithImagesLoaded: [], // Array para armazenar os IDs dos frames que já pré-carregaram as imagens
+  };
+  const [config, setConfig] = useState(
+    JSON.parse(localStorage.getItem("config")) || initialConfig
+  );
 
   let initialFrames = [];
   for (let i = 0; i < 4; i++) {
@@ -37,27 +35,23 @@ export default function ConfigProvider({ children }) {
       init: null,
     });
   }
-
   const [frames, setFrames] = useState(
     JSON.parse(localStorage.getItem("framesPrevisao")) || initialFrames
   );
 
-  // console.log("jsonFrames", jsonFrames)
+  const updateLocalConfig = (config) => {
+    const localConfig = {
+      showHeaderFooter: config.showHeaderFooter,
+      quantityFrames: config.quantityFrames,
+      isAllPlaying: false, // Sempre false
+      framesWithImagesLoaded: [], // Sempre vazio
+    };
+    console.log("localConfig", localConfig);
+    localStorage.setItem("config", JSON.stringify(config));
+    setConfig(localConfig);
+  };
 
-  useEffect(() => {
-    localStorage.setItem(
-      "config",
-      JSON.stringify({
-        showHeaderFooter: config.showHeaderFooter,
-        quantityFrames: config.quantityFrames,
-      })
-    );
-    // console.log("salvou no localStorage: config")
-  }, [config]);
-
-  // console.log("config", config)
-
-  useEffect(() => {
+  const updateLocalFrames = (frames) => {
     const localFrames = frames.map((frame) => ({
       id: frame.id,
       model: frame.model,
@@ -67,22 +61,33 @@ export default function ConfigProvider({ children }) {
       city: frame.city ?? null,
       forecastTime: frame.forecastTime,
     }));
-    // console.log("frames", frames)
-    // console.log("localFrames", localFrames)
     localStorage.setItem("framesPrevisao", JSON.stringify(localFrames));
-    // console.log("salvou no localStorage: frames")
-  }, [frames]);
-
-  // console.log("frames", frames)
+    setFrames(localFrames);
+  };
 
   const startAllTimer = () => {
-    // console.log("startAllTimer")
-    setConfig({ ...config, isAllPlaying: true, framesWithImagesLoaded: [] });
+    console.log("startAllTimer");
+    const localConfig = {
+      ...config,
+      isAllPlaying: true,
+      framesWithImagesLoaded: [],
+    };
+    updateLocalConfig({
+      ...config,
+      isAllPlaying: false, // Manter false no localStorage
+      framesWithImagesLoaded: [], // Manter vazio no localStorage
+    });
+    setConfig(localConfig);
   };
 
   const pauseAllTimer = () => {
-    // console.log("pauseAllTimer")
-    setConfig({ ...config, isAllPlaying: false, framesWithImagesLoaded: [] });
+    const localConfig = {
+      ...config,
+      isAllPlaying: false,
+      framesWithImagesLoaded: [],
+    };
+    updateLocalConfig(localConfig);
+    setConfig(localConfig);
   };
 
   return (
@@ -94,9 +99,10 @@ export default function ConfigProvider({ children }) {
         regions,
         cities,
         frames,
-        setFrames,
         startAllTimer,
         pauseAllTimer,
+        updateLocalFrames,
+        updateLocalConfig,
       }}
     >
       {children}

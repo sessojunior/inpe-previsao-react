@@ -16,8 +16,15 @@ export default function DropDownConfig({
   isInputFocused,
   setIsInputFocused,
 }) {
-  const { config, setConfig, frames, setFrames, models, regions, cities } =
-    useContext(ConfigContext);
+  const {
+    config,
+    frames,
+    models,
+    regions,
+    cities,
+    updateLocalConfig,
+    updateLocalFrames,
+  } = useContext(ConfigContext);
 
   // Cities
   const [selectedCity, setSelectedCity] = useState("");
@@ -40,9 +47,6 @@ export default function DropDownConfig({
   // Load city from localStorage when the component mounts
   useEffect(() => {
     loadCityId();
-    // console.log("frame.city", frame.city);
-    // console.log("cities", cities);
-    // console.log("cityUf", cityUf());
   }, [cities]);
 
   // City selected
@@ -83,17 +87,6 @@ export default function DropDownConfig({
     return modelProducts.filter((product) => product.group === frame.group);
   }, [modelProducts, frame.group]);
 
-  // console.log("models", models)
-  // console.log("model", model)
-  // console.log("frame", frame);
-  // console.log("frame.group", frame.group)
-  // console.log("frame.product", frame.product)
-  // console.log("modelProductRegions", modelProductRegions)
-  // console.log("productRegions", productRegions)
-  // console.log("modelProducts", modelProducts)
-  // console.log("modelGroups", modelGroups)
-  // console.log("productGroups", productGroups)
-
   const classSelect =
     "py-2 px-2 block w-full border border-gray-200 rounded-lg text-sm focus:border-black focus:outline-2 disabled:opacity-50 disabled:pointer-events-none";
   // const classRadio = "block shrink-0 mr-1 border border-gray-200 rounded-full text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none cursor-pointer"
@@ -113,7 +106,7 @@ export default function DropDownConfig({
         isPlaying: false,
         city: null,
       });
-      setFrames([
+      updateLocalFrames([
         ...frames.slice(0, frame.id - 1),
         {
           ...frame,
@@ -127,13 +120,10 @@ export default function DropDownConfig({
         },
         ...frames.slice(frame.id),
       ]);
-      setConfig((prev) => ({ ...prev, framesWithImagesLoaded: [] }));
-      // console.log("handleChangeModel (model)", model)
-      // console.log("handleChangeModel (frame)", frame)
-      // console.log("frame.region", frame.region)
-      // console.log("model.possibleValues.region", model.possibleValues.region.find(region => region.value === frame.region))
-      // console.log("model.possibleValues.region.find", model.possibleValues.region.find(region => region.value === frame.region))
-      // console.log("DropDownConfig handleChangeModel periodStart", periodStart)
+      updateLocalConfig({
+        ...config,
+        framesWithImagesLoaded: [],
+      });
     },
     [models, frame, resetTimer]
   );
@@ -141,7 +131,6 @@ export default function DropDownConfig({
   const handleCitySelected = useCallback(
     (id) => {
       setSelectedCityId(id); // Atualiza o id ao selecionar a cidade
-      // console.log("handleCitySelected", id);
 
       resetTimer(model.forecastTime);
       setFrame({
@@ -150,7 +139,7 @@ export default function DropDownConfig({
         city: id,
         region: null,
       });
-      setFrames([
+      updateLocalFrames([
         ...frames.slice(0, frame.id - 1),
         {
           ...frame,
@@ -159,17 +148,19 @@ export default function DropDownConfig({
         },
         ...frames.slice(frame.id),
       ]);
-      setConfig((prev) => ({ ...prev, framesWithImagesLoaded: [] }));
+      updateLocalConfig({
+        ...config,
+        framesWithImagesLoaded: [],
+      });
     },
     [model.forecastTime, frame, resetTimer]
   );
 
   const handleChangeRegion = useCallback(
     (e) => {
-      // console.log("handleChangeRegion model", model)
       resetTimer(model.forecastTime);
       setFrame({ ...frame, region: e.target.value, isPlaying: false });
-      setFrames([
+      updateLocalFrames([
         ...frames.slice(0, frame.id - 1),
         {
           ...frame,
@@ -180,7 +171,10 @@ export default function DropDownConfig({
         },
         ...frames.slice(frame.id),
       ]);
-      setConfig((prev) => ({ ...prev, framesWithImagesLoaded: [] }));
+      updateLocalConfig({
+        ...config,
+        framesWithImagesLoaded: [],
+      });
     },
     [model.forecastTime, frame, resetTimer]
   );
@@ -190,7 +184,6 @@ export default function DropDownConfig({
       const firstProductGroup = modelProducts.find(
         (product) => product.group === e.target.value
       );
-      // console.log("firstProductGroup", firstProductGroup);
       const forecastTime =
         firstProductGroup.forecastTime !== undefined
           ? firstProductGroup.forecastTime
@@ -208,7 +201,7 @@ export default function DropDownConfig({
             ? firstProductGroup.regions[0]
             : null,
       });
-      setFrames([
+      updateLocalFrames([
         ...frames.slice(0, frame.id - 1),
         {
           ...frame,
@@ -224,14 +217,16 @@ export default function DropDownConfig({
         },
         ...frames.slice(frame.id),
       ]);
-      setConfig((prev) => ({ ...prev, framesWithImagesLoaded: [] }));
+      updateLocalConfig({
+        ...config,
+        framesWithImagesLoaded: [],
+      });
     },
     [modelProducts, model.forecastTime, frame, resetTimer]
   );
 
   const handleChangeProduct = useCallback(
     (e) => {
-      // console.log("model", model)
       const product = model.options.products.find(
         (product) => product.value === e.target.value
       );
@@ -239,10 +234,9 @@ export default function DropDownConfig({
         product.forecastTime !== undefined
           ? product.forecastTime
           : model.forecastTime;
-      // console.log("forecastTime", forecastTime);
       resetTimer(forecastTime);
       setFrame({ ...frame, product: e.target.value, isPlaying: false });
-      setFrames([
+      updateLocalFrames([
         ...frames.slice(0, frame.id - 1),
         {
           ...frame,
@@ -254,7 +248,10 @@ export default function DropDownConfig({
         },
         ...frames.slice(frame.id),
       ]);
-      setConfig((prev) => ({ ...prev, framesWithImagesLoaded: [] }));
+      updateLocalConfig({
+        ...config,
+        framesWithImagesLoaded: [],
+      });
     },
     [model.options.products, model.forecastTime, frame, resetTimer]
   );
@@ -263,7 +260,7 @@ export default function DropDownConfig({
     (e) => {
       resetTimer(model.forecastTime);
       setFrame({ ...frame, init: e.target.value, isPlaying: false });
-      setFrames([
+      updateLocalFrames([
         ...frames.slice(0, frame.id - 1),
         {
           ...frame,
@@ -273,17 +270,13 @@ export default function DropDownConfig({
         },
         ...frames.slice(frame.id),
       ]);
-      setConfig((prev) => ({ ...prev, framesWithImagesLoaded: [] }));
+      updateLocalConfig({
+        ...config,
+        framesWithImagesLoaded: [],
+      });
     },
-    [model.forecastTime, frame, resetTimer, setFrames, setConfig]
+    [model.forecastTime, frame, resetTimer]
   );
-
-  // console.log("dates", dates)
-
-  // console.log("frames", frames)
-  // console.log("options", model.options)
-  // console.log("id", id)
-  // console.log("TopFrame (frame)", frame);
 
   return (
     <div>

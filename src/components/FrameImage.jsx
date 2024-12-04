@@ -26,19 +26,6 @@ export default function FrameImage({
   const turn = init?.slice(11, 13);
   const forecastTime = frame.forecastTime ?? periodStart;
 
-  // console.log("frame.init", frame.init);
-  // console.log("year", year);
-  // console.log("month", month);
-  // console.log("day", day);
-  // console.log("turn", turn);
-  // console.log("init", init)
-  // console.log("dates", dates)
-  // console.log("FrameImage model", model)
-  // console.log("model.urlImage", model.urlImage)
-  // console.log("FrameImage frame.forecastTime", frame.forecastTime)
-  // console.log("FrameImage periodStart", periodStart)
-  // console.log("FrameImage forecastTime", forecastTime)
-
   const urlImage = model?.urlImage
     .replaceAll("{{model}}", model?.value)
     .replaceAll("{{region}}", frame?.region ?? frame?.city)
@@ -54,14 +41,6 @@ export default function FrameImage({
     .replaceAll("{{day}}", day);
 
   const altImage = `${frame?.model} - ${frame?.region}`;
-
-  // console.log("frame.forecastTime 1", frame.forecastTime);
-  // console.log("urlImage", urlImage);
-
-  // console.log("config.isAllPlaying", config.isAllPlaying)
-  // console.log("config.framesWithImagesLoaded", config.framesWithImagesLoaded)
-
-  // console.log("model", model);
 
   useEffect(() => {
     const loadImage = async () => {
@@ -79,7 +58,6 @@ export default function FrameImage({
               )
             );
         });
-        // console.log(`Imagem do frame ${frame.id} carregada com sucesso!`)
       } catch (error) {
         //console.error(error);
       } finally {
@@ -100,11 +78,6 @@ export default function FrameImage({
 
   if (!frame || !model || dates.length === 0) return null;
 
-  // console.log("frame.id", frame.id)
-  // console.log("loadingImages", loadingImages)
-  // console.log("loading", loading)
-  // console.log("(loadingImages || loading)", (loadingImages || (loading && !loadingImages)))
-
   // Se é um meteograma, mostrar o gráfico
   if (frame?.city && model?.urlCharts) {
     // console.log("frame.city", frame.city);
@@ -119,35 +92,6 @@ export default function FrameImage({
   } else {
     return (
       <div className="w-full">
-        {/* <p className="pb-2">URL do modelo:
-        <br /><b>{model.urlImage.replaceAll("{{", " {{").replaceAll("}}", "}} ")}</b></p>
-      <p className="pb-2">URL convertida:
-        <br />[<b>{
-          model.urlImage.replaceAll("{{model}}", " " + model.value + " ")
-            .replaceAll("{{region}}", " " + frame.region + " ")
-            .replaceAll("{{product}}", " " + frame.product + " ")
-            .replaceAll("{{forecastTime}}", " " + forecastTime + " ")
-            .replaceAll("{{timeRun}}", " " + model.defaultValues.timeRun + " ")
-            .replaceAll("{{turn}}", " " + turn + " ")
-            .replaceAll("{{year}}", " " + year + " ")
-            .replaceAll("{{month}}", " " + month + " ")
-            .replaceAll("{{day}}", " " + day + " ")}</b>]</p>
-      <p className="pb-2">Dados para a troca de imagem:</p>
-      <p>[frame.model: <b>{frame.model}</b>]</p>
-      <p>[frame.region: <b>{frame.region}</b>]</p>
-      <p>[frame.product: <b>{frame.product}</b>]</p>
-      <p>[model.possibleValues.time: <b>{model.possibleValues.time.map(time => time + " ")}</b>]</p>
-      <p><b>[frame.forecastTime: <b>{frame.forecastTime}</b>]</b></p>
-      <p><b>[forecastTime: <b>{forecastTime}</b>]</b></p>
-      <p>[frame.isPlaying: <b>{frame.isPlaying ? "true" : "false"}</b>]</p>
-      <p>[frame.timeRun: <b>{frame.timeRun}</b>]</p>
-      <p>[frame.init: <b>{frame.init}</b>]</p>
-      <p>[init: <b>{init}</b>]</p>
-      <p>[timeRun: <b>{frame.timeRun}</b>]</p>
-      <p>[year: <b>{year}</b>]</p>
-      <p>[month: <b>{month}</b>]</p>
-      <p>[day: <b>{day}</b>]</p>
-      <p>[turn: <b>{turn}</b>]</p> */}
         <div className="flex justify-center items-center relative min-h-96">
           {frame?.forecastTime !== null && (loadingImages || loading) && (
             <span

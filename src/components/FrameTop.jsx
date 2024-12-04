@@ -27,11 +27,14 @@ export default function FrameTop({
   setLoadingImages,
   downloadImageUrl,
 }) {
-  // console.log("FrameTop")
-  // console.log("FrameTop dates", dates)
-
-  const { config, setConfig, regions, startAllTimer, pauseAllTimer } =
-    useContext(ConfigContext);
+  const {
+    config,
+    setConfig,
+    regions,
+    startAllTimer,
+    pauseAllTimer,
+    updateLocalConfig,
+  } = useContext(ConfigContext);
 
   const region = regions.find((region) => region.value === frame.region);
   const group = model.options.groups.find(
@@ -41,30 +44,12 @@ export default function FrameTop({
     model.options.products.find((product) => product.value === frame.product) ||
     model.options.products[0];
 
-  // console.log("frame", frame)
-  // console.log("model", model)
-  // console.log("group", group)
-  // console.log("product", product);
-  // console.log("model.periodHours", model.periodHours)
-  // console.log("product.periodHours", product.periodHours)
-  // console.log("model.periodStart", model.periodStart)
-  // console.log("product.periodStart", product.periodStart)
-  // console.log("model.periodEnd", model.periodEnd)
-  // console.log("product.periodEnd", product.periodEnd)
-
-  // console.log("DropDownConfig product", product)
-  // console.log("DropDownConfig periodStart", periodStart)
-
   // Se o intervalo de horas for específico para o produto, por exemplo, um produto que só roda de 24 em 24 horas, obtém a partir do produto o período de horas que o mesmo roda.
   const periodHours = product.periodHours ?? model.periodHours;
 
   // Se o período que inicia ou termina for específico para o produto, por exemplo, um produto que inicia em "024", obtém a partir do produto o período de horas que o mesmo roda.
   const periodStart = product.periodStart ?? model.periodStart;
   const periodEnd = product.periodEnd ?? model.periodEnd;
-
-  // console.log("periodHours", periodHours)
-  // console.log("periodStart", periodStart)
-  // console.log("periodEnd", periodEnd)
 
   // Cria um array de horas iniciando com model.periodStart (geralmente "000") e terminando com model.periodEnd (geralmente "180" ou "240")
   // Precisa ter 3 caracteres, e ficaria assim: ["000", "003", "006", ..., "240"]
@@ -99,50 +84,29 @@ export default function FrameTop({
   );
   const [isPlaying, setIsPlaying] = useState(frame.isPlaying ?? false);
 
-  const [configTimeout, setConfigTimeout] = useState(null);
-  const [timeTimeout, setTimeTimeout] = useState(null);
   const [isInputFocused, setIsInputFocused] = useState(false);
 
-  // console.log("frame.forecastTime", frame.forecastTime);
-  // console.log("forecastTime", forecastTime)
-  // console.log("periodStart", periodStart)
-
   const handleDropdownConfig = useCallback(() => {
-    // console.log("openDropdownConfig", openDropdownConfig);
     setOpenDropdownConfig((prev) => !prev);
     setOpenDropdownTime(false);
   }, []);
 
   const handleDropdownTime = useCallback(() => {
-    // console.log("openDropdownTime", openDropdownTime);
     setOpenDropdownTime((prev) => !prev);
     setOpenDropdownConfig(false);
   }, []);
 
   const handleDecreaseTime = useCallback(() => {
-    // console.log("decreaseTime")
-    // console.log("frame.forecastTime", frame.forecastTime)
-    // console.log("hours", hours)
-    // console.log("hours.length", hours.length)
     if (hours.indexOf(forecastTime) > 0) {
-      // console.log("hours[hours.indexOf(frame.forecastTime) - 1]", hours[hours.indexOf(frame.forecastTime) - 1])
       const previousTime = hours[hours.indexOf(forecastTime) - 1];
-      // console.log("previousTime", previousTime)
       setForecastTime(previousTime);
       setFrame({ ...frame, forecastTime: previousTime });
     }
   }, [forecastTime, hours, frame, setFrame]);
 
   const handleIncreaseTime = useCallback(() => {
-    // console.log("increaseTime")
-    // console.log("frame.forecastTime", frame.forecastTime)
-    // console.log("hours", hours)
-    // console.log("indexOf(frame.forecastTime)", hours.indexOf(frame.forecastTime))
-    // console.log("hours.length", hours.length)
     if (hours.indexOf(forecastTime) < hours.length - 1) {
-      // console.log("hours[hours.indexOf(frame.forecastTime) + 1]", hours[hours.indexOf(frame.forecastTime) + 1])
       const nextTime = hours[hours.indexOf(forecastTime) + 1];
-      // console.log("nextTime", nextTime)
       setForecastTime(nextTime);
       setFrame({ ...frame, forecastTime: nextTime });
     }
@@ -156,7 +120,6 @@ export default function FrameTop({
   const [timeInterval, setTimeInterval] = useState(null);
 
   useEffect(() => {
-    // console.log("forecastTime", forecastTime)
     if (timer > 0) {
       setFrame({ ...frame, forecastTime: forecastTime, isPlaying: isPlaying });
     }
@@ -196,7 +159,6 @@ export default function FrameTop({
 
   const urlImage = useCallback(
     (forecastTime) => {
-      // console.log("forecastTime", forecastTime)
       const init = frame.init ?? dates[0];
       if (!init) return null;
       const year = init?.slice(0, 4);
@@ -213,7 +175,6 @@ export default function FrameTop({
         .replaceAll("{{year}}", year)
         .replaceAll("{{month}}", month)
         .replaceAll("{{day}}", day);
-      // console.log("url", url)
       return url;
     },
     [frame.init, dates, frame.region, frame.product, model]
@@ -241,7 +202,6 @@ export default function FrameTop({
       let imageUrls = hours.map((forecastTime) => urlImage(forecastTime));
       try {
         await saveImagesInCache(imageUrls);
-        // console.log(`Imagens do frame ${frame.id} carregadas com sucesso!`)
         setConfig((prev) => ({
           ...prev,
           framesWithImagesLoaded: prev.framesWithImagesLoaded.includes(frame.id)
@@ -278,17 +238,11 @@ export default function FrameTop({
           }
         });
         setIsPlaying(true);
-        // console.log("forecastTime", forecastTime)
       }, 500)
     );
   };
 
   const startTimer = useCallback(async () => {
-    // console.log("startTimer")
-    // console.log("hours", hours)
-    // console.log("frame.init", frame.init)
-    // console.log("dates", dates)
-
     toast.warn(
       `Aguarde o carregamento das imagens do quadro ${frame.id} para iniciar a animação!`
     );
@@ -300,23 +254,21 @@ export default function FrameTop({
   }, [frame.id, preloadImages, startAnimation]);
 
   const pauseTimer = () => {
-    // console.log("pauseTimer")
     clearInterval(timeInterval);
     setFrame({ ...frame, isPlaying: false });
     setIsPlaying(false);
-    setConfig({ ...config, isAllPlaying: false, framesWithImagesLoaded: [] });
+    updateLocalConfig({
+      ...config,
+      isAllPlaying: false,
+      framesWithImagesLoaded: [],
+    });
   };
 
   const resetTimer = (time = null) => {
-    // console.log("resetTimer")
     setTimer(0);
     pauseTimer();
     setForecastTime(time ?? forecastTime);
     setIsPlaying(false);
-    // console.log("model", model)
-    // console.log("forecastTime", forecastTime)
-    // console.log("frame", frame)
-    // console.log("config", config)
   };
 
   {

@@ -1,15 +1,12 @@
 import { BsArrowsFullscreen, BsBorderAll } from "react-icons/bs";
 import { TbColumns1, TbColumns2, TbColumns3 } from "react-icons/tb";
 import { FaPause, FaPlay } from "react-icons/fa";
-import { toast } from "react-toastify";
 
 import { useEffect, useContext, useState } from "react";
 import { ConfigContext } from "../contexts/ConfigContext";
 
 export default function TopBar() {
-  // console.log("TopBar")
-
-  const { config, setConfig, frames, startAllTimer, pauseAllTimer } =
+  const { config, frames, startAllTimer, pauseAllTimer, updateLocalConfig } =
     useContext(ConfigContext);
   const [showButtonAllPlaying, setShowButtonAllPlaying] = useState(true);
 
@@ -18,42 +15,25 @@ export default function TopBar() {
   const classButtonActive =
     "size-9 md:size-[38px] inline-flex justify-center items-center gap-2 rounded-full font-medium bg-blue-600 text-gray-50 hover:bg-blue-500 text-xs md:text-sm";
 
-  useEffect(() => {
-    localStorage.setItem(
-      "config",
-      JSON.stringify({
-        showHeaderFooter: config.showHeaderFooter,
-        quantityFrames: config.quantityFrames,
-      })
-    );
-  }, [config.showHeaderFooter, config.quantityFrames]);
-
   const handleFullScreen = () => {
-    setConfig({ ...config, showHeaderFooter: !config.showHeaderFooter });
-    // if (config.showHeaderFooter) {
-    //   toast.info("Cabecalho e rodapé escondidos.");
-    // }
+    updateLocalConfig({
+      ...config,
+      showHeaderFooter: !config.showHeaderFooter,
+    });
   };
 
   const handleQuantityFrames = ({ quantity }) => {
-    // console.log("handleQuantityFrames", quantity);
-    setConfig({ ...config, quantityFrames: quantity });
-    // toast.info(
-    //   `Exibindo ${
-    //     quantity > 1 ? quantity + " quadros" : quantity + " quadro"
-    //   } de previsão numérica do tempo`
-    // );
+    updateLocalConfig({
+      ...config,
+      quantityFrames: quantity,
+    });
   };
 
   useEffect(() => {
     const existsForecastTimeNull =
       frames.filter((frame) => frame.forecastTime === null).length > 0;
-    // console.log("existsForecastTimeNull", existsForecastTimeNull);
     setShowButtonAllPlaying(!existsForecastTimeNull);
   }, [frames]);
-
-  // console.log("config", config);
-  // console.log("frames", frames);
 
   return (
     <header className="flex justify-start md:justify-between items-center px-4 w-full h-16 bg-gray-100 border border-y-gray-300">
