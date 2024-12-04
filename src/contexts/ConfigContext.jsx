@@ -46,7 +46,6 @@ export default function ConfigProvider({ children }) {
       isAllPlaying: false, // Sempre false
       framesWithImagesLoaded: [], // Sempre vazio
     };
-    console.log("localConfig", localConfig);
     localStorage.setItem("config", JSON.stringify(config));
     setConfig(localConfig);
   };
