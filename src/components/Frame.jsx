@@ -38,12 +38,12 @@ export default function Frame({ id }) {
     setTimeout(() => {
       updateLocalFrames(localFrames);
       window.location.reload();
-    }, 15000);
+    }, 5000);
 
     return (
       <div className="p-8 text-red-500">
-        Foi feita uma atualização no aplicativo. Recarregue a página ou aguarde
-        15 segundos para recarregamento automático.
+        Foi feita uma atualização no aplicativo. Aguarde 5 segundos para
+        recarregamento automático.
       </div>
     );
   }

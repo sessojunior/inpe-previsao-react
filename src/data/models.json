@@ -5,7 +5,7 @@
     "value": "SMEC",
     "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/pn/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/{{model}}_{{product}}_{{region}}_{{year}}{{month}}{{day}}{{turn}}z_{{forecastTime}}z.png",
     "urlDates": "https://s1.cptec.inpe.br/grafico/Modelos/portal_previsao_numerica/mod_smec.json",
-    "urlCharts": null,
+    "urlCharts": "",
     "urlCsv": null,
     "timeRun": 24,
     "periodHours": 6,
@@ -60,10 +60,6 @@
         {
           "label": "Vorticidade",
           "value": "vort"
-        },
-        {
-          "label": "Meteogramas",
-          "value": "meteograms"
         }
       ],
       "products": [
@@ -389,13 +385,6 @@
             "ams",
             "bra"
           ]
-        },
-        {
-          "label": null,
-          "value": "meteograms",
-          "group": "meteograms",
-          "regions": null,
-          "forecastTime": null
         }
       ]
     }
