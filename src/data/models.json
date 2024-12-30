@@ -14,13 +14,21 @@
     "forecastTime": "000",
     "default": {
       "product": {
-        "value": "aprec",
-        "group": "aprec",
+        "value": "prec_acum",
+        "group": "prec",
         "region": "ams"
       }
     },
     "options": {
       "groups": [
+        {
+          "label": "Precipitação",
+          "value": "prec"
+        },
+        {
+          "label": "Precipitação, pressão e espessura",
+          "value": "prec_pnmm"
+        },
         {
           "label": "Água Precipitável",
           "value": "aprec"
@@ -36,14 +44,6 @@
         {
           "label": "Lapserate",
           "value": "lapserate"
-        },
-        {
-          "label": "Precipitação",
-          "value": "prec"
-        },
-        {
-          "label": "Precipitação, pressão e espessura",
-          "value": "prec_pnmm"
         },
         {
           "label": "Temperatura",
@@ -67,6 +67,69 @@
         }
       ],
       "products": [
+        {
+          "label": "Precipitação acumulada",
+          "value": "prec_acum",
+          "group": "prec",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ],
+          "periodStart": "024",
+          "periodEnd": "168",
+          "forecastTime": "024",
+          "periodHours": 12
+        },
+        {
+          "label": "Precipitação acumulada em 12h",
+          "value": "prec_12h",
+          "group": "prec",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ],
+          "periodStart": "024",
+          "periodEnd": "168",
+          "forecastTime": "024",
+          "periodHours": 12
+        },
+        {
+          "label": "Precipitação acumulada em 24h",
+          "value": "prec",
+          "group": "prec",
+          "regions": [
+            "ams",
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nde",
+            "nte"
+          ],
+          "periodStart": "024",
+          "periodEnd": "168",
+          "forecastTime": "024",
+          "periodHours": 12
+        },
+        {
+          "label": null,
+          "value": "prec_pnmm",
+          "group": "prec_pnmm",
+          "regions": [
+            "ams",
+            "bra"
+          ]
+        },
         {
           "label": null,
           "value": "aprec",
@@ -148,69 +211,6 @@
           "label": null,
           "value": "lapserate",
           "group": "lapserate",
-          "regions": [
-            "ams",
-            "bra"
-          ]
-        },
-        {
-          "label": "Precipitação acumulada",
-          "value": "prec_acum",
-          "group": "prec",
-          "regions": [
-            "ams",
-            "bra",
-            "sul",
-            "sud",
-            "coe",
-            "nde",
-            "nte"
-          ],
-          "periodStart": "024",
-          "periodEnd": "168",
-          "forecastTime": "024",
-          "periodHours": 12
-        },
-        {
-          "label": "Precipitação acumulada em 12h",
-          "value": "prec_12h",
-          "group": "prec",
-          "regions": [
-            "ams",
-            "bra",
-            "sul",
-            "sud",
-            "coe",
-            "nde",
-            "nte"
-          ],
-          "periodStart": "024",
-          "periodEnd": "168",
-          "forecastTime": "024",
-          "periodHours": 12
-        },
-        {
-          "label": "Precipitação acumulada em 24h",
-          "value": "prec",
-          "group": "prec",
-          "regions": [
-            "ams",
-            "bra",
-            "sul",
-            "sud",
-            "coe",
-            "nde",
-            "nte"
-          ],
-          "periodStart": "024",
-          "periodEnd": "168",
-          "forecastTime": "024",
-          "periodHours": 12
-        },
-        {
-          "label": null,
-          "value": "prec_pnmm",
-          "group": "prec_pnmm",
           "regions": [
             "ams",
             "bra"
