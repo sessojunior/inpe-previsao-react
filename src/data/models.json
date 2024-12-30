@@ -11,7 +11,7 @@
     "periodHours": 6,
     "periodStart": "000",
     "periodEnd": "168",
-    "forecastTime": "000",
+    "forecastTime": "024",
     "default": {
       "product": {
         "value": "prec_acum",
