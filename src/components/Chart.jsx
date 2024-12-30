@@ -1,3 +1,4 @@
+import imgLogoInpe from "../assets/inpe-logo.png";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import highchartsMore from "highcharts/highcharts-more";
@@ -18,6 +19,7 @@ highchartsExportData(Highcharts);
 highchartsBoost(Highcharts);
 
 export default function Chart({
+  city,
   date,
   dataCharts = null,
   dataCsv = null,
@@ -164,6 +166,7 @@ export default function Chart({
       enabled: false,
     },
     credits: {
+      enabled: false,
       text: "Previsão numérica do CPTEC",
       href: "https://previsaonumerica.cptec.inpe.br",
       position: {
@@ -721,7 +724,7 @@ export default function Chart({
         backgroundColor: "transparent",
       },
       title: {
-        text: "Umidade Relativa a 2m do solo (%)",
+        text: "Umidade Relativa a 2m (%)",
         align: "center",
       },
       subtitle: {
@@ -894,7 +897,7 @@ export default function Chart({
         backgroundColor: "transparent",
       },
       title: {
-        text: "Monóxido de Carbono (ppb)",
+        text: "Monóxido de Carbono (ppbv)",
         align: "center",
       },
       subtitle: {
@@ -920,42 +923,42 @@ export default function Chart({
       series: [
         {
           data: co_40,
-          name: "40 metros do solo",
+          name: "40 metros",
           showInLegend: true,
           tooltip: {
-            valueSuffix: " ppb",
+            valueSuffix: " ppbv",
           },
         },
         {
           data: co_700,
-          name: "700 metros do solo",
+          name: "700 metros",
           showInLegend: true,
           tooltip: {
-            valueSuffix: " ppb",
+            valueSuffix: " ppbv",
           },
         },
         {
           data: co_1400,
-          name: "1400 metros do solo",
+          name: "1400 metros",
           showInLegend: true,
           tooltip: {
-            valueSuffix: " ppb",
+            valueSuffix: " ppbv",
           },
         },
         {
           data: co_5400,
-          name: "5400 metros do solo",
+          name: "5400 metros",
           showInLegend: true,
           tooltip: {
-            valueSuffix: " ppb",
+            valueSuffix: " ppbv",
           },
         },
         {
           data: co_10200,
-          name: "10200 metros do solo",
+          name: "10200 metros",
           showInLegend: true,
           tooltip: {
-            valueSuffix: " ppb",
+            valueSuffix: " ppbv",
           },
         },
       ],
@@ -1011,7 +1014,7 @@ export default function Chart({
         backgroundColor: "transparent",
       },
       title: {
-        text: "Material Micro-particulado 2.5nm (ug/m³)",
+        text: "Material Particulado - 2.5um (µg/m3)",
         align: "center",
       },
       subtitle: {
@@ -1037,42 +1040,42 @@ export default function Chart({
       series: [
         {
           data: pm25_40,
-          name: "40 metros do solo",
+          name: "40 metros",
           showInLegend: true,
           tooltip: {
-            valueSuffix: " ug/m³",
+            valueSuffix: " µg/m³",
           },
         },
         {
           data: pm25_700,
-          name: "700 metros do solo",
+          name: "700 metros",
           showInLegend: true,
           tooltip: {
-            valueSuffix: " ug/m³",
+            valueSuffix: " µg/m³",
           },
         },
         {
           data: pm25_1400,
-          name: "1400 metros do solo",
+          name: "1400 metros",
           showInLegend: true,
           tooltip: {
-            valueSuffix: " ug/m³",
+            valueSuffix: " µg/m³",
           },
         },
         {
           data: pm25_5400,
-          name: "5400 metros do solo",
+          name: "5400 metros",
           showInLegend: true,
           tooltip: {
-            valueSuffix: " ug/m³",
+            valueSuffix: " µg/m³",
           },
         },
         {
           data: pm25_10200,
-          name: "10200 metros do solo",
+          name: "10200 metros",
           showInLegend: true,
           tooltip: {
-            valueSuffix: " ug/m³",
+            valueSuffix: " µg/m³",
           },
         },
       ],
@@ -1089,38 +1092,38 @@ export default function Chart({
   if (product === "csvCo") {
     const { data, minDate, maxDate } = parseCsvToHeatmapData(dataCsv, "co");
     const customLabels = {
-      1: "39.2 m",
-      2: "122.4 m",
-      3: "212.2 m",
-      4: "309.1 m",
-      5: "413.9 m",
-      6: "527.0 m",
-      7: "649.1 m",
-      8: "781.1 m",
-      9: "923.5 m",
-      10: "1077.4 m",
-      11: "1243.6 m",
-      12: "1423.1 m",
-      13: "1617.0 m",
-      14: "1826.3 m",
-      15: "2052.4 m",
-      16: "2296.6 m",
-      17: "2560.3 m",
-      18: "2845.2 m",
-      19: "3152.8 m",
-      20: "3485.0 m",
-      21: "3843.8 m",
-      22: "4231.3 m",
-      23: "4649.8 m",
-      24: "5101.8 m",
-      25: "5590.0 m",
-      26: "6117.1 m",
-      27: "6686.5 m",
-      28: "7301.4 m",
-      29: "7965.6 m",
-      30: "8682.8 m",
-      31: "9458.6 m",
-      32: "10289.8 m",
+      1: "39",
+      2: "122",
+      3: "212",
+      4: "309",
+      5: "413",
+      6: "527",
+      7: "649",
+      8: "781",
+      9: "923",
+      10: "1077",
+      11: "1243",
+      12: "1423",
+      13: "1617",
+      14: "1826",
+      15: "2052",
+      16: "2297",
+      17: "2560",
+      18: "2845",
+      19: "3153",
+      20: "3485",
+      21: "3844",
+      22: "4231",
+      23: "4650",
+      24: "5102",
+      25: "5590",
+      26: "6117",
+      27: "6687",
+      28: "7301",
+      29: "7966",
+      30: "8683",
+      31: "9459",
+      32: "10290",
     };
     const optionsHeatmapCo = {
       chart: {
@@ -1210,38 +1213,38 @@ export default function Chart({
   if (product === "csvPm25") {
     const { data, minDate, maxDate } = parseCsvToHeatmapData(dataCsv, "pm25");
     const customLabels = {
-      1: "39.2 m",
-      2: "122.4 m",
-      3: "212.2 m",
-      4: "309.1 m",
-      5: "413.9 m",
-      6: "527.0 m",
-      7: "649.1 m",
-      8: "781.1 m",
-      9: "923.5 m",
-      10: "1077.4 m",
-      11: "1243.6 m",
-      12: "1423.1 m",
-      13: "1617.0 m",
-      14: "1826.3 m",
-      15: "2052.4 m",
-      16: "2296.6 m",
-      17: "2560.3 m",
-      18: "2845.2 m",
-      19: "3152.8 m",
-      20: "3485.0 m",
-      21: "3843.8 m",
-      22: "4231.3 m",
-      23: "4649.8 m",
-      24: "5101.8 m",
-      25: "5590.0 m",
-      26: "6117.1 m",
-      27: "6686.5 m",
-      28: "7301.4 m",
-      29: "7965.6 m",
-      30: "8682.8 m",
-      31: "9458.6 m",
-      32: "10289.8 m",
+      1: "39",
+      2: "122",
+      3: "212",
+      4: "309",
+      5: "413",
+      6: "527",
+      7: "649",
+      8: "781",
+      9: "923",
+      10: "1077",
+      11: "1243",
+      12: "1423",
+      13: "1617",
+      14: "1826",
+      15: "2052",
+      16: "2297",
+      17: "2560",
+      18: "2845",
+      19: "3153",
+      20: "3485",
+      21: "3844",
+      22: "4231",
+      23: "4650",
+      24: "5102",
+      25: "5590",
+      26: "6117",
+      27: "6687",
+      28: "7301",
+      29: "7966",
+      30: "8683",
+      31: "9459",
+      32: "10290",
     };
     const optionsHeatmapPm25 = {
       chart: {
@@ -1251,12 +1254,12 @@ export default function Chart({
       },
       title: {
         text: "Heatmap - Material Micro-particulado (PM25)",
-        align: "left",
+        align: "center",
         x: 40,
       },
       subtitle: {
         text: "Variação de PM25 ao longo da elevação e do tempo",
-        align: "left",
+        align: "center",
         x: 40,
       },
       xAxis: {
@@ -1302,7 +1305,7 @@ export default function Chart({
         startOnTick: false,
         endOnTick: false,
         labels: {
-          format: "{value} ug/m³",
+          format: "{value} µg/m³",
         },
       },
       legend: {
@@ -1319,7 +1322,7 @@ export default function Chart({
           tooltip: {
             headerFormat: "Concentração de PM25<br/>",
             pointFormat:
-              "{point.x:%d/%m %H:%M}, elevação: {point.y} m: <b>{point.value} ug/m³</b>",
+              "{point.x:%d/%m %H:%M}, elevação: {point.y} m: <b>{point.value} µg/m³</b>",
           },
         },
       ],
@@ -1327,42 +1330,42 @@ export default function Chart({
     options = optionsHeatmapPm25;
   }
 
-  // Heatmap de óxido de nitrogenio
+  // Heatmap de óxidos de nitrogenio
   if (product === "csvNox") {
     const { data, minDate, maxDate } = parseCsvToHeatmapData(dataCsv, "nox");
     const customLabels = {
-      1: "39.2 m",
-      2: "122.4 m",
-      3: "212.2 m",
-      4: "309.1 m",
-      5: "413.9 m",
-      6: "527.0 m",
-      7: "649.1 m",
-      8: "781.1 m",
-      9: "923.5 m",
-      10: "1077.4 m",
-      11: "1243.6 m",
-      12: "1423.1 m",
-      13: "1617.0 m",
-      14: "1826.3 m",
-      15: "2052.4 m",
-      16: "2296.6 m",
-      17: "2560.3 m",
-      18: "2845.2 m",
-      19: "3152.8 m",
-      20: "3485.0 m",
-      21: "3843.8 m",
-      22: "4231.3 m",
-      23: "4649.8 m",
-      24: "5101.8 m",
-      25: "5590.0 m",
-      26: "6117.1 m",
-      27: "6686.5 m",
-      28: "7301.4 m",
-      29: "7965.6 m",
-      30: "8682.8 m",
-      31: "9458.6 m",
-      32: "10289.8 m",
+      1: "39",
+      2: "122",
+      3: "212",
+      4: "309",
+      5: "413",
+      6: "527",
+      7: "649",
+      8: "781",
+      9: "923",
+      10: "1077",
+      11: "1243",
+      12: "1423",
+      13: "1617",
+      14: "1826",
+      15: "2052",
+      16: "2297",
+      17: "2560",
+      18: "2845",
+      19: "3153",
+      20: "3485",
+      21: "3844",
+      22: "4231",
+      23: "4650",
+      24: "5102",
+      25: "5590",
+      26: "6117",
+      27: "6687",
+      28: "7301",
+      29: "7966",
+      30: "8683",
+      31: "9459",
+      32: "10290",
     };
     const optionsHeatmapNox = {
       chart: {
@@ -1371,13 +1374,13 @@ export default function Chart({
         height: "100%",
       },
       title: {
-        text: "Heatmap - Óxido de Nitrogenio (NOx)",
-        align: "left",
+        text: "Óxidos de Nitrogênio (NOx)",
+        align: "center",
         x: 40,
       },
       subtitle: {
         text: "Variação de NOx ao longo da elevação e do tempo",
-        align: "left",
+        align: "center",
         x: 40,
       },
       xAxis: {
@@ -1423,7 +1426,7 @@ export default function Chart({
         startOnTick: false,
         endOnTick: false,
         labels: {
-          format: "{value} ppb",
+          format: "{value} ppbv",
         },
       },
       legend: {
@@ -1438,7 +1441,7 @@ export default function Chart({
           nullColor: "#EFEFEF",
           colsize: 3 * 36e5, // Intervalo de 3 horas (ajuste conforme necessidade)
           tooltip: {
-            headerFormat: "Óxido de nitrogênio<br/>",
+            headerFormat: "Óxidos de Nitrogênio<br/>",
             pointFormatter: function () {
               const level = this.y; // Obtem o nível da elevação
               return `${Highcharts.dateFormat(
@@ -1446,7 +1449,7 @@ export default function Chart({
                 this.x
               )}, elevação: nível ${level}: ${customLabels[level]}: <b>${
                 this.value
-              } ppb</b>`;
+              } ppbv</b>`;
             },
           },
         },
@@ -1459,38 +1462,38 @@ export default function Chart({
   if (product === "csvWind") {
     const { data, minDate, maxDate } = parseCsvToHeatmapData(dataCsv, "wind");
     const customLabels = {
-      1: "39.2 m",
-      2: "122.4 m",
-      3: "212.2 m",
-      4: "309.1 m",
-      5: "413.9 m",
-      6: "527.0 m",
-      7: "649.1 m",
-      8: "781.1 m",
-      9: "923.5 m",
-      10: "1077.4 m",
-      11: "1243.6 m",
-      12: "1423.1 m",
-      13: "1617.0 m",
-      14: "1826.3 m",
-      15: "2052.4 m",
-      16: "2296.6 m",
-      17: "2560.3 m",
-      18: "2845.2 m",
-      19: "3152.8 m",
-      20: "3485.0 m",
-      21: "3843.8 m",
-      22: "4231.3 m",
-      23: "4649.8 m",
-      24: "5101.8 m",
-      25: "5590.0 m",
-      26: "6117.1 m",
-      27: "6686.5 m",
-      28: "7301.4 m",
-      29: "7965.6 m",
-      30: "8682.8 m",
-      31: "9458.6 m",
-      32: "10289.8 m",
+      1: "39",
+      2: "122",
+      3: "212",
+      4: "309",
+      5: "413",
+      6: "527",
+      7: "649",
+      8: "781",
+      9: "923",
+      10: "1077",
+      11: "1243",
+      12: "1423",
+      13: "1617",
+      14: "1826",
+      15: "2052",
+      16: "2297",
+      17: "2560",
+      18: "2845",
+      19: "3153",
+      20: "3485",
+      21: "3844",
+      22: "4231",
+      23: "4650",
+      24: "5102",
+      25: "5590",
+      26: "6117",
+      27: "6687",
+      28: "7301",
+      29: "7966",
+      30: "8683",
+      31: "9459",
+      32: "10290",
     };
     const optionsWind = {
       chart: {
@@ -1508,12 +1511,12 @@ export default function Chart({
       },
       title: {
         text: "Direção e velocidade do vento",
-        align: "left",
+        align: "center",
         x: 40,
       },
       subtitle: {
         text: "Variação de direção e velocidade do vento ao longo da elevação e do tempo",
-        align: "left",
+        align: "center",
         x: 40,
       },
       xAxis: {
@@ -1559,7 +1562,7 @@ export default function Chart({
               const direction = this.series.data[this.index].direction; // Direção (deve ser passada no data)
               return (
                 `Data: ${date}<br/>` +
-                `Elevação: nível ${elevationLevel}: <b>${customLabels[elevationLevel]}</b><br/>` +
+                `Elevação: nível ${elevationLevel}: <b>${customLabels[elevationLevel]} m</b><br/>` +
                 `Velocidade: <b>${speed} m/s</b><br/>` +
                 `Direção: <b>${direction}°</b>`
               );
@@ -1587,43 +1590,114 @@ export default function Chart({
       color: "#000000", // Cor preta para as setas
     }));
     const customLabels = {
-      1: "39.2 m",
-      2: "122.4 m",
-      3: "212.2 m",
-      4: "309.1 m",
-      5: "413.9 m",
-      6: "527.0 m",
-      7: "649.1 m",
-      8: "781.1 m",
-      9: "923.5 m",
-      10: "1077.4 m",
-      11: "1243.6 m",
-      12: "1423.1 m",
-      13: "1617.0 m",
-      14: "1826.3 m",
-      15: "2052.4 m",
-      16: "2296.6 m",
-      17: "2560.3 m",
-      18: "2845.2 m",
-      19: "3152.8 m",
-      20: "3485.0 m",
-      21: "3843.8 m",
-      22: "4231.3 m",
-      23: "4649.8 m",
-      24: "5101.8 m",
-      25: "5590.0 m",
-      26: "6117.1 m",
-      27: "6686.5 m",
-      28: "7301.4 m",
-      29: "7965.6 m",
-      30: "8682.8 m",
-      31: "9458.6 m",
-      32: "10289.8 m",
+      1: "39",
+      2: "122",
+      3: "212",
+      4: "309",
+      5: "413",
+      6: "527",
+      7: "649",
+      8: "781",
+      9: "923",
+      10: "1077",
+      11: "1243",
+      12: "1423",
+      13: "1617",
+      14: "1826",
+      15: "2052",
+      16: "2297",
+      17: "2560",
+      18: "2845",
+      19: "3153",
+      20: "3485",
+      21: "3844",
+      22: "4231",
+      23: "4650",
+      24: "5102",
+      25: "5590",
+      26: "6117",
+      27: "6687",
+      28: "7301",
+      29: "7966",
+      30: "8683",
+      31: "9459",
+      32: "10290",
+    };
+    const stops = [
+      [0, "#FFFFFF"],
+      [50, "#B9EBDF"],
+      [100, "#D2F0DD"],
+      [150, "#FDF4D3"],
+      [200, "#F3EB99"],
+      [300, "#F5D263"],
+      [400, "#FCB419"],
+      [500, "#FD7647"],
+      [750, "#FD4D2E"],
+      [1000, "#FF2C1A"],
+      [1500, "#FD0301"],
+      [2000, "#D90C44"],
+      [2500, "#D00B76"],
+      [3000, "#9725C2"],
+      [4250, "#750476"],
+    ];
+    const generateLegend = (idChart) => {
+      // Gerar a legenda personalizada com o gradiente
+      const gradientStops = stops
+        .map(([value, color], index) => {
+          const stopPercentage = (index / (stops.length - 1)) * 100; // Distribuir uniformemente no gradiente
+          return `${color} ${stopPercentage}%`;
+        })
+        .join(", ");
+      // A legenda HTML
+      const legendHTML = `
+        <div class="w-full flex justify-center items-center">
+          <div class="flex-1 text-center text-sm mx-2">
+            <div class="w-full flex flex-col items-center overflow-x-auto mt-1 mb-3">
+              <div class="w-full h-3 rounded" style="background: linear-gradient(to right, ${gradientStops});"></div>
+              <div class="flex justify-between w-full mt-1">
+                ${stops
+                  .map(([value]) => {
+                    return `
+                      <span class="flex-1 text-center text-sm">${value}</span>
+                    `;
+                  })
+                  .join("")}
+              </div>
+            </div>
+          </div>
+          <div>
+            <a
+              href="https://www.gov.br/acessoainformacao/pt-br"
+              className="flex items-center justify-center p-2"
+            >
+              <img
+                src=${imgLogoInpe}
+                alt="INPE"
+                class="max-w-14 lg:max-w-16"
+              />
+            </a>
+          </div>
+        </div>
+      `;
+      // Inserir a legenda no DOM
+      document
+        .getElementById(idChart)
+        .insertAdjacentHTML("afterend", legendHTML);
     };
     const optionsHeatmapVectorWindCo = {
       chart: {
         backgroundColor: "transparent",
         height: "100%",
+        events: {
+          load: function () {
+            // Aqui, 'this' refere-se à instância do gráfico
+            const chart = this;
+            console.log("chart", chart);
+            console.log("chart container id", chart.container.id);
+            // Chamar a função global para gerar a legenda personalizada
+            generateLegend(chart.container.id);
+          },
+        },
       },
       boost: {
         useGPUTranslations: true, // Utiliza GPU para renderização
@@ -1635,12 +1709,7 @@ export default function Chart({
         },
       },
       title: {
-        text: "Vento e Monóxido de Carbono (CO)",
-        align: "center",
-        x: 40,
-      },
-      subtitle: {
-        text: "Variação ao longo da elevação e do tempo com vento e monóxido de carbono",
+        text: "Vento e Monóxido de Carbono (ppbv)",
         align: "center",
         x: 40,
       },
@@ -1659,7 +1728,7 @@ export default function Chart({
       },
       yAxis: {
         title: {
-          text: "Elevação em 32 níveis (m)", // O eixo y representa a elevação
+          text: "Altitude (m)", // O eixo y representa a elevação
         },
         labels: {
           formatter: function () {
@@ -1677,25 +1746,12 @@ export default function Chart({
         reversed: false,
       },
       colorAxis: {
-        stops: [
-          [0, "rgba(48, 96, 207, 0.75)"], // Azul translúcido para valores baixos
-          [0.25, "rgba(173, 216, 230, 0.75)"], // Azul claro para intermediários
-          [0.5, "rgba(255, 251, 188, 0.75)"], // Amarelo translúcido para médios
-          [0.75, "rgba(255, 165, 0, 0.75)"], // Laranja translúcido para altos
-          [0.9, "rgba(196, 70, 58, 0.75)"], // Vermelho translúcido para valores altos
-        ],
         min: 0,
-        max: 500,
-        tickInterval: 100, // Intervalo fixo para o eixo colorAxis
-        startOnTick: false,
-        endOnTick: false,
-        labels: {
-          format: "{value} ppm",
-        },
+        max: 1,
+        stops: stops,
       },
       legend: {
-        align: "center",
-        symbolWidth: 420,
+        enabled: false,
       },
       series: [
         {
@@ -1730,10 +1786,10 @@ export default function Chart({
 
               return (
                 `Data: ${date}<br/>` +
-                `Elevação: nível ${elevationLevel}: <b>${customLabels[elevationLevel]}</b><br/>` +
+                `Elevação: nível ${elevationLevel}: <b>${customLabels[elevationLevel]} m</b><br/>` +
                 `Velocidade: <b>${speed} m/s</b><br/>` +
                 `Direção: <b>${direction}°</b><br/>` +
-                `Concentração de CO: <b>${co} ppm</b>`
+                `Concentração de CO: <b>${co} ppbv</b>`
               );
             },
           },
@@ -1801,43 +1857,111 @@ export default function Chart({
       color: "#000000", // Cor preta para as setas
     }));
     const customLabels = {
-      1: "39.2 m",
-      2: "122.4 m",
-      3: "212.2 m",
-      4: "309.1 m",
-      5: "413.9 m",
-      6: "527.0 m",
-      7: "649.1 m",
-      8: "781.1 m",
-      9: "923.5 m",
-      10: "1077.4 m",
-      11: "1243.6 m",
-      12: "1423.1 m",
-      13: "1617.0 m",
-      14: "1826.3 m",
-      15: "2052.4 m",
-      16: "2296.6 m",
-      17: "2560.3 m",
-      18: "2845.2 m",
-      19: "3152.8 m",
-      20: "3485.0 m",
-      21: "3843.8 m",
-      22: "4231.3 m",
-      23: "4649.8 m",
-      24: "5101.8 m",
-      25: "5590.0 m",
-      26: "6117.1 m",
-      27: "6686.5 m",
-      28: "7301.4 m",
-      29: "7965.6 m",
-      30: "8682.8 m",
-      31: "9458.6 m",
-      32: "10289.8 m",
+      1: "39",
+      2: "122",
+      3: "212",
+      4: "309",
+      5: "413",
+      6: "527",
+      7: "649",
+      8: "781",
+      9: "923",
+      10: "1077",
+      11: "1243",
+      12: "1423",
+      13: "1617",
+      14: "1826",
+      15: "2052",
+      16: "2297",
+      17: "2560",
+      18: "2845",
+      19: "3153",
+      20: "3485",
+      21: "3844",
+      22: "4231",
+      23: "4650",
+      24: "5102",
+      25: "5590",
+      26: "6117",
+      27: "6687",
+      28: "7301",
+      29: "7966",
+      30: "8683",
+      31: "9459",
+      32: "10290",
+    };
+    const stops = [
+      [0, "#FFFFFF"],
+      [12.5, "#B9EBDF"],
+      [30, "#FDF4D3"],
+      [55, "#F3EB99"],
+      [80, "#FBB825"],
+      [110, "#FF6E42"],
+      [160, "#FF3E23"],
+      [210, "#FD0901"],
+      [275, "#D50B53"],
+      [400, "#D00B76"],
+      [450, "#9725C2"],
+      [500, "#750476"],
+    ];
+    const generateLegend = (idChart) => {
+      // Gerar a legenda personalizada com o gradiente
+      const gradientStops = stops
+        .map(([value, color], index) => {
+          const stopPercentage = (index / (stops.length - 1)) * 100; // Distribuir uniformemente no gradiente
+          return `${color} ${stopPercentage}%`;
+        })
+        .join(", ");
+      // A legenda HTML
+      const legendHTML = `
+        <div class="w-full flex justify-center items-center">
+          <div class="flex-1 text-center text-sm mx-2">
+            <div class="w-full flex flex-col items-center overflow-x-auto mt-1 mb-3">
+              <div class="w-full h-3 rounded" style="background: linear-gradient(to right, ${gradientStops});"></div>
+              <div class="flex justify-between w-full mt-1">
+                ${stops
+                  .map(([value]) => {
+                    return `
+                      <span class="flex-1 text-center text-sm">${value}</span>
+                    `;
+                  })
+                  .join("")}
+              </div>
+            </div>
+          </div>
+          <div>
+            <a
+              href="https://www.gov.br/acessoainformacao/pt-br"
+              className="flex items-center justify-center p-2"
+            >
+              <img
+                src=${imgLogoInpe}
+                alt="INPE"
+                class="max-w-14 lg:max-w-16"
+              />
+            </a>
+          </div>
+        </div>
+      `;
+      // Inserir a legenda no DOM
+      document
+        .getElementById(idChart)
+        .insertAdjacentHTML("afterend", legendHTML);
     };
     const optionsHeatmapVectorWindPm25 = {
       chart: {
         backgroundColor: "transparent",
         height: "100%",
+        events: {
+          load: function () {
+            // Aqui, 'this' refere-se à instância do gráfico
+            const chart = this;
+            console.log("chart", chart);
+            console.log("chart container id", chart.container.id);
+            // Chamar a função global para gerar a legenda personalizada
+            generateLegend(chart.container.id);
+          },
+        },
       },
       boost: {
         useGPUTranslations: true, // Utiliza GPU para renderização
@@ -1849,12 +1973,7 @@ export default function Chart({
         },
       },
       title: {
-        text: "Vento e Material Micro-particulado 2.5nm (ug/m³)",
-        align: "center",
-        x: 40,
-      },
-      subtitle: {
-        text: "Variação ao longo da elevação e do tempo com vento e material micro-particulado 2.5nm",
+        text: "Vento e Material Micro-particulado 2.5nm (µg/m³)",
         align: "center",
         x: 40,
       },
@@ -1873,7 +1992,7 @@ export default function Chart({
       },
       yAxis: {
         title: {
-          text: "Elevação em 32 níveis (m)", // O eixo y representa a elevação
+          text: "Altitude (m)", // O eixo y representa a elevação
         },
         labels: {
           formatter: function () {
@@ -1891,30 +2010,17 @@ export default function Chart({
         reversed: false,
       },
       colorAxis: {
-        stops: [
-          [0, "rgba(48, 96, 207, 0.75)"], // Azul translúcido para valores baixos
-          [0.25, "rgba(173, 216, 230, 0.75)"], // Azul claro para intermediários
-          [0.5, "rgba(255, 251, 188, 0.75)"], // Amarelo translúcido para médios
-          [0.75, "rgba(255, 165, 0, 0.75)"], // Laranja translúcido para altos
-          [0.9, "rgba(196, 70, 58, 0.75)"], // Vermelho translúcido para valores altos
-        ],
         min: 0,
-        max: 10,
-        tickInterval: 2, // Intervalo fixo para o eixo colorAxis
-        startOnTick: false,
-        endOnTick: false,
-        labels: {
-          format: "{value} ug/m³",
-        },
+        max: 1,
+        stops: stops,
       },
       legend: {
-        align: "center",
-        symbolWidth: 420,
+        enabled: false,
       },
       series: [
         {
           data: dataPm25, // Função que processa o CSV e gera os dados
-          name: "Material Micro-particulado 2.5nm (ug/m³)",
+          name: "Material Micro-particulado 2.5nm (µg/m³)",
           type: "heatmap",
           borderWidth: 0,
           colsize: 3 * 36e5, // Intervalo de 3 horas (ajuste conforme necessidade)
@@ -1944,10 +2050,10 @@ export default function Chart({
 
               return (
                 `Data: ${date}<br/>` +
-                `Elevação: nível ${elevationLevel}: <b>${customLabels[elevationLevel]}</b><br/>` +
+                `Elevação: nível ${elevationLevel}: <b>${customLabels[elevationLevel]} m</b><br/>` +
                 `Velocidade: <b>${speed} m/s</b><br/>` +
                 `Direção: <b>${direction}°</b><br/>` +
-                `Material Micro-particulado 2.5nm: <b>${pm25} ug/m³</b>`
+                `Material Micro-particulado 2.5nm: <b>${pm25} µg/m³</b>`
               );
             },
           },
@@ -1999,7 +2105,7 @@ export default function Chart({
     options = optionsHeatmapVectorWindPm25;
   }
 
-  // Heatmap e vector plot de vento e óxido de nitrogênio
+  // Heatmap e vector plot de vento e óxidos de nitrogênio
   if (product === "csvWindNox") {
     const {
       data: dataNox,
@@ -2015,43 +2121,115 @@ export default function Chart({
       color: "#000000", // Cor preta para as setas
     }));
     const customLabels = {
-      1: "39.2 m",
-      2: "122.4 m",
-      3: "212.2 m",
-      4: "309.1 m",
-      5: "413.9 m",
-      6: "527.0 m",
-      7: "649.1 m",
-      8: "781.1 m",
-      9: "923.5 m",
-      10: "1077.4 m",
-      11: "1243.6 m",
-      12: "1423.1 m",
-      13: "1617.0 m",
-      14: "1826.3 m",
-      15: "2052.4 m",
-      16: "2296.6 m",
-      17: "2560.3 m",
-      18: "2845.2 m",
-      19: "3152.8 m",
-      20: "3485.0 m",
-      21: "3843.8 m",
-      22: "4231.3 m",
-      23: "4649.8 m",
-      24: "5101.8 m",
-      25: "5590.0 m",
-      26: "6117.1 m",
-      27: "6686.5 m",
-      28: "7301.4 m",
-      29: "7965.6 m",
-      30: "8682.8 m",
-      31: "9458.6 m",
-      32: "10289.8 m",
+      1: "39",
+      2: "122",
+      3: "212",
+      4: "309",
+      5: "413",
+      6: "527",
+      7: "649",
+      8: "781",
+      9: "923",
+      10: "1077",
+      11: "1243",
+      12: "1423",
+      13: "1617",
+      14: "1826",
+      15: "2052",
+      16: "2297",
+      17: "2560",
+      18: "2845",
+      19: "3153",
+      20: "3485",
+      21: "3844",
+      22: "4231",
+      23: "4650",
+      24: "5102",
+      25: "5590",
+      26: "6117",
+      27: "6687",
+      28: "7301",
+      29: "7966",
+      30: "8683",
+      31: "9459",
+      32: "10290",
     };
-    const optionsHeatmapVectorWindPm25 = {
+    const stops = [
+      [0.1, "#FFFFFF"],
+      [0.5, "#B9EBDF"],
+      [0.9, "#D2F0DD"],
+      [2.5, "#FDF4D3"],
+      [4.5, "#F3EB99"],
+      [9, "#F5D263"],
+      [13, "#FCB419"],
+      [17, "#FD7647"],
+      [21, "#FD4D2E"],
+      [25, "#FF2C1A"],
+      [29, "#FD0301"],
+      [37.5, "#D90C44"],
+      [47.5, "#D20D5F"],
+      [57.5, "#D00B76"],
+      [100, "#9725C2"],
+      [140, "#750476"],
+    ];
+    const generateLegend = (idChart) => {
+      // Gerar a legenda personalizada com o gradiente
+      const gradientStops = stops
+        .map(([value, color], index) => {
+          const stopPercentage = (index / (stops.length - 1)) * 100; // Distribuir uniformemente no gradiente
+          return `${color} ${stopPercentage}%`;
+        })
+        .join(", ");
+      // A legenda HTML
+      const legendHTML = `
+        <div class="w-full flex justify-center items-center">
+          <div class="flex-1 text-center text-sm mx-2">
+            <div class="w-full flex flex-col items-center overflow-x-auto mt-1 mb-3">
+              <div class="w-full h-3 rounded" style="background: linear-gradient(to right, ${gradientStops});"></div>
+              <div class="flex justify-between w-full mt-1">
+                ${stops
+                  .map(([value]) => {
+                    return `
+                      <span class="flex-1 text-center text-sm">${value}</span>
+                    `;
+                  })
+                  .join("")}
+              </div>
+            </div>
+          </div>
+          <div>
+            <a
+              href="https://www.gov.br/acessoainformacao/pt-br"
+              className="flex items-center justify-center p-2"
+            >
+              <img
+                src=${imgLogoInpe}
+                alt="INPE"
+                class="max-w-14 lg:max-w-16"
+              />
+            </a>
+          </div>
+        </div>
+      `;
+      // Inserir a legenda no DOM
+      document
+        .getElementById(idChart)
+        .insertAdjacentHTML("afterend", legendHTML);
+    };
+    const optionsHeatmapVectorWindNox = {
       chart: {
         backgroundColor: "transparent",
         height: "100%",
+        events: {
+          load: function () {
+            // Aqui, 'this' refere-se à instância do gráfico
+            const chart = this;
+            console.log("chart", chart);
+            console.log("chart container id", chart.container.id);
+            // Chamar a função global para gerar a legenda personalizada
+            generateLegend(chart.container.id);
+          },
+        },
       },
       boost: {
         useGPUTranslations: true, // Utiliza GPU para renderização
@@ -2063,12 +2241,7 @@ export default function Chart({
         },
       },
       title: {
-        text: "Vento e Óxido de Nitrogenio (NOx)",
-        align: "center",
-        x: 40,
-      },
-      subtitle: {
-        text: "Variação ao longo da elevação e do tempo com vento e óxido de nitrogênio",
+        text: "Vento e Óxidos de Nitrogênio (ppbv)",
         align: "center",
         x: 40,
       },
@@ -2087,7 +2260,7 @@ export default function Chart({
       },
       yAxis: {
         title: {
-          text: "Elevação em 32 níveis (m)", // O eixo y representa a elevação
+          text: "Altitude (m)", // O eixo y representa a elevação
         },
         labels: {
           formatter: function () {
@@ -2105,25 +2278,12 @@ export default function Chart({
         reversed: false,
       },
       colorAxis: {
-        stops: [
-          [0, "rgba(48, 96, 207, 0.75)"], // Azul translúcido para valores baixos
-          [0.25, "rgba(173, 216, 230, 0.75)"], // Azul claro para intermediários
-          [0.5, "rgba(255, 251, 188, 0.75)"], // Amarelo translúcido para médios
-          [0.75, "rgba(255, 165, 0, 0.75)"], // Laranja translúcido para altos
-          [0.9, "rgba(196, 70, 58, 0.75)"], // Vermelho translúcido para valores altos
-        ],
         min: 0,
         max: 1,
-        tickInterval: 0.25, // Intervalo fixo para o eixo colorAxis
-        startOnTick: false,
-        endOnTick: false,
-        labels: {
-          format: "{value} ppb",
-        },
+        stops: stops,
       },
       legend: {
-        align: "center",
-        symbolWidth: 420,
+        enabled: false,
       },
       series: [
         {
@@ -2135,7 +2295,7 @@ export default function Chart({
           tooltip: {
             shared: true, // Compartilha o tooltip com heatmap e vetor
             headerFormat:
-              "Direção e velocidade do vento com óxido de nitrogênio<br/>",
+              "Direção e velocidade do vento com óxidos de nitrogênio<br/>",
             pointFormatter: function () {
               const date = Highcharts.dateFormat("%d/%m %H:%M", this.x);
               const elevationLevel = this.y;
@@ -2158,10 +2318,10 @@ export default function Chart({
 
               return (
                 `Data: ${date}<br/>` +
-                `Elevação: nível ${elevationLevel}: <b>${customLabels[elevationLevel]}</b><br/>` +
+                `Elevação: nível ${elevationLevel}: <b>${customLabels[elevationLevel]} m</b><br/>` +
                 `Velocidade: <b>${speed} m/s</b><br/>` +
                 `Direção: <b>${direction}°</b><br/>` +
-                `Óxido de nitrogénio (NOx): <b>${nox} ug/m³</b>`
+                `Óxido de nitrogénio (NOx): <b>${nox} ppbv</b>`
               );
             },
           },
@@ -2210,14 +2370,12 @@ export default function Chart({
         },
       ],
     };
-    options = optionsHeatmapVectorWindPm25;
+    options = optionsHeatmapVectorWindNox;
   }
 
   return (
     <div>
-      {dataCharts !== null && (
-        <p className="pt-4 text-center">{dataCharts.area}</p>
-      )}
+      {city !== null && <p className="pt-4 text-center">{city}</p>}
       <HighchartsReact highcharts={Highcharts} options={options} />
     </div>
   );
