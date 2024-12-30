@@ -4,6 +4,18 @@
     "value": "glo"
   },
   {
+    "label": "Atlântico",
+    "value": "atl"
+  },
+  {
+    "label": "Pacífico",
+    "value": "pac"
+  },
+  {
+    "label": "Índico",
+    "value": "ind"
+  },
+  {
     "label": "América do Sul",
     "value": "ams"
   },

@@ -2108,5 +2108,132 @@
         }
       ]
     }
+  },
+  {
+    "id": 5,
+    "label": "Wwatch (Ondas)",
+    "value": "Wwatch",
+    "urlImage": "https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/pn/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/{{model}}_{{product}}_{{region}}_{{year}}{{month}}{{day}}{{turn}}z_{{forecastTime}}z.png",
+    "urlDates": "https://s1.cptec.inpe.br/grafico/Modelos/portal_previsao_numerica/mod_wwatch.json",
+    "urlCharts": null,
+    "urlCsv": null,
+    "timeRun": 24,
+    "periodHours": 3,
+    "periodStart": "000",
+    "periodEnd": "024",
+    "forecastTime": "000",
+    "default": {
+      "product": {
+        "value": "alt_onda",
+        "group": "alt_onda",
+        "region": "bra"
+      }
+    },
+    "options": {
+      "groups": [
+        {
+          "label": "Altura e direção das ondas",
+          "value": "alt_onda"
+        },
+        {
+          "label": "Período e direção média das ondas",
+          "value": "per_medio"
+        },
+        {
+          "label": "Período e direção de pico das ondas",
+          "value": "per_pico"
+        },
+        {
+          "label": "Direção e intensidade do vento",
+          "value": "vento"
+        },
+        {
+          "label": "Direção e intensidade de Windsea",
+          "value": "windsea"
+        }
+      ],
+      "products": [
+        {
+          "label": null,
+          "value": "alt_onda",
+          "group": "alt_onda",
+          "regions": [
+            "bra",
+            "sul",
+            "sud",
+            "nde",
+            "nte",
+            "glo",
+            "atl",
+            "pac",
+            "ind"
+          ]
+        },
+        {
+          "label": null,
+          "value": "per_medio",
+          "group": "per_medio",
+          "regions": [
+            "bra",
+            "sul",
+            "sud",
+            "nde",
+            "nte",
+            "glo",
+            "atl",
+            "pac",
+            "ind"
+          ]
+        },
+        {
+          "label": null,
+          "value": "per_pico",
+          "group": "per_pico",
+          "regions": [
+            "bra",
+            "sul",
+            "sud",
+            "nde",
+            "nte",
+            "glo",
+            "atl",
+            "pac",
+            "ind"
+          ]
+        },
+        {
+          "label": null,
+          "value": "vento",
+          "group": "vento",
+          "regions": [
+            "bra",
+            "sul",
+            "sud",
+            "nde",
+            "nte",
+            "glo",
+            "atl",
+            "pac",
+            "ind"
+          ]
+        },
+        {
+          "label": null,
+          "value": "windsea",
+          "group": "windsea",
+          "regions": [
+            "bra",
+            "sul",
+            "sud",
+            "nde",
+            "nte",
+            "glo",
+            "atl",
+            "pac",
+            "ind"
+          ]
+        }
+      ]
+    }
   }
 ]
