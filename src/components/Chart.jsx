@@ -1667,7 +1667,7 @@ export default function Chart({
           </div>
           <div>
             <a
-              href="https://www.gov.br/acessoainformacao/pt-br"
+              href="https://www.gov.br/inpe/pt-br"
               className="flex items-center justify-center p-2"
             >
               <img
@@ -1721,7 +1721,7 @@ export default function Chart({
           align: "left",
           x: 5,
           y: 14,
-          format: "{value:%d/%m %Hh}", // Formato da data
+          format: "{value:%d/%m %HZ}", // Formato da data
         },
         showLastLabel: false,
         tickLength: 16,
@@ -1931,7 +1931,7 @@ export default function Chart({
           </div>
           <div>
             <a
-              href="https://www.gov.br/acessoainformacao/pt-br"
+              href="https://www.gov.br/inpe/pt-br"
               className="flex items-center justify-center p-2"
             >
               <img
@@ -1985,7 +1985,7 @@ export default function Chart({
           align: "left",
           x: 5,
           y: 14,
-          format: "{value:%d/%m %Hh}", // Formato da data
+          format: "{value:%d/%m %HZ}", // Formato da data
         },
         showLastLabel: false,
         tickLength: 16,
@@ -2199,7 +2199,7 @@ export default function Chart({
           </div>
           <div>
             <a
-              href="https://www.gov.br/acessoainformacao/pt-br"
+              href="https://www.gov.br/inpe/pt-br"
               className="flex items-center justify-center p-2"
             >
               <img
@@ -2253,7 +2253,7 @@ export default function Chart({
           align: "left",
           x: 5,
           y: 14,
-          format: "{value:%d/%m %Hh}", // Formato da data
+          format: "{value:%d/%m %HZ}", // Formato da data
         },
         showLastLabel: false,
         tickLength: 16,
