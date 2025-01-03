@@ -42,8 +42,7 @@ export default function Frame({ id }) {
 
     return (
       <div className="p-8 text-red-500">
-        Foi feita uma atualização no aplicativo. Aguarde 5 segundos para
-        recarregamento automático.
+        Foi feita uma atualização no aplicativo. Aguarde um momento que a página será recarregada novamente.
       </div>
     );
   }
