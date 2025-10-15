@@ -2109,7 +2109,7 @@
     "timeRun": 24,
     "periodHours": 3,
     "periodStart": "000",
-    "periodEnd": "024",
+    "periodEnd": "120",
     "forecastTime": "000",
     "default": {
       "product": {
