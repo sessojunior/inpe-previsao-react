@@ -7,10 +7,7 @@ import ComboBox from "./ComboBox";
 
 export default function DropDownConfig({
   frame,
-  setFrame,
   model,
-  setModel,
-  periodStart,
   dates,
   resetTimer,
   isInputFocused,
@@ -18,42 +15,32 @@ export default function DropDownConfig({
 }) {
   const {
     config,
-    frames,
     models,
     regions,
     cities,
     updateLocalConfig,
-    updateLocalFrames,
+    updateFrame,
   } = useContext(ConfigContext);
 
   // Cities
   const [selectedCity, setSelectedCity] = useState("");
-  const [selectedCityId, setSelectedCityId] = useState(null); // Armazena o id da cidade
-
-  const loadCityId = () => {
-    setSelectedCity(selectedCity.length > 0 ? selectedCity : cityUf());
-    const savedCity = localStorage.getItem("selectedCity");
-    if (savedCity) {
-      setSelectedCity(savedCity);
-      const savedCityId = cities.find(
-        (city) => city.city === savedCity
-      )?.codIbge;
-      if (savedCityId) {
-        setSelectedCityId(savedCityId);
-      }
-    }
-  };
+  // City selected
+  const cityUf = useCallback(() => {
+    const city = cities.find((city) => city.id === frame.city);
+    return city ? `${city.name} - ${city.uf}` : "";
+  }, [cities, frame.city]);
 
   // Load city from localStorage when the component mounts
   useEffect(() => {
-    loadCityId();
-  }, [cities]);
+    setSelectedCity((currentCity) =>
+      currentCity.length > 0 ? currentCity : cityUf()
+    );
 
-  // City selected
-  const cityUf = () => {
-    const city = cities.find((city) => city.id === frame.city);
-    return city ? `${city.name} - ${city.uf}` : "";
-  };
+    const savedCity = localStorage.getItem("selectedCity");
+    if (savedCity) {
+      setSelectedCity(savedCity);
+    }
+  }, [cityUf]);
 
   // Regions of product selected
   const modelProductRegions = useMemo(() => {
@@ -93,90 +80,58 @@ export default function DropDownConfig({
 
   const handleChangeModel = useCallback(
     (e) => {
-      const model = models.find((model) => model.value === e.target.value);
-      setModel(model);
-      resetTimer(model.forecastTime);
-      setFrame({
-        ...frame,
+      const nextModel = models.find((item) => item.value === e.target.value);
+      resetTimer(nextModel.forecastTime);
+      updateFrame(frame.id, {
         model: e.target.value,
-        group: model.default.product.group,
-        product: model.default.product.value,
-        region: model.default.product.region,
-        forecastTime: model.forecastTime,
+        group: nextModel.default.product.group,
+        product: nextModel.default.product.value,
+        region: nextModel.default.product.region,
+        forecastTime: nextModel.forecastTime,
         isPlaying: false,
         city: null,
+        init: null,
       });
-      updateLocalFrames([
-        ...frames.slice(0, frame.id - 1),
-        {
-          ...frame,
-          model: e.target.value,
-          group: model.default.product.group,
-          product: model.default.product.value,
-          region: model.default.product.region,
-          forecastTime: model.forecastTime,
-          isPlaying: false,
-          city: null,
-        },
-        ...frames.slice(frame.id),
-      ]);
       updateLocalConfig({
         ...config,
         framesWithImagesLoaded: [],
       });
     },
-    [models, frame, resetTimer]
+    [config, frame.id, models, resetTimer, updateFrame, updateLocalConfig]
   );
 
   const handleCitySelected = useCallback(
     (id) => {
-      setSelectedCityId(id); // Atualiza o id ao selecionar a cidade
-
       resetTimer(model.forecastTime);
-      setFrame({
-        ...frame,
+      updateFrame(frame.id, {
         isPlaying: false,
         city: id,
         region: null,
+        forecastTime: model.forecastTime,
       });
-      updateLocalFrames([
-        ...frames.slice(0, frame.id - 1),
-        {
-          ...frame,
-          isPlaying: false,
-          city: id,
-        },
-        ...frames.slice(frame.id),
-      ]);
       updateLocalConfig({
         ...config,
         framesWithImagesLoaded: [],
       });
     },
-    [model.forecastTime, frame, resetTimer]
+    [config, frame.id, model.forecastTime, resetTimer, updateFrame, updateLocalConfig]
   );
 
   const handleChangeRegion = useCallback(
     (e) => {
       resetTimer(model.forecastTime);
-      setFrame({ ...frame, region: e.target.value, isPlaying: false });
-      updateLocalFrames([
-        ...frames.slice(0, frame.id - 1),
-        {
-          ...frame,
-          region: e.target.value,
-          forecastTime: model.forecastTime,
-          isPlaying: false,
-          city: null,
-        },
-        ...frames.slice(frame.id),
-      ]);
+      updateFrame(frame.id, {
+        region: e.target.value,
+        forecastTime: model.forecastTime,
+        isPlaying: false,
+        city: null,
+      });
       updateLocalConfig({
         ...config,
         framesWithImagesLoaded: [],
       });
     },
-    [model.forecastTime, frame, resetTimer]
+    [config, frame.id, model.forecastTime, resetTimer, updateFrame, updateLocalConfig]
   );
 
   const handleChangeGroup = useCallback(
@@ -189,11 +144,10 @@ export default function DropDownConfig({
           ? firstProductGroup.forecastTime
           : model.forecastTime;
       resetTimer(forecastTime);
-      setFrame({
-        ...frame,
+      updateFrame(frame.id, {
         group: e.target.value,
         product: firstProductGroup.value,
-        forecastTime: forecastTime,
+        forecastTime,
         isPlaying: false,
         city: null,
         region:
@@ -201,28 +155,12 @@ export default function DropDownConfig({
             ? firstProductGroup.regions[0]
             : null,
       });
-      updateLocalFrames([
-        ...frames.slice(0, frame.id - 1),
-        {
-          ...frame,
-          group: e.target.value,
-          product: firstProductGroup.value,
-          forecastTime: forecastTime,
-          isPlaying: false,
-          city: null,
-          region:
-            firstProductGroup.regions !== null
-              ? firstProductGroup.regions[0]
-              : null,
-        },
-        ...frames.slice(frame.id),
-      ]);
       updateLocalConfig({
         ...config,
         framesWithImagesLoaded: [],
       });
     },
-    [modelProducts, model.forecastTime, frame, resetTimer]
+    [config, frame.id, model.forecastTime, modelProducts, resetTimer, updateFrame, updateLocalConfig]
   );
 
   const handleChangeProduct = useCallback(
@@ -235,47 +173,36 @@ export default function DropDownConfig({
           ? product.forecastTime
           : model.forecastTime;
       resetTimer(forecastTime);
-      setFrame({ ...frame, product: e.target.value, isPlaying: false });
-      updateLocalFrames([
-        ...frames.slice(0, frame.id - 1),
-        {
-          ...frame,
-          product: e.target.value,
-          forecastTime: forecastTime,
-          isPlaying: false,
-          city: null,
-          region: model.default.product.region,
-        },
-        ...frames.slice(frame.id),
-      ]);
+      updateFrame(frame.id, {
+        product: e.target.value,
+        group: product.group,
+        region: product.regions !== null ? product.regions[0] : null,
+        city: null,
+        forecastTime,
+        isPlaying: false,
+      });
       updateLocalConfig({
         ...config,
         framesWithImagesLoaded: [],
       });
     },
-    [model.options.products, model.forecastTime, frame, resetTimer]
+    [config, frame.id, model.options.products, model.forecastTime, resetTimer, updateFrame, updateLocalConfig]
   );
 
   const handleChangeInit = useCallback(
     (e) => {
       resetTimer(model.forecastTime);
-      setFrame({ ...frame, init: e.target.value, isPlaying: false });
-      updateLocalFrames([
-        ...frames.slice(0, frame.id - 1),
-        {
-          ...frame,
-          init: e.target.value,
-          forecastTime: model.forecastTime,
-          isPlaying: false,
-        },
-        ...frames.slice(frame.id),
-      ]);
+      updateFrame(frame.id, {
+        init: e.target.value,
+        forecastTime: model.forecastTime,
+        isPlaying: false,
+      });
       updateLocalConfig({
         ...config,
         framesWithImagesLoaded: [],
       });
     },
-    [model.forecastTime, frame, resetTimer]
+    [config, frame.id, model.forecastTime, resetTimer, updateFrame, updateLocalConfig]
   );
 
   return (

@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, useCallback, useMemo } from "react";
+import { useState, useEffect, useContext, useCallback } from "react";
 import { ConfigContext } from "../contexts/ConfigContext";
 import {
   FaChevronLeft,
@@ -15,13 +15,9 @@ import DropDownTime from "./DropDownTime";
 import { formatDate } from "../lib/formatDate";
 import { toast } from "react-toastify";
 
-import ImageNotFound from "../assets/not-found.png";
-
 export default function FrameTop({
   frame,
-  setFrame,
   model,
-  setModel,
   dates,
   loadingImages,
   setLoadingImages,
@@ -30,16 +26,12 @@ export default function FrameTop({
   const {
     config,
     setConfig,
-    regions,
     startAllTimer,
     pauseAllTimer,
+    updateFrame,
     updateLocalConfig,
   } = useContext(ConfigContext);
 
-  const region = regions.find((region) => region.value === frame.region);
-  const group = model.options.groups.find(
-    (group) => group.value === frame.group
-  );
   const product =
     model.options.products.find((product) => product.value === frame.product) ||
     model.options.products[0];
@@ -80,11 +72,28 @@ export default function FrameTop({
   const [openDropdownTime, setOpenDropdownTime] = useState(false);
 
   const [forecastTime, setForecastTime] = useState(
-    product.forecastTime ?? model.forecastTime ?? periodStart
+    frame.forecastTime ?? product.forecastTime ?? model.forecastTime ?? periodStart
   );
   const [isPlaying, setIsPlaying] = useState(frame.isPlaying ?? false);
 
   const [isInputFocused, setIsInputFocused] = useState(false);
+
+  const updateFrameState = useCallback(
+    (updates, options = {}) => {
+      updateFrame(frame.id, updates, options);
+    },
+    [frame.id, updateFrame]
+  );
+
+  useEffect(() => {
+    setForecastTime(
+      frame.forecastTime ?? product.forecastTime ?? model.forecastTime ?? periodStart
+    );
+  }, [frame.forecastTime, model.forecastTime, periodStart, product.forecastTime]);
+
+  useEffect(() => {
+    setIsPlaying(Boolean(frame.isPlaying));
+  }, [frame.isPlaying]);
 
   const handleDropdownConfig = useCallback(() => {
     setOpenDropdownConfig((prev) => !prev);
@@ -100,17 +109,17 @@ export default function FrameTop({
     if (hours.indexOf(forecastTime) > 0) {
       const previousTime = hours[hours.indexOf(forecastTime) - 1];
       setForecastTime(previousTime);
-      setFrame({ ...frame, forecastTime: previousTime });
+      updateFrameState({ forecastTime: previousTime });
     }
-  }, [forecastTime, hours, frame, setFrame]);
+  }, [forecastTime, hours, updateFrameState]);
 
   const handleIncreaseTime = useCallback(() => {
     if (hours.indexOf(forecastTime) < hours.length - 1) {
       const nextTime = hours[hours.indexOf(forecastTime) + 1];
       setForecastTime(nextTime);
-      setFrame({ ...frame, forecastTime: nextTime });
+      updateFrameState({ forecastTime: nextTime });
     }
-  }, [forecastTime, hours, frame, setFrame]);
+  }, [forecastTime, hours, updateFrameState]);
 
   {
     /* Begin Timer */
@@ -121,9 +130,12 @@ export default function FrameTop({
 
   useEffect(() => {
     if (timer > 0) {
-      setFrame({ ...frame, forecastTime: forecastTime, isPlaying: isPlaying });
+      updateFrameState(
+        { forecastTime, isPlaying },
+        { persist: false, syncUrl: false }
+      );
     }
-  }, [timer]);
+  }, [forecastTime, isPlaying, timer, updateFrameState]);
 
   useEffect(() => {
     async function checkIsAllPlaying() {
@@ -167,7 +179,7 @@ export default function FrameTop({
       const turn = init?.slice(11, 13);
       const url = model.urlImage
         .replaceAll("{{model}}", model.value)
-        .replaceAll("{{region}}", frame.region)
+        .replaceAll("{{region}}", frame.region ?? frame.city)
         .replaceAll("{{product}}", frame.product)
         .replaceAll("{{forecastTime}}", forecastTime)
         .replaceAll("{{timeRun}}", model.timeRun)
@@ -177,7 +189,7 @@ export default function FrameTop({
         .replaceAll("{{day}}", day);
       return url;
     },
-    [frame.init, dates, frame.region, frame.product, model]
+    [frame.city, frame.init, dates, frame.product, frame.region, model]
   );
 
   function saveImagesInCache(imageUrls) {
@@ -197,7 +209,6 @@ export default function FrameTop({
 
   const preloadImages = async () => {
     setLoadingImages(true);
-    let imageUrls = [];
     if (frame.init !== undefined || dates.length > 0) {
       let imageUrls = hours.map((forecastTime) => urlImage(forecastTime));
       try {
@@ -221,7 +232,7 @@ export default function FrameTop({
 
   const startAnimation = () => {
     clearInterval(timeInterval);
-    setFrame({ ...frame, isPlaying: false });
+    updateFrameState({ isPlaying: false }, { persist: false, syncUrl: false });
     setIsPlaying(false);
 
     setTimeInterval(
@@ -255,7 +266,7 @@ export default function FrameTop({
 
   const pauseTimer = () => {
     clearInterval(timeInterval);
-    setFrame({ ...frame, isPlaying: false });
+    updateFrameState({ isPlaying: false }, { persist: false, syncUrl: false });
     setIsPlaying(false);
     updateLocalConfig({
       ...config,
@@ -335,8 +346,6 @@ export default function FrameTop({
     startTimer,
   ]);
 
-  const publicImage = ImageNotFound;
-
   return (
     <div className="flex justify-between">
       <div className="flex relative">
@@ -360,10 +369,7 @@ export default function FrameTop({
         {openDropdownConfig && (
           <DropDownConfig
             frame={frame}
-            setFrame={setFrame}
             model={model}
-            setModel={setModel}
-            periodStart={periodStart}
             dates={dates}
             resetTimer={resetTimer}
             isInputFocused={isInputFocused}
@@ -411,7 +417,7 @@ export default function FrameTop({
               >
                 <FaChevronLeft />
               </button>
-              {frame.isPlaying ? (
+              {isPlaying ? (
                 <button
                   className={classButtonActive}
                   onClick={pauseTimer}
@@ -503,10 +509,11 @@ export default function FrameTop({
               {openDropdownTime && (
                 <DropDownTime
                   forecastTime={forecastTime}
-                  setForecastTime={setForecastTime}
-                  frame={frame}
-                  setFrame={setFrame}
                   hours={hours}
+                  onChangeTime={(time) => {
+                    setForecastTime(time);
+                    updateFrameState({ forecastTime: time });
+                  }}
                 />
               )}
             </div>

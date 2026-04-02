@@ -2,7 +2,7 @@
 
 Neste projeto utilizaremos [React](https://react.dev/) e [Vite](https://vitejs.dev/) para o desenvolvimento.
 
-Para abrir este repositório no Sandbox.io e ver uma **demonstração**, acessar: [https://codesandbox.io/s/github/sessojunior/inpe-previsao-react](https://codesandbox.io/s/github/sessojunior/inpe-previsao-react).
+Para abrir este repositório no Sandbox.io e ver uma **demonstração**, acessar: [https://codesandbox.io/s/github/cptec-inpe-br/inpe-previsao-react](https://codesandbox.io/s/github/cptec-inpe-br/inpe-previsao-react).
 
 Imagem de pré-visualização do aplicativo em funcionamento:
 
@@ -17,7 +17,7 @@ O projeto também está organizado em diversos arquivos e diretórios, onde:
 - **/.git** - Diretório de configurações para o git. Não é feito o upload para o Github.
 - **/dist** - Diretório que é disponibilizado para a produção após rodar o _npm run build_. É possível ver uma prévia depois com _npm run preview_
 - **/node_modules** - Diretório descartável, contendo as dependências do projeto. Não é feito o upload para o Github. Pode ser removido e depois gerado novamente utilizado _npm install_, instalando todas as dependências necessárias que estão no arquivo \*package.json\*\*.
-- **/public** - Diretório contendo as imagens de favicon e a imagem _image-not-found.jpg_ que é exibida quando não é encontrada uma imagem de previsão.
+- **/public** - Diretório contendo arquivos públicos copiados para a build final, como favicon, screenshot e o arquivo **404.html** usado como fallback de deep-link no Github Pages.
 - **/src** - Diretório contendo os arquivos principais do projeto, componentes e layout.
   - **/assets** - Diretório contendo as imagens de logotipos do governo para o cabeçalho e rodapé.
   - **/components** - Diretório contendo todos os arquivos dos componentes do aplicativo. Está dividido em uma hierarquia, porém ambos no mesmo diretório, para fácil acesso:
@@ -28,15 +28,17 @@ O projeto também está organizado em diversos arquivos e diretórios, onde:
           - **DropDownConfig.jsx** - Arquivo de componente de dropdown que permite selecionar o modelo, grupo do produto, produto, região e data de inicialização do modelo.
           - **DropDownTime.jsx** - Arquivo de componente que exibe as horas de previsão disponíveis para a configuração selecionada e permite trocar manualmente de previsão.
         - **FrameImage.jsx** - Arquivo de componente que exibe a imagem de previsão e um botão para download da imagem em uma nova aba do navegador.
-  - **/contexts** - Diretório contendo arquivo com Context API de configurações do aplicativo. Reúne e disponibiliza de forma global o conteúdo dos arquivos JSON, define e salva configurações como exibir ou ocultar cabeçalho e rodapé, quantidade de frames (quadros) na tela, configurações de cada frame etc.
+    - **RouteNotFound.jsx** - Arquivo de componente exibido quando a SPA recebe uma rota inválida de modelo, produto, região/cidade ou inicialização.
+  - **/contexts** - Diretório contendo arquivo com Context API de configurações do aplicativo. Reúne e disponibiliza de forma global o conteúdo dos arquivos JSON, define e salva configurações como exibir ou ocultar cabeçalho e rodapé, quantidade de frames (quadros) na tela, configurações de cada frame, hidrata o frame 1 pela URL e sincroniza o pathname do navegador.
   - **/data** - Diretório contendo arquivos JSON essenciais para o funcionamento do aplicativo. Contém os seguintes arquivos:
+    - **config.json** - Arquivo JSON com configurações globais da aplicação, como o modelo inicial da home e os valores padrão de interface.
     - **models.json** - Arquivo JSON com dados e configurações dos modelos.
     - **regions.json** - Arquivo JSON com uma lista de informações sobre regiões.
   - **/layouts** - Diretório contendo arquivos de componentes de layout. Contém os seguintes arquivos:
     - **Header.jsx** - Arquivo de componente de cabeçalho com logotipo e links de navegação
     - **Container.jsx** - Arquivo de componente que engloba todo o conteúdo principal, como barra do topo _(TopBar.jsx)_ e os quadros _(Frames.jsx)_.
     - **Footer.jsx** - Arquivo de componente de rodapé, contendo logotipo, links de navegação e outras informações.
-  - **/lib** - Diretório que contém funções que podem ser utilizadas em todo o aplicativo, como formatação de datas.
+  - **/lib** - Diretório que contém funções que podem ser utilizadas em todo o aplicativo, como formatação de datas e serialização/parsing das rotas da SPA.
   - **App.jsx** - Arquivo principal que contém os componentes pais e engloba tudo com o Context API.
   - **input.css** - Arquivo criado para estilização com o Tailwind, conforme a documentação oficial do Taiwind.
   - **main.jsx** - Arquivo que é o ponto de entrada para o aplicativo em React.
@@ -114,7 +116,8 @@ Exemplo:
 
 - **id** - _(number)_. É o identificador único do modelo. O primeiro modelo deve começar com 1 e os seguintes de forma incremental e crescente. Exemplo: 1, 2, 3...
 - **label** - _(string)_. Nome que irá aparecer para o usuário na caixa de seleção do formulário. Exemplo: "BRAMS 08".
-- **value** - _(string)_. Slug de URL e também valor do modelo. Serve para identificar o modelo também de forma única, a fins de comparação nos scripts. Também é o formato usado na URL para a obtenção da imagem. Exemplo: "BRAMS08".
+- **value** - _(string)_. Valor interno do modelo. Serve para identificar o modelo de forma única e também é o formato usado na URL da imagem no backend. Exemplo: "BRAMS08" ou "Global_BAM".
+- **slug** - _(string, opcional)_. Slug público amigável usado na rota da SPA. Se não for informado explicitamente, pode ser derivado da **urlDates**. Exemplo: "bam".
 - **urlImage** - _(string)_. Template de URL contendo informações de como as variáveis de cada modelo são transferidos para a URL.
   - **{{model}}** - _(string)_. Valor ou slug do modelo. Exemplos: "BRAMS08".
   - **{{region}}** - _(string)_. Região do produto do modelo. Exemplos: "sul", "ams", "norte", "bra".
@@ -124,7 +127,7 @@ Exemplo:
   - **{{day}}** - _(string)_. Dia da rodada (DD). Exemplo: "14".
   - **{{turn}}** - _(string)_. Turno da rodada (HH). Exemplos: "00", "12".
   - **{{forecastTime}}** - _(string)_. Hora (HHH) de execução atual da imagem. Tempo de previsão (forecast time). Exemplos: "000", "003", "012", "072", "144".
-- **urlDates** - _(string)_. URL que obterá o arquivo JSON contendo as datas disponíveis do modelo com o parâmetro _datesRun_.
+- **urlDates** - _(string)_. URL que obterá o arquivo JSON contendo as datas disponíveis do modelo com o parâmetro _datesRun_. Na implementação atual, esse endereço também pode ser usado para derivar o slug público da rota da SPA. Exemplo: `mod_bam.json` resulta em `bam`.
 - **urlCharts** - _(string)_. Template de URL que obterá o arquivo JSON para geração dos gráficos com highcharts.
   - **{{year}}** - _(string)_. Ano da rodada (YYYY). Exemplo: "2024".
   - **{{month}}** - _(string)_. Mês da rodada (MM). Exemplo: "08".
@@ -601,7 +604,7 @@ date,elevation,co,pm25,nox,wdir,speed
 ...
 ```
 
-## URLs válidas
+## URLs válidas no backend
 
 Exemplos de URLs válidas:
 
@@ -616,6 +619,43 @@ Meteogramas, não exibe a região e sim um combobox para escolher a cidade. Repa
 https://s1.cptec.inpe.br/grafico/Modelos/SMEC/pn/meteograms/2024/10/08/00/SMEC_meteograms_1200104_2024100800z.png
 
 https://s1.cptec.inpe.br/grafico/Modelos/{{model}}/pn/{{product}}/{{year}}/{{month}}/{{day}}/{{turn}}/{{model}}_{{product}}_{{city}}_{{year}}{{month}}{{day}}{{turn}}z.png
+
+## Rotas válidas da SPA
+
+Além das URLs das imagens no backend, o aplicativo agora possui rotas próprias na barra de endereços do navegador para o **frame 1**.
+
+Regras da implementação atual:
+
+- Apenas o **frame 1** é refletido no pathname da SPA.
+- Os **frames 2, 3 e 4** continuam sendo persistidos apenas no `localStorage`.
+- A página inicial da aplicação é o modelo **BAM**.
+- A configuração global da home e dos defaults da interface fica em **src/data/config.json**.
+- A precedência do estado do frame 1 é: **URL > localStorage > valores padrão do JSON**.
+- O `init` é opcional na rota. Quando ele não é informado, a aplicação utiliza a inicialização mais recente disponível do modelo.
+- Quando um grupo possui vários produtos, a rota usa o **produto exato** para evitar ambiguidades.
+- Meteogramas e demais seleções por cidade usam o formato `city-<codIbge>` no segmento de localização.
+
+Formato da rota:
+
+```text
+/inpe-previsao-react/:model/:product/:region-ou-cidade/:init?
+```
+
+Exemplos válidos:
+
+```text
+/inpe-previsao-react/bam/aprec/ams/
+/inpe-previsao-react/bam/aprec/ams/2026-04-02-00z
+/inpe-previsao-react/bam/prec_acum/ams/
+/inpe-previsao-react/brams/aprec/ams/
+/inpe-previsao-react/bam/meteograms/city-3550308/2026-04-02-00z
+```
+
+Observações importantes sobre a rota:
+
+- Em casos como `aprec`, o valor do grupo e o valor do produto coincidem, então a URL curta desejada continua natural.
+- Em grupos com múltiplos produtos, como `prec` ou `t`, a rota usa o valor do produto, por exemplo `prec_acum`, `prec_3h`, `tmin_2m` ou `tmax_2m`.
+- Quando o usuário digita uma rota inválida, a SPA exibe uma tela 404 interna com sugestões de retorno para rotas válidas.
 
 ## Observações
 
@@ -644,7 +684,7 @@ Para os passos abaixo, é necessário que o projeto já esteja em um repositóri
 npm install gh-pages --save-dev
 ```
 
-2. Em package.json adicionar em "scripts", no final, exatamente as chaves "predeploy" e "deploy" com as configurações:
+1. Em package.json adicionar em "scripts", no final, exatamente as chaves "predeploy" e "deploy" com as configurações:
 
 ```json
   "scripts": {
@@ -657,18 +697,18 @@ npm install gh-pages --save-dev
 
 O "predeploy" faz com que os arquivos de produção sejam gerados, a partir disso a Git gera a build que são os arquivos finais e o "deploy" salva em uma pasta "dist".
 
-3. Em seguida adicionar em package.json, no início, antes do "name":
+1. Em seguida adicionar em package.json, no início, antes do "name":
 
 ```json
 {
-  "homepage": "https://sessojunior.github.io/inpe-previsao-react",
+  "homepage": "https://cptec-inpe-br.github.io/inpe-previsao-react",
   "name": ...
 }
 ```
 
 O padrão que é seguido aqui é https://**[nomedousuario]**.github.io/**[nomedorepositorio]**.
 
-4. No arquivo vite.config.js, acrescentar o "base" com o **nomedorepositorio**, no final, pode ser após "plugins" da função defineConfig():
+1. No arquivo vite.config.js, acrescentar o "base" com o **nomedorepositorio**, no final, pode ser após "plugins" da função defineConfig():
 
 ```js
 export default defineConfig({
@@ -679,7 +719,15 @@ export default defineConfig({
 
 Isso é necessário para o deploy com o **Vite**.
 
-5. Seria interessante, comitar e subir essas alterações no repositório, para ficar correto lá.
+Além disso, a home da aplicação e os defaults de interface são definidos em **src/data/config.json**. Esse arquivo é a fonte de verdade para o modelo inicial da página e para preferências globais como `showHeaderFooter` e `quantityFrames`.
+
+4.1. Para que acessos diretos e refresh funcionem em URLs profundas como `/inpe-previsao-react/bam/aprec/ams/`, é necessário manter o arquivo **public/404.html**.
+
+Esse arquivo **não é arquivo morto**. No Github Pages ele atua como fallback para rotas profundas da SPA: quando o servidor não encontra o caminho físico, carrega o `404.html`, que salva o pathname solicitado e redireciona para a raiz da aplicação. Em seguida, o `src/main.jsx` restaura o caminho original e a SPA decide se a rota é válida ou se deve exibir a tela interna de modelo/rota não encontrada.
+
+Sem esse arquivo, a navegação por clique continuaria funcionando, mas abrir diretamente ou recarregar uma rota profunda no Github Pages quebraria o deep-link.
+
+1. Seria interessante, comitar e subir essas alterações no repositório, para ficar correto lá.
 
 ```bash
 git add .
@@ -687,7 +735,7 @@ git commit -m "Add deploy config"
 git push
 ```
 
-5. Para colocar esse projeto no ar, executar no terminal:
+1. Para colocar esse projeto no ar, executar no terminal:
 
 ```bash
 npm run deploy
@@ -695,9 +743,9 @@ npm run deploy
 
 Esse comando irá gerar os arquivos de build e enviar já para o Github. Se exibir uma mensagem de "Published", quer dizer que deu certo.
 
-6. Para acessar a página, ir no navegador para a página do Github, clicar em **Settings** e na navegação lateral, do lado esquerdo, clicar em **Pages**. Irá exibir a página de **Github Pages**. Nesta página irá aparecer, após o deploy, o link da página final. Demora um pouco para aparecer (cerca de 4 ou 5 minutos). Após um tempo, recarregando a página, irá exibir uma caixinha com o link, com o seguinte:
+1. Para acessar a página, ir no navegador para a página do Github, clicar em **Settings** e na navegação lateral, do lado esquerdo, clicar em **Pages**. Irá exibir a página de **Github Pages**. Nesta página irá aparecer, após o deploy, o link da página final. Demora um pouco para aparecer (cerca de 4 ou 5 minutos). Após um tempo, recarregando a página, irá exibir uma caixinha com o link, com o seguinte:
 
-**Your site is live at [https://sessojunior.github.io/inpe-previsao-react](https://sessojunior.github.io/inpe-previsao-react)**
+**Your site is live at [https://cptec-inpe-br.github.io/inpe-previsao-react](https://cptec-inpe-br.github.io/inpe-previsao-react)**
 Last **deployed** by...
 
-7. Basta clicar no link informado na caixinha e pronto!
+1. Basta clicar no link informado na caixinha e pronto!

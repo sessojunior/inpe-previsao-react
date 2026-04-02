@@ -1,9 +1,7 @@
 export default function DropDownTime({
   forecastTime,
-  setForecastTime,
-  frame,
-  setFrame,
   hours,
+  onChangeTime,
 }) {
   // console.log("DropDownTime forecastTime", forecastTime)
   // console.log("forecastTime", forecastTime)
@@ -14,8 +12,7 @@ export default function DropDownTime({
     "size-8 md:size-[38px] inline-flex justify-center items-center gap-2 rounded-full font-bold bg-blue-600 hover:bg-blue-500 text-gray-50 text-xs md:text-sm";
 
   const handleChangeTime = (time) => {
-    setForecastTime(time);
-    setFrame({ ...frame, forecastTime: time });
+    onChangeTime(time);
   };
 
   return (
@@ -28,6 +25,7 @@ export default function DropDownTime({
           <div className="flex flex-wrap gap-1">
             {hours.map((time, index) => (
               <button
+                type="button"
                 key={index}
                 className={
                   forecastTime === time

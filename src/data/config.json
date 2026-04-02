@@ -1,0 +1,13 @@
+{
+  "defaults": {
+    "showHeaderFooter": true,
+    "quantityFrames": 1
+  },
+  "home": {
+    "modelSlug": "bam"
+  },
+  "routing": {
+    "firstFrameOnly": true,
+    "invalidRouteMode": "in-app-404"
+  }
+}
