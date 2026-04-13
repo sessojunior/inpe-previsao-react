@@ -58,7 +58,7 @@ export default function Header() {
       label: "Satélite",
       url: "http://satelite.cptec.inpe.br/home/novoSite/index.jsp",
     },
-    { label: "Ondas", url: "http://ondas.cptec.inpe.br/" },
+    { label: "Ondas", url: "https://previsaonumerica.cptec.inpe.br/wwatch/alt_onda/glo/" },
     {
       label: "Bacias",
       url: "https://bacias.cptec.inpe.br/",
