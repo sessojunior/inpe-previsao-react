@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CPTEC / INPE - AMS Workstation</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            /* Cores dark mais claras e com melhor contraste (escala Slate do Tailwind) */
+            darkbg: '#0f172a', /* slate-900 */
+            darkmap: '#1e293b', /* slate-800 */
+            darkglass: 'rgba(30, 41, 59, 0.90)', /* slate-800 com leve transparência */
+            lightglass: 'rgba(255, 255, 255, 0.90)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <script src="https://code.iconify.design/iconify-icon/1.0.8/iconify-icon.min.js"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      font-family: "Inter", sans-serif;
+    }
+
+    body {
+      overflow: hidden;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Scrollbars */
+    .panel-scroll::-webkit-scrollbar {
+      width: 4px;
+    }
+    .panel-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .panel-scroll::-webkit-scrollbar-thumb {
+      background: rgba(156, 163, 175, 0.3);
+      border-radius: 4px;
+    }
+
+    /* Grid for placeholders */
+    .bg-grid-pattern {
+      background-image: 
+        linear-gradient(to right, rgba(156, 163, 175, 0.15) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(156, 163, 175, 0.15) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    /* Range Slider - Map overlay */
+    input[type=range]::-webkit-slider-thumb {
+      pointer-events: all;
+      width: 16px;
+      height: 16px;
+      -webkit-appearance: none;
+      @apply bg-white border-2 border-sky-500 rounded-full cursor-pointer shadow-md;
+    }
+
+    /* Color Scale Gradient */
+    .scale-gradient {
+      background: linear-gradient(to bottom, 
+        #ffc0cb 0%,   /* Pink */
+        #a855f7 10%,  /* Purple */
+        #1e3a8a 25%,  /* Dark Blue */
+        #3b82f6 40%,  /* Blue */
+        #06b6d4 50%,  /* Cyan */
+        #22c55e 65%,  /* Green */
+        #eab308 80%,  /* Yellow */
+        #f97316 90%,  /* Orange */
+        #ef4444 100%  /* Red */
+      );
+    }
+    
+    .ensemble-gradient {
+      background: linear-gradient(to right, #0ea5e9, #2dd4bf, #facc15, #f97316, #ec4899);
+    }
+  </style>
+</head>
+
+<body class="flex h-screen w-screen bg-slate-50 text-slate-800 dark:bg-darkbg dark:text-slate-200 antialiased selection:bg-sky-500/30">
+
+  <aside class="z-50 flex h-full w-14 flex-col items-center border-r border-slate-200 bg-lightglass dark:border-slate-700 dark:bg-darkglass backdrop-blur-md shrink-0 transition-colors duration-300">
+    <div class="flex h-16 w-full items-center justify-center border-b border-slate-200 dark:border-slate-700">
+      <button class="text-slate-500 hover:text-sky-600 dark:text-slate-400 dark:hover:text-white transition-colors">
+        <iconify-icon icon="mdi:menu" width="24"></iconify-icon>
+      </button>
+    </div>
+
+    <nav class="flex flex-col items-center gap-4 py-6 w-full">
+      <button class="flex h-10 w-10 items-center justify-center rounded-lg bg-sky-100 text-sky-600 border border-sky-200 dark:bg-sky-500/20 dark:text-sky-400 dark:border-sky-500/30 shadow-sm">
+        <iconify-icon icon="mdi:layers" width="22"></iconify-icon>
+      </button>
+      <button class="flex h-10 w-10 items-center justify-center rounded-lg text-slate-500 hover:bg-slate-200 hover:text-slate-800 dark:text-slate-400 dark:hover:bg-white/10 dark:hover:text-slate-200 transition-colors">
+        <iconify-icon icon="mdi:weather-partly-cloudy" width="22"></iconify-icon>
+      </button>
+      <button class="flex h-10 w-10 items-center justify-center rounded-lg text-slate-500 hover:bg-slate-200 hover:text-slate-800 dark:text-slate-400 dark:hover:bg-white/10 dark:hover:text-slate-200 transition-colors">
+        <iconify-icon icon="mdi:map-marker-path" width="22"></iconify-icon>
+      </button>
+      <button class="flex h-10 w-10 items-center justify-center rounded-lg text-slate-500 hover:bg-slate-200 hover:text-slate-800 dark:text-slate-400 dark:hover:bg-white/10 dark:hover:text-slate-200 transition-colors">
+        <iconify-icon icon="mdi:ruler" width="22"></iconify-icon>
+      </button>
+    </nav>
+
+    <div class="mt-auto flex flex-col items-center gap-4 py-6 w-full">
+      <button class="flex h-10 w-10 items-center justify-center rounded-lg text-slate-500 hover:bg-slate-200 hover:text-slate-800 dark:text-slate-400 dark:hover:bg-white/10 dark:hover:text-slate-200 transition-colors">
+        <iconify-icon icon="mdi:flag-variant-outline" width="22"></iconify-icon>
+      </button>
+      <button class="flex h-10 w-10 items-center justify-center rounded-lg text-slate-500 hover:bg-slate-200 hover:text-slate-800 dark:text-slate-400 dark:hover:bg-white/10 dark:hover:text-slate-200 transition-colors">
+        <iconify-icon icon="mdi:cog" width="22"></iconify-icon>
+      </button>
+    </div>
+  </aside>
+
+  <div class="relative flex h-full flex-1 flex-col overflow-hidden">
+    
+    <header class="absolute top-0 left-0 right-0 z-40 flex h-16 items-center justify-between border-b border-slate-200 bg-lightglass dark:border-slate-700 dark:bg-darkglass backdrop-blur-md px-6 transition-colors duration-300">
+      <div class="flex flex-col justify-center">
+        <h1 class="text-sm md:text-base font-semibold tracking-wide text-slate-800 dark:text-slate-100">
+          CPTEC/INPE - AMS WORKSTATION (v2.1)
+        </h1>
+        <p class="text-xs md:text-sm text-slate-500 dark:text-slate-400">
+          WRF-SAMS Ensemble
+        </p>
+      </div>
+
+      <div class="flex items-center gap-4 md:gap-6">
+        <button id="theme-toggle" class="flex items-center justify-center h-9 w-9 rounded-full bg-slate-200 text-slate-600 hover:bg-slate-300 dark:bg-slate-800 dark:border dark:border-slate-600 dark:text-yellow-400 dark:hover:bg-slate-700 transition-colors shadow-sm">
+          <iconify-icon id="theme-icon" icon="mdi:weather-sunny" width="20"></iconify-icon>
+        </button>
+
+        <button class="text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white transition-colors relative">
+          <iconify-icon icon="mdi:bell-outline" width="24"></iconify-icon>
+          <span class="absolute -top-1 -right-1 h-2.5 w-2.5 rounded-full bg-red-500 border-2 border-white dark:border-darkbg"></span>
+        </button>
+
+        <div class="flex items-center gap-2">
+          <div class="flex h-8 px-3 items-center justify-center rounded-full bg-[#004797] border border-blue-400/30 text-white font-bold text-xs shadow-inner">
+            CPTEC
+          </div>
+          <div class="flex h-8 px-2 items-center justify-center rounded-full bg-orange-600 border border-orange-400/30 text-white font-bold text-[10px] shadow-inner">
+            <iconify-icon icon="mdi:weather-hurricane" width="16" class="mr-1"></iconify-icon> OIPA
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="relative h-full w-full pt-16 bg-slate-200 dark:bg-darkmap transition-colors duration-300">
+      
+      <div class="absolute inset-0 bg-grid-pattern opacity-40 dark:opacity-30 pointer-events-none"></div>
+      <div class="absolute inset-0 flex flex-col items-center justify-center text-slate-400 dark:text-slate-500">
+        <iconify-icon icon="mdi:map-outline" width="80" class="mb-4 opacity-50"></iconify-icon>
+        <h2 class="text-xl font-medium tracking-wide text-slate-500 dark:text-slate-400">Placeholder do Mapa</h2>
+        <p class="text-sm text-slate-400 dark:text-slate-500 mt-2">Área de renderização (Leaflet/OpenLayers/Mapbox)</p>
+      </div>
+
+      <div class="absolute left-4 top-20 z-30 flex w-[17rem] md:w-72 flex-col rounded-xl border border-slate-200 bg-lightglass dark:border-slate-700 dark:bg-darkglass backdrop-blur-md shadow-2xl transition-colors duration-300">
+        <div class="flex h-11 items-center justify-between border-b border-slate-200 dark:border-slate-700 px-4">
+          <span class="text-sm font-semibold text-slate-700 dark:text-slate-200">Layer Manager</span>
+          <button class="text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors">
+            <iconify-icon icon="mdi:close" width="18"></iconify-icon>
+          </button>
+        </div>
+
+        <div class="flex flex-col gap-4 p-4 max-h-[calc(100vh-16rem)] overflow-y-auto panel-scroll">
+          
+          <div class="flex flex-col gap-2">
+            <button class="flex h-8 w-full items-center justify-between rounded bg-slate-100 border border-slate-200 px-3 text-[13px] text-slate-700 hover:bg-slate-200 dark:bg-slate-700/50 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-700 transition-colors shadow-sm">
+              <span>Atmosfera</span>
+              <iconify-icon icon="mdi:chevron-down" width="18"></iconify-icon>
+            </button>
+            <div class="flex gap-2">
+              <button class="flex h-8 flex-1 items-center justify-between rounded bg-slate-100 border border-slate-200 px-3 text-[13px] text-slate-600 hover:bg-slate-200 dark:bg-slate-700/50 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-700 transition-colors shadow-sm">
+                <span>Superfície</span>
+              </button>
+              <button class="flex h-8 w-[4.5rem] items-center justify-center rounded bg-slate-100 border border-slate-200 text-[13px] text-slate-700 hover:bg-slate-200 dark:bg-slate-700/50 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-700 transition-colors shadow-sm">
+                A4Bh <iconify-icon icon="mdi:chevron-down" class="ml-1"></iconify-icon>
+              </button>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-1 mt-1">
+            
+            <div class="flex h-8 items-center justify-between rounded px-2 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors">
+              <label class="flex items-center gap-3 cursor-pointer">
+                <input type="checkbox" checked class="h-3.5 w-3.5 rounded border-slate-300 bg-slate-100 text-sky-500 focus:ring-sky-500 dark:border-slate-500 dark:bg-slate-600">
+                <span class="text-[13px] text-slate-700 dark:text-slate-200">Temperature</span>
+              </label>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" class="sr-only peer" checked>
+                <div class="w-8 h-4 bg-slate-300 dark:bg-slate-600 rounded-full peer peer-checked:after:translate-x-4 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-sky-500 shadow-sm border dark:border-slate-500"></div>
+              </label>
+            </div>
+
+            <div class="flex h-8 items-center justify-between rounded px-2 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors">
+              <label class="flex items-center gap-3 cursor-pointer">
+                <input type="checkbox" class="h-3.5 w-3.5 rounded border-slate-300 bg-slate-100 text-sky-500 focus:ring-sky-500 dark:border-slate-500 dark:bg-slate-600">
+                <span class="text-[13px] text-slate-700 dark:text-slate-200">Temperature, Humidity</span>
+              </label>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" class="sr-only peer">
+                <div class="w-8 h-4 bg-slate-300 dark:bg-slate-600 rounded-full peer peer-checked:after:translate-x-4 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-sky-500 shadow-sm border dark:border-slate-500"></div>
+              </label>
+            </div>
+
+            <div class="flex h-8 items-center justify-between rounded px-2 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors">
+              <label class="flex items-center gap-3 cursor-pointer">
+                <input type="checkbox" class="h-3.5 w-3.5 rounded border-slate-300 bg-slate-100 text-sky-500 dark:border-slate-500 dark:bg-slate-600">
+                <span class="text-[13px] text-slate-700 dark:text-slate-200">Geopotential</span>
+              </label>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" class="sr-only peer" checked>
+                <div class="w-8 h-4 bg-slate-300 dark:bg-slate-600 rounded-full peer peer-checked:after:translate-x-4 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-indigo-400 shadow-sm border dark:border-slate-500"></div>
+              </label>
+            </div>
+
+            <div class="flex h-8 items-center justify-between rounded px-2 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors">
+              <label class="flex items-center gap-3 cursor-pointer">
+                <input type="checkbox" class="h-3.5 w-3.5 rounded border-slate-300 bg-slate-100 text-sky-500 dark:border-slate-500 dark:bg-slate-600">
+                <span class="text-[13px] text-slate-700 dark:text-slate-200">Geopotential Height</span>
+              </label>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" class="sr-only peer">
+                <div class="w-8 h-4 bg-slate-300 dark:bg-slate-600 rounded-full peer peer-checked:after:translate-x-4 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-indigo-400 shadow-sm border dark:border-slate-500"></div>
+              </label>
+            </div>
+
+            <div class="flex h-8 items-center justify-between rounded px-2 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors">
+              <label class="flex items-center gap-3 cursor-pointer">
+                <input type="checkbox" checked class="h-3.5 w-3.5 rounded border-slate-300 bg-slate-100 text-sky-500 dark:border-slate-500 dark:bg-slate-600">
+                <span class="text-[13px] text-slate-700 dark:text-slate-200">Humidity</span>
+              </label>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" class="sr-only peer" checked>
+                <div class="w-8 h-4 bg-slate-300 dark:bg-slate-600 rounded-full peer peer-checked:after:translate-x-4 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-slate-500 shadow-sm border dark:border-slate-500"></div>
+              </label>
+            </div>
+
+            <div class="flex h-8 items-center justify-between rounded px-2 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors">
+              <label class="flex items-center gap-3 cursor-pointer">
+                <input type="checkbox" class="h-3.5 w-3.5 rounded border-slate-300 bg-slate-100 text-sky-500 dark:border-slate-500 dark:bg-slate-600">
+                <span class="text-[13px] text-slate-700 dark:text-slate-200">Vorticity</span>
+              </label>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" class="sr-only peer">
+                <div class="w-8 h-4 bg-slate-300 dark:bg-slate-600 rounded-full peer peer-checked:after:translate-x-4 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-slate-500 shadow-sm border dark:border-slate-500"></div>
+              </label>
+            </div>
+
+          </div>
+
+          <div class="mt-2 flex flex-col gap-2">
+            <button class="flex h-9 w-full items-center justify-between rounded bg-slate-50 border border-slate-200 px-3 text-[13px] text-slate-700 hover:bg-slate-100 dark:bg-slate-700/50 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-700 transition-colors">
+              <span>Atmosfera</span>
+              <iconify-icon icon="mdi:chevron-down"></iconify-icon>
+            </button>
+            <button class="flex h-9 w-full items-center justify-between rounded bg-slate-50 border border-slate-200 px-3 text-[13px] text-slate-700 hover:bg-slate-100 dark:bg-slate-700/50 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-700 transition-colors">
+              <span>Superfície</span>
+              <iconify-icon icon="mdi:chevron-down"></iconify-icon>
+            </button>
+            <button class="flex h-9 w-full items-center justify-between rounded bg-slate-50 border border-slate-200 px-3 text-[13px] text-slate-700 hover:bg-slate-100 dark:bg-slate-700/50 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-700 transition-colors">
+              <span>Oceano</span>
+              <iconify-icon icon="mdi:chevron-down"></iconify-icon>
+            </button>
+          </div>
+          
+        </div>
+      </div>
+
+      <div class="absolute left-[20rem] top-20 z-30 flex flex-col gap-0.5 rounded-lg border border-slate-200 bg-white/80 dark:border-slate-600 dark:bg-darkglass backdrop-blur-md p-1 shadow-lg">
+        <button class="flex h-7 w-7 items-center justify-center rounded text-slate-600 hover:bg-slate-200 dark:text-slate-300 dark:hover:bg-white/10 transition-colors">
+          <iconify-icon icon="mdi:plus" width="18"></iconify-icon>
+        </button>
+        <button class="flex h-7 w-7 items-center justify-center rounded text-slate-600 hover:bg-slate-200 dark:text-slate-300 dark:hover:bg-white/10 transition-colors">
+          <iconify-icon icon="mdi:minus" width="18"></iconify-icon>
+        </button>
+        <div class="my-0.5 h-px w-full bg-slate-300 dark:bg-slate-600"></div>
+        <button class="flex h-7 w-7 items-center justify-center rounded text-slate-600 hover:bg-slate-200 dark:text-slate-300 dark:hover:bg-white/10 transition-colors">
+          <iconify-icon icon="mdi:crosshairs-gps" width="16"></iconify-icon>
+        </button>
+      </div>
+
+      <div class="absolute right-[20.5rem] top-20 z-30 flex gap-2">
+        <button class="flex h-8 w-8 items-center justify-center rounded border border-slate-200 bg-white/80 text-slate-600 hover:bg-slate-100 dark:border-slate-600 dark:bg-darkglass dark:text-slate-300 dark:hover:bg-white/10 backdrop-blur-md shadow-lg transition-colors">
+          <iconify-icon icon="mdi:magnify" width="18"></iconify-icon>
+        </button>
+        <button class="flex h-8 items-center gap-1.5 rounded border border-slate-200 bg-white/80 px-3 text-[13px] font-medium text-slate-700 hover:bg-slate-100 dark:border-slate-600 dark:bg-darkglass dark:text-slate-200 dark:hover:bg-white/10 backdrop-blur-md shadow-lg transition-colors">
+          <iconify-icon icon="mdi:crosshairs" width="16"></iconify-icon>
+          Measurements
+        </button>
+        <button class="flex h-8 w-8 items-center justify-center rounded border border-slate-200 bg-white/80 text-slate-600 hover:bg-slate-100 dark:border-slate-600 dark:bg-darkglass dark:text-slate-300 dark:hover:bg-white/10 backdrop-blur-md shadow-lg transition-colors">
+          <iconify-icon icon="mdi:layers-outline" width="18"></iconify-icon>
+        </button>
+      </div>
+
+      <div class="absolute right-[20.5rem] top-[8.5rem] z-30 flex items-start gap-3">
+        <div class="flex flex-col gap-2 mt-0.5">
+          <div class="rounded border border-slate-200 bg-white/90 px-2.5 py-1 text-xs font-semibold text-slate-700 shadow-sm dark:border-slate-600 dark:bg-darkglass dark:text-slate-200 dark:shadow">
+            Wind: 35 kt
+          </div>
+          <div class="rounded border border-slate-200 bg-white/90 px-2.5 py-1 text-xs font-semibold text-slate-700 shadow-sm dark:border-slate-600 dark:bg-darkglass dark:text-slate-200 dark:shadow">
+            SST: 26°C
+          </div>
+          <div class="rounded border border-slate-200 bg-white/90 px-2.5 py-1 text-xs font-semibold text-slate-700 shadow-sm dark:border-slate-600 dark:bg-darkglass dark:text-slate-200 dark:shadow">
+            CAPET: 1200 J/kg
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-0.5 rounded-lg border border-slate-200 bg-white/80 p-1 shadow-lg dark:border-slate-600 dark:bg-darkglass backdrop-blur-md">
+          <button class="flex h-7 w-7 items-center justify-center rounded text-slate-600 hover:bg-slate-200 dark:text-slate-300 dark:hover:bg-white/10 transition-colors">
+            <iconify-icon icon="mdi:compass-outline" width="18"></iconify-icon>
+          </button>
+          <button class="flex h-7 w-7 items-center justify-center rounded text-slate-600 hover:bg-slate-200 dark:text-slate-300 dark:hover:bg-white/10 transition-colors">
+            <iconify-icon icon="mdi:ruler" width="18"></iconify-icon>
+          </button>
+          <button class="flex h-7 w-7 items-center justify-center rounded text-slate-600 hover:bg-slate-200 dark:text-slate-300 dark:hover:bg-white/10 transition-colors">
+            <iconify-icon icon="mdi:magnify-plus-outline" width="18"></iconify-icon>
+          </button>
+        </div>
+      </div>
+
+      <div class="absolute right-[20.5rem] bottom-[12.5rem] z-30 flex flex-col items-center rounded-lg border border-slate-200 bg-white/90 p-2 shadow-lg dark:border-slate-600 dark:bg-darkglass backdrop-blur-md">
+        <span class="mb-1 text-[10px] font-bold text-slate-700 dark:text-slate-200 drop-shadow-md">+50</span>
+        <div class="h-44 w-3 rounded-full border border-slate-300 dark:border-white/20 scale-gradient shadow-sm"></div>
+        <span class="mt-1 text-[10px] font-bold text-slate-700 dark:text-slate-200 drop-shadow-md">255</span>
+      </div>
+
+      <div class="absolute right-[20.5rem] bottom-[7.5rem] z-30 w-48 rounded border border-slate-200 bg-white/90 p-2 shadow-lg dark:border-slate-600 dark:bg-darkglass backdrop-blur-md">
+        <h4 class="mb-1.5 text-[9px] font-bold tracking-wider text-slate-500 dark:text-slate-400 uppercase">
+          Membros do Ensemble
+        </h4>
+        <div class="h-2 w-full rounded-full ensemble-gradient"></div>
+        <div class="mt-1 flex justify-between text-[9px] font-medium text-slate-500 dark:text-slate-400">
+          <span>0</span>
+          <span>120</span>
+          <span>300</span>
+          <span>500</span>
+          <span>700</span>
+          <span>1000</span>
+        </div>
+      </div>
+
+      <footer class="absolute bottom-4 left-[20rem] right-[20.5rem] z-30 rounded-xl border border-slate-200 bg-lightglass p-3 shadow-2xl flex flex-col dark:border-slate-700 dark:bg-darkglass backdrop-blur-md transition-colors duration-300">
+        
+        <div class="mb-2 flex items-center justify-center">
+          <span class="text-[11px] font-medium text-slate-600 dark:text-slate-300 tracking-wide uppercase">
+            Horário da Previsão: <strong class="text-sky-600 dark:text-sky-400">12z UTC - 28 Out 2023 / +48h</strong>
+          </span>
+        </div>
+
+        <div class="flex gap-4">
+          
+          <div class="flex items-center gap-1 shrink-0 h-[1.125rem]">
+            <button class="flex h-7 w-7 items-center justify-center rounded text-slate-500 hover:bg-slate-200 hover:text-slate-800 dark:text-slate-300 dark:hover:bg-white/10 transition-colors">
+              <iconify-icon icon="mdi:skip-previous" width="18"></iconify-icon>
+            </button>
+            <button class="flex h-9 w-9 items-center justify-center rounded text-sky-600 hover:bg-sky-100 dark:text-sky-400 dark:hover:bg-slate-700/50 transition-colors">
+              <iconify-icon icon="mdi:play" width="24"></iconify-icon>
+            </button>
+            <button class="flex h-7 w-7 items-center justify-center rounded text-slate-500 hover:bg-slate-200 hover:text-slate-800 dark:text-slate-300 dark:hover:bg-white/10 transition-colors">
+              <iconify-icon icon="mdi:skip-next" width="18"></iconify-icon>
+            </button>
+          </div>
+
+          <div class="flex-1 flex flex-col pt-[2px]" data-timeline-slider>
+            
+            <div class="relative h-4 w-full flex items-center">
+              <input type="range" min="0" max="100" value="25" class="absolute inset-0 w-full z-20 opacity-0 cursor-pointer" data-timeline-input>
+              <div class="w-full h-1.5 bg-slate-300 dark:bg-slate-600 rounded-full relative">
+                <div class="absolute left-0 top-0 h-full rounded-full bg-sky-500" style="width: 25%;" data-timeline-fill></div>
+                <div class="absolute top-1/2 -mt-2 h-4 w-4 rounded-full border-2 border-sky-500 bg-white shadow-sm dark:border-sky-400" style="left: 25%; transform: translateX(-50%);" data-timeline-thumb></div>
+              </div>
+            </div>
+
+            <div class="mt-1 flex w-full justify-between items-start text-[9px] font-medium text-slate-500 dark:text-slate-400">
+              
+              <div class="flex flex-col items-center"><div class="h-3 w-[1.5px] bg-slate-400 dark:bg-slate-500 mb-0.5"></div><span class="leading-none">12z</span></div>
+              <div class="flex flex-col items-center"><div class="h-2 w-[1.5px] bg-slate-400 dark:bg-slate-500"></div></div>
+              <div class="flex flex-col items-center"><div class="h-2 w-[1.5px] bg-slate-400 dark:bg-slate-500"></div></div>
+              <div class="flex flex-col items-center"><div class="h-2 w-[1.5px] bg-slate-400 dark:bg-slate-500"></div></div>
+              <div class="flex flex-col items-center"><div class="h-2 w-[1.5px] bg-slate-400 dark:bg-slate-500"></div></div>
+              
+              <div class="flex flex-col items-center"><div class="h-3 w-[1.5px] bg-slate-400 dark:bg-slate-500 mb-0.5"></div><span class="leading-none">15z</span></div>
+              <div class="flex flex-col items-center"><div class="h-2 w-[1.5px] bg-slate-400 dark:bg-slate-500"></div></div>
+              <div class="flex flex-col items-center"><div class="h-2 w-[1.5px] bg-slate-400 dark:bg-slate-500"></div></div>
+              <div class="flex flex-col items-center"><div class="h-2 w-[1.5px] bg-slate-400 dark:bg-slate-500"></div></div>
+              <div class="flex flex-col items-center"><div class="h-2 w-[1.5px] bg-slate-400 dark:bg-slate-500"></div></div>
+              
+              <div class="flex flex-col items-center"><div class="h-3 w-[1.5px] bg-slate-400 dark:bg-slate-500 mb-0.5"></div><span class="leading-none">18z</span></div>
+              <div class="flex flex-col items-center"><div class="h-2 w-[1.5px] bg-slate-400 dark:bg-slate-500"></div></div>
+              <div class="flex flex-col items-center"><div class="h-2 w-[1.5px] bg-slate-400 dark:bg-slate-500"></div></div>
+              <div class="flex flex-col items-center"><div class="h-2 w-[1.5px] bg-slate-400 dark:bg-slate-500"></div></div>
+              <div class="flex flex-col items-center"><div class="h-2 w-[1.5px] bg-slate-400 dark:bg-slate-500"></div></div>
+              
+              <div class="flex flex-col items-center"><div class="h-3 w-[1.5px] bg-slate-400 dark:bg-slate-500 mb-0.5"></div><span class="leading-none">21z</span></div>
+              <div class="flex flex-col items-center"><div class="h-2 w-[1.5px] bg-slate-400 dark:bg-slate-500"></div></div>
+              <div class="flex flex-col items-center"><div class="h-2 w-[1.5px] bg-slate-400 dark:bg-slate-500"></div></div>
+              <div class="flex flex-col items-center"><div class="h-2 w-[1.5px] bg-slate-400 dark:bg-slate-500"></div></div>
+              <div class="flex flex-col items-center"><div class="h-2 w-[1.5px] bg-slate-400 dark:bg-slate-500"></div></div>
+              
+              <div class="flex flex-col items-center"><div class="h-3 w-[1.5px] bg-slate-400 dark:bg-slate-500 mb-0.5"></div><span class="leading-none">00z</span></div>
+              <div class="flex flex-col items-center"><div class="h-2 w-[1.5px] bg-slate-400 dark:bg-slate-500"></div></div>
+              <div class="flex flex-col items-center"><div class="h-2 w-[1.5px] bg-slate-400 dark:bg-slate-500"></div></div>
+              <div class="flex flex-col items-center"><div class="h-2 w-[1.5px] bg-slate-400 dark:bg-slate-500"></div></div>
+              <div class="flex flex-col items-center"><div class="h-2 w-[1.5px] bg-slate-400 dark:bg-slate-500"></div></div>
+              
+              <div class="flex flex-col items-center"><div class="h-3 w-[1.5px] bg-slate-400 dark:bg-slate-500 mb-0.5"></div><span class="leading-none">03z</span></div>
+              <div class="flex flex-col items-center"><div class="h-2 w-[1.5px] bg-slate-400 dark:bg-slate-500"></div></div>
+              <div class="flex flex-col items-center"><div class="h-2 w-[1.5px] bg-slate-400 dark:bg-slate-500"></div></div>
+              <div class="flex flex-col items-center"><div class="h-2 w-[1.5px] bg-slate-400 dark:bg-slate-500"></div></div>
+              <div class="flex flex-col items-center"><div class="h-2 w-[1.5px] bg-slate-400 dark:bg-slate-500"></div></div>
+              
+              <div class="flex flex-col items-center"><div class="h-3 w-[1.5px] bg-slate-400 dark:bg-slate-500 mb-0.5"></div><span class="leading-none">06z</span></div>
+              <div class="flex flex-col items-center"><div class="h-2 w-[1.5px] bg-slate-400 dark:bg-slate-500"></div></div>
+              <div class="flex flex-col items-center"><div class="h-2 w-[1.5px] bg-slate-400 dark:bg-slate-500"></div></div>
+              <div class="flex flex-col items-center"><div class="h-2 w-[1.5px] bg-slate-400 dark:bg-slate-500"></div></div>
+              <div class="flex flex-col items-center"><div class="h-2 w-[1.5px] bg-slate-400 dark:bg-slate-500"></div></div>
+              
+              <div class="flex flex-col items-center"><div class="h-3 w-[1.5px] bg-slate-400 dark:bg-slate-500 mb-0.5"></div><span class="leading-none">09z</span></div>
+              
+            </div>
+
+          </div>
+
+          <div class="flex items-center shrink-0 h-[1.125rem]">
+            <button class="flex h-7 w-7 items-center justify-center rounded text-slate-500 hover:bg-slate-200 hover:text-slate-800 dark:text-slate-300 dark:hover:bg-white/10 transition-colors">
+              <iconify-icon icon="solar:maximize-bold" width="16"></iconify-icon>
+            </button>
+          </div>
+        </div>
+      </footer>
+
+      <aside class="absolute bottom-4 right-4 top-20 z-30 flex w-[19rem] flex-col rounded-xl border border-slate-200 bg-lightglass shadow-2xl overflow-hidden dark:border-slate-700 dark:bg-darkglass backdrop-blur-md transition-colors duration-300">
+        
+        <div class="flex flex-col border-b border-slate-200 dark:border-slate-700 p-4">
+          <div class="mb-3 flex items-center justify-between">
+            <h3 class="text-xs font-bold tracking-wide text-slate-700 dark:text-slate-200 uppercase">
+              Sondagem SKEW-T Log-P
+            </h3>
+            <button class="text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors">
+              <iconify-icon icon="mdi:dots-vertical" width="18"></iconify-icon>
+            </button>
+          </div>
+          
+          <div class="relative flex h-52 w-full flex-col items-center justify-center rounded-lg border border-slate-200 bg-white/50 bg-grid-pattern dark:border-slate-600 dark:bg-slate-800/80 transition-colors duration-300">
+            <iconify-icon icon="mdi:chart-line-variant" width="42" class="text-slate-400 dark:text-slate-500 mb-2"></iconify-icon>
+            <p class="text-xs font-semibold text-slate-500 dark:text-slate-400">Gráfico Skew-T</p>
+            <span class="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5">(São Paulo - SBGR)</span>
+          </div>
+        </div>
+
+        <div class="flex flex-1 flex-col p-4 overflow-y-auto panel-scroll">
+          
+          <div class="mb-3 flex flex-col gap-2">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xs font-bold tracking-wide text-slate-700 dark:text-slate-200 uppercase">
+                Meteograma Interativo
+              </h3>
+              <button class="flex h-6 w-6 items-center justify-center rounded border border-slate-200 bg-slate-50 text-slate-500 hover:bg-slate-200 dark:border-slate-600 dark:bg-slate-700/50 dark:text-slate-300 dark:hover:bg-slate-700 transition-colors">
+                <iconify-icon icon="mdi:cog" width="14"></iconify-icon>
+              </button>
+            </div>
+            
+            <div class="flex items-center justify-between">
+              <p class="text-[11px] font-medium text-slate-500 dark:text-slate-400">Curitiba, Paraná</p>
+              <button class="flex h-6 items-center gap-1 rounded border border-slate-200 bg-slate-50 px-2 text-[10px] font-semibold text-slate-600 hover:bg-slate-200 dark:border-slate-600 dark:bg-slate-700/50 dark:text-slate-300 dark:hover:bg-slate-700 transition-colors">
+                Next 5 dias
+                <iconify-icon icon="mdi:chevron-down"></iconify-icon>
+              </button>
+            </div>
+          </div>
+
+          <div class="relative flex flex-1 w-full min-h-[180px] flex-col items-center justify-center rounded-lg border border-slate-200 bg-white/50 bg-grid-pattern dark:border-slate-600 dark:bg-slate-800/80 transition-colors duration-300">
+            <iconify-icon icon="mdi:chart-areaspline" width="42" class="text-slate-400 dark:text-slate-500 mb-2"></iconify-icon>
+            <p class="text-xs font-semibold text-slate-500 dark:text-slate-400">Meteograma</p>
+            <span class="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5">Série Temporal</span>
+          </div>
+
+        </div>
+      </aside>
+
+    </main>
+  </div>
+
+  <script>
+    // --- Lógica do Slider ---
+    const timelineSlider = document.querySelector('[data-timeline-slider]');
+
+    if (timelineSlider) {
+      const timelineInput = timelineSlider.querySelector('[data-timeline-input]');
+      const timelineFill = timelineSlider.querySelector('[data-timeline-fill]');
+      const timelineThumb = timelineSlider.querySelector('[data-timeline-thumb]');
+
+      const syncTimeline = () => {
+        const min = Number(timelineInput.min || 0);
+        const max = Number(timelineInput.max || 100);
+        const value = Number(timelineInput.value || 0);
+        const percent = ((value - min) / (max - min)) * 100;
+
+        timelineFill.style.width = `${percent}%`;
+        timelineThumb.style.left = `${percent}%`;
+      };
+
+      timelineInput.addEventListener('input', syncTimeline);
+      syncTimeline();
+    }
+
+    // --- Lógica do Modo Dark/Light ---
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+    const htmlEl = document.documentElement;
+
+    themeToggleBtn.addEventListener('click', () => {
+      const isDark = htmlEl.classList.contains('dark');
+      
+      if (isDark) {
+        htmlEl.classList.remove('dark');
+        themeIcon.setAttribute('icon', 'mdi:weather-night');
+      } else {
+        htmlEl.classList.add('dark');
+        themeIcon.setAttribute('icon', 'mdi:weather-sunny');
+      }
+    });
+  </script>
+</body>
+</html>
