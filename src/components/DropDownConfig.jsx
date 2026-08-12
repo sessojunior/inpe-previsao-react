@@ -102,27 +102,44 @@ export default function DropDownConfig({
 
   const handleCitySelected = useCallback(
     (id) => {
-      resetTimer(model.forecastTime);
+      const product = model.options.products.find(
+        (product) => product.value === frame.product
+      );
+      const forecastTime = product?.forecastTime ?? model.forecastTime;
+      resetTimer(forecastTime);
       updateFrame(frame.id, {
         isPlaying: false,
         city: id,
         region: null,
-        forecastTime: model.forecastTime,
+        forecastTime,
       });
       updateLocalConfig({
         ...config,
         framesWithImagesLoaded: [],
       });
     },
-    [config, frame.id, model.forecastTime, resetTimer, updateFrame, updateLocalConfig]
+    [
+      config,
+      frame.id,
+      frame.product,
+      model.forecastTime,
+      model.options.products,
+      resetTimer,
+      updateFrame,
+      updateLocalConfig,
+    ]
   );
 
   const handleChangeRegion = useCallback(
     (e) => {
-      resetTimer(model.forecastTime);
+      const product = model.options.products.find(
+        (product) => product.value === frame.product
+      );
+      const forecastTime = product?.forecastTime ?? model.forecastTime;
+      resetTimer(forecastTime);
       updateFrame(frame.id, {
         region: e.target.value,
-        forecastTime: model.forecastTime,
+        forecastTime,
         isPlaying: false,
         city: null,
       });
@@ -131,7 +148,16 @@ export default function DropDownConfig({
         framesWithImagesLoaded: [],
       });
     },
-    [config, frame.id, model.forecastTime, resetTimer, updateFrame, updateLocalConfig]
+    [
+      config,
+      frame.id,
+      frame.product,
+      model.forecastTime,
+      model.options.products,
+      resetTimer,
+      updateFrame,
+      updateLocalConfig,
+    ]
   );
 
   const handleChangeGroup = useCallback(
@@ -191,10 +217,14 @@ export default function DropDownConfig({
 
   const handleChangeInit = useCallback(
     (e) => {
-      resetTimer(model.forecastTime);
+      const product = model.options.products.find(
+        (product) => product.value === frame.product
+      );
+      const forecastTime = product?.forecastTime ?? model.forecastTime;
+      resetTimer(forecastTime);
       updateFrame(frame.id, {
         init: e.target.value,
-        forecastTime: model.forecastTime,
+        forecastTime,
         isPlaying: false,
       });
       updateLocalConfig({
@@ -202,7 +232,16 @@ export default function DropDownConfig({
         framesWithImagesLoaded: [],
       });
     },
-    [config, frame.id, model.forecastTime, resetTimer, updateFrame, updateLocalConfig]
+    [
+      config,
+      frame.id,
+      frame.product,
+      model.forecastTime,
+      model.options.products,
+      resetTimer,
+      updateFrame,
+      updateLocalConfig,
+    ]
   );
 
   return (
