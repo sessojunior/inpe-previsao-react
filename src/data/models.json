@@ -115,7 +115,7 @@
           "periodStart": "024",
           "periodEnd": "168",
           "forecastTime": "024",
-          "periodHours": 12
+          "periodHours": 24
         },
         {
           "label": null,
@@ -596,7 +596,11 @@
             "coe",
             "nde",
             "nte"
-          ]
+          ],
+          "periodStart": "024",
+          "periodEnd": "168",
+          "forecastTime": "024",
+          "periodHours": 24
         },
         {
           "label": null,
@@ -1016,7 +1020,11 @@
             "coe",
             "nde",
             "nte"
-          ]
+          ],
+          "periodStart": "024",
+          "periodEnd": "168",
+          "forecastTime": "024",
+          "periodHours": 24
         },
         {
           "label": null,
@@ -1436,7 +1444,11 @@
             "coe",
             "nde",
             "nte"
-          ]
+          ],
+          "periodStart": "024",
+          "periodEnd": "240",
+          "forecastTime": "024",
+          "periodHours": 24
         },
         {
           "label": null,
@@ -1869,7 +1881,11 @@
             "coe",
             "nde",
             "nte"
-          ]
+          ],
+          "periodStart": "024",
+          "periodEnd": "240",
+          "forecastTime": "024",
+          "periodHours": 24
         },
         {
           "label": null,
@@ -2441,7 +2457,11 @@
             "coe",
             "nde",
             "nte"
-          ]
+          ],
+          "periodStart": "024",
+          "periodEnd": "168",
+          "forecastTime": "024",
+          "periodHours": 24
         },
         {
           "label": null,
