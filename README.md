@@ -150,6 +150,8 @@ Exemplo:
     - **value** - _(string)_. Valor de slug do produto.
     - **group** - _(string)_. Valor de slug do grupo.
     - **region** - _(string)_. Valor de slug da região.
+- **compatibility** - _(Object, opcional)_. Regras explícitas para preservar um produto quando o modelo é trocado e o mesmo **value** não existe no modelo destino.
+  - **productFallbacks** - _(Object, opcional)_. Mapa no modelo destino no formato `modeloOrigem -> produtoOrigem -> produtoDestino`. Só deve ser usado quando os dois produtos forem semanticamente equivalentes; grupos ou labels iguais não são suficientes para criar um mapeamento.
 - **options** - _(Object)_. Valores possíveis do modelo que o usuário pode selecionar.
   - **groups** - _(array de objetos: Object[])_. Grupos do modelo que podem ser selecionados pelo usuário. Aqui ficam agrupados os nomes (value) dos produtos que são parecidos. Exemplo: Grupo _ageop_ para os produtos _"ageop_250"_, _"ageop_500"_, _"ageop_700"_ etc.
     - **label** - _(string)_. Nome do grupo que irá aparecer para o usuário escolher.
@@ -159,6 +161,8 @@ Exemplo:
     - **value** - _(string)_. Valor de slug do produto. Exemplos: "prec_pnmm", "aprec", "ageop_500", "ageop_850", "lapserate", "cis_vento_1000", "cis_vento_3000".
     - **group** - _(string)_. Valor de slug do grupo que o produto pertence. Exemplo: "prec", "cis_vento", "lapserate", "ageop".
     - **regions** - (array de strings: string[]). Os valores possíveis são os que estão nos parâmetros **value** do arquivo JSON **regions.json**. Exemplo: _["ams", "bra", "nte"]_. No caso, aqui são somente os valores de região que este produto possui. Pode ser _null_ em caso de não ser seleção por região e sim um campo de texto com seleção por cidade.
+    - **defaultRegion** - _(string, opcional)_. Região usada como fallback quando a região atualmente selecionada não existe no produto. Deve ser uma região presente em **regions**. Se não for informada, a aplicação usa a região padrão do modelo e, por último, a primeira região válida do produto.
+    - **defaultCity** - _(number ou string, opcional)_. Cidade usada como fallback quando o produto não possui **regions** e não existe uma cidade selecionada. Deve ser um código presente em **src/data/cities.json**.
     - **forecastTime** - _(null)_. Opcional, deve ser fornecido como _null_ caso não tenha o forecastTime, como é o caso dos meteogramas.
 
 Exemplo de arquivo JSON:
@@ -647,15 +651,23 @@ Exemplos válidos:
 /inpe-previsao-react/bam/aprec/ams/
 /inpe-previsao-react/bam/aprec/ams/2026-04-02-00z
 /inpe-previsao-react/bam/prec_acum/ams/
+/inpe-previsao-react/bam/prec_3h/glo/
 /inpe-previsao-react/brams/aprec/ams/
-/inpe-previsao-react/bam/meteograms/city-3550308/2026-04-02-00z
+/inpe-previsao-react/bam/meteograms/city-3409/2026-04-02-00z
 ```
 
 Observações importantes sobre a rota:
 
 - Em casos como `aprec`, o valor do grupo e o valor do produto coincidem, então a URL curta desejada continua natural.
 - Em grupos com múltiplos produtos, como `prec` ou `t`, a rota usa o valor do produto, por exemplo `prec_acum`, `prec_3h`, `tmin_2m` ou `tmax_2m`.
+- O produto `prec_3h` do modelo BAM é exibido como "Precipitação acumulada em 6h", mas seu valor técnico e sua rota permanecem `prec_3h`, por exemplo `/inpe-previsao-react/bam/prec_3h/glo/`.
 - Quando o usuário digita uma rota inválida, a SPA exibe uma tela 404 interna com sugestões de retorno para rotas válidas.
+
+Ao trocar de modelo, a aplicação preserva o produto técnico quando o mesmo **value** existe no modelo destino. Se ele não existir, pode ser usado um mapeamento explícito em **compatibility.productFallbacks**; sem esse mapeamento, é usado o produto padrão do modelo destino. Ao trocar de grupo ou produto, a seleção segue a mesma validação do produto destino.
+
+Em todas essas trocas, a região atual é preservada somente quando está presente em **regions** do produto destino. Quando ela não é válida, a aplicação usa **defaultRegion**, se configurado; depois usa a região padrão do modelo; e por último a primeira região do produto. Assim, produtos do mesmo grupo ou de modelos diferentes podem possuir conjuntos de regiões distintos sem receber uma região inválida. Produtos por cidade preservam a cidade somente quando a seleção destino também aceita cidade.
+
+O valor **label** é apenas o texto apresentado na interface. O valor **value** é o identificador técnico usado nas URLs e nos templates de imagem e não deve ser alterado para corrigir um texto exibido.
 
 ## Observações
 

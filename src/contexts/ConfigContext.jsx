@@ -9,20 +9,37 @@ import {
   getInitialModel,
   inspectFramePathname,
 } from "../lib/frameUrlState";
+import {
+  findProductForSelection,
+  hasRegions,
+  resolveForecastTime,
+  resolveCity,
+  resolveRegion,
+} from "../lib/frameSelection";
 
 export const ConfigContext = createContext({});
 
 const MAX_FRAMES = 4;
 
 function buildDefaultFrame(model, id) {
+  const product = findProductForSelection(model, {
+    productValue: model.default?.product?.value,
+    groupValue: model.default?.product?.group,
+  });
+  const productHasRegions = hasRegions(product);
+
   return {
     id,
     model: model.value,
-    product: model.default.product.value,
-    group: model.default.product.group,
-    region: model.default.product.region,
-    city: null,
-    forecastTime: model.forecastTime,
+    product: product?.value ?? null,
+    group: product?.group ?? null,
+    region: productHasRegions
+      ? resolveRegion(model, product, model.default?.product?.region, null)
+      : null,
+    city: productHasRegions
+      ? null
+      : resolveCity(model, product, model.default?.product?.city, null),
+    forecastTime: resolveForecastTime(model, product, null),
     isPlaying: false,
     init: null,
   };
@@ -45,14 +62,6 @@ function readJsonStorage(key) {
   }
 }
 
-function getDefaultProduct(model) {
-  return (
-    model.options.products.find(
-      (product) => product.value === model.default.product.value
-    ) ?? model.options.products[0]
-  );
-}
-
 function normalizeFrame(frame, models, fallbackFrame) {
   const baseFrame =
     fallbackFrame ?? buildDefaultFrame(getInitialModel(models), frame?.id ?? 1);
@@ -61,22 +70,19 @@ function normalizeFrame(frame, models, fallbackFrame) {
     models.find((item) => item.value === baseFrame.model) ??
     getInitialModel(models);
 
-  const defaultProduct = getDefaultProduct(model);
-  const product =
-    model.options.products.find((item) => item.value === frame?.product) ??
-    model.options.products.find((item) => item.group === frame?.group) ??
-    defaultProduct;
+  const product = findProductForSelection(model, {
+    productValue: frame?.product,
+    groupValue: frame?.group,
+  });
 
-  const hasRegions = Array.isArray(product.regions) && product.regions.length > 0;
-  const region = hasRegions
-    ? product.regions.includes(frame?.region)
-      ? frame.region
-      : product.regions.includes(baseFrame.region)
-      ? baseFrame.region
-      : product.regions[0]
+  const productHasRegions = hasRegions(product);
+  const region = productHasRegions
+    ? resolveRegion(model, product, frame?.region, baseFrame.region)
     : null;
 
-  const city = hasRegions ? null : frame?.city ?? baseFrame.city ?? null;
+  const city = productHasRegions
+    ? null
+    : resolveCity(model, product, frame?.city, baseFrame.city);
 
   return {
     id: baseFrame.id,
@@ -85,11 +91,12 @@ function normalizeFrame(frame, models, fallbackFrame) {
     group: product.group,
     region,
     city,
-    forecastTime:
-      frame?.forecastTime ??
-      product.forecastTime ??
-      model.forecastTime ??
-      baseFrame.forecastTime,
+    forecastTime: resolveForecastTime(
+      model,
+      product,
+      frame?.forecastTime,
+      baseFrame.forecastTime
+    ),
     isPlaying: false,
     init: typeof frame?.init === "string" ? frame.init : null,
   };
@@ -145,7 +152,14 @@ export default function ConfigProvider({ children }) {
   const [config, setConfig] = useState(() =>
     sanitizeConfig(readJsonStorage("config"), initialConfig)
   );
+  const [activeFrameId, setActiveFrameId] = useState(1);
   const [routeState, setRouteState] = useState(initialRouteState);
+
+  useEffect(() => {
+    if (activeFrameId > config.quantityFrames) {
+      setActiveFrameId(1);
+    }
+  }, [activeFrameId, config.quantityFrames]);
 
   const [frames, setFrames] = useState(() => {
     const defaultFrames = buildDefaultFrames(models);
@@ -329,6 +343,8 @@ export default function ConfigProvider({ children }) {
       value={{
         config,
         setConfig,
+        activeFrameId,
+        setActiveFrameId,
         models,
         regions,
         cities,

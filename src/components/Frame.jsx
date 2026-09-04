@@ -5,7 +5,14 @@ import FrameTop from "./FrameTop";
 import FrameImage from "./FrameImage";
 
 export default function Frame({ id }) {
-  const { config, models, frames, resetFrames, updateFrame } =
+  const {
+    config,
+    models,
+    frames,
+    resetFrames,
+    updateFrame,
+    setActiveFrameId,
+  } =
     useContext(ConfigContext);
 
   const frame = frames.find((item) => item.id === id);
@@ -15,22 +22,36 @@ export default function Frame({ id }) {
   const [downloadImageUrl, setDownloadImageUrl] = useState("");
 
   useEffect(() => {
-    if (!model) {
-      return;
+    let isCurrentRequest = true;
+
+    setDates([]);
+
+    if (!model?.urlDates) {
+      return () => {
+        isCurrentRequest = false;
+      };
     }
 
     async function fetchUrlDates() {
       try {
         const response = await fetch(model.urlDates);
         const data = await response.json();
-        setDates(data.datesRun);
+        if (isCurrentRequest) {
+          setDates(Array.isArray(data.datesRun) ? data.datesRun : []);
+        }
       } catch (error) {
-        console.log(error);
+        if (isCurrentRequest) {
+          console.log(error);
+        }
       }
     }
 
     fetchUrlDates();
-  }, [model]);
+
+    return () => {
+      isCurrentRequest = false;
+    };
+  }, [model?.urlDates, model?.value]);
 
   useEffect(() => {
     if (!frame?.init || dates.length === 0 || dates.includes(frame.init)) {
@@ -65,7 +86,12 @@ export default function Frame({ id }) {
   }
 
   return (
-    <div className={`flex flex-col p-4 w-full hover:bg-gray-50 ${classFrame}`}>
+    <div
+      className={`flex flex-col p-4 w-full hover:bg-gray-50 ${classFrame}`}
+      data-frame-id={id}
+      onMouseEnter={() => setActiveFrameId(id)}
+      onFocusCapture={() => setActiveFrameId(id)}
+    >
       <FrameTop
         frame={frame}
         model={model}

@@ -1854,7 +1854,7 @@
           ]
         },
         {
-          "label": "Precipitação acumulada em 3h",
+          "label": "Precipitação acumulada em 6h",
           "value": "prec_3h",
           "group": "prec",
           "regions": [

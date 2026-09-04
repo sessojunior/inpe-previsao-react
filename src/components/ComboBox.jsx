@@ -5,8 +5,8 @@ export default function ComboBox({
   selectedCity,
   setSelectedCity,
   onCitySelected, // Nova função para emitir o id da cidade selecionada
-  isInputFocused,
   setIsInputFocused,
+  inputId = "city",
 }) {
   const [filteredCities, setFilteredCities] = useState(cities);
   const [isOpen, setIsOpen] = useState(false);
@@ -53,8 +53,8 @@ export default function ComboBox({
   return (
     <div ref={comboBoxRef}>
       <input
-        id="city"
-        name="city"
+        id={inputId}
+        name={inputId}
         type="text"
         value={selectedCity}
         onChange={handleInputChange}

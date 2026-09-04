@@ -26,6 +26,7 @@ export default function FrameTop({
   const {
     config,
     setConfig,
+    activeFrameId,
     startAllTimer,
     pauseAllTimer,
     updateFrame,
@@ -290,13 +291,15 @@ export default function FrameTop({
   useEffect(() => {
     const handleKeyDown = (event) => {
       const activeElement = document.activeElement;
-      const isInputFocused =
+      const isFormControlFocused =
         activeElement &&
         (activeElement.tagName === "INPUT" ||
           activeElement.tagName === "TEXTAREA" ||
+          activeElement.tagName === "SELECT" ||
+          activeElement.tagName === "BUTTON" ||
           activeElement.isContentEditable);
 
-      if (isInputFocused) {
+      if (activeFrameId !== frame.id || isFormControlFocused) {
         return; // Não processa as teclas se um input estiver focado
       }
 
@@ -341,6 +344,8 @@ export default function FrameTop({
   }, [
     handleDecreaseTime,
     handleIncreaseTime,
+    activeFrameId,
+    frame.id,
     isPlaying,
     pauseTimer,
     startTimer,

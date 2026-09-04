@@ -2,6 +2,14 @@ import { useContext, useEffect, useState, useMemo, useCallback } from "react";
 import { ConfigContext } from "../contexts/ConfigContext";
 
 import { formatDate } from "../lib/formatDate";
+import {
+  findProduct,
+  findProductForModelChange,
+  findProductForSelection,
+  resolveCity,
+  resolveForecastTime,
+  resolveRegion,
+} from "../lib/frameSelection";
 
 import ComboBox from "./ComboBox";
 
@@ -30,17 +38,9 @@ export default function DropDownConfig({
     return city ? `${city.name} - ${city.uf}` : "";
   }, [cities, frame.city]);
 
-  // Load city from localStorage when the component mounts
   useEffect(() => {
-    setSelectedCity((currentCity) =>
-      currentCity.length > 0 ? currentCity : cityUf()
-    );
-
-    const savedCity = localStorage.getItem("selectedCity");
-    if (savedCity) {
-      setSelectedCity(savedCity);
-    }
-  }, [cityUf]);
+    setSelectedCity(frame.city ? cityUf() : "");
+  }, [cityUf, frame.city]);
 
   // Regions of product selected
   const modelProductRegions = useMemo(() => {
@@ -76,20 +76,53 @@ export default function DropDownConfig({
 
   const classSelect =
     "py-2 px-2 block w-full border border-gray-200 rounded-lg text-sm focus:border-black focus:outline-2 disabled:opacity-50 disabled:pointer-events-none";
+  const controlIds = {
+    model: `model-${frame.id}`,
+    group: `group-${frame.id}`,
+    product: `product-${frame.id}`,
+    region: `region-${frame.id}`,
+    city: `city-${frame.id}`,
+    init: `init-${frame.id}`,
+  };
   // const classRadio = "block shrink-0 mr-1 border border-gray-200 rounded-full text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none cursor-pointer"
 
   const handleChangeModel = useCallback(
     (e) => {
       const nextModel = models.find((item) => item.value === e.target.value);
-      resetTimer(nextModel.forecastTime);
+      if (!nextModel) {
+        return;
+      }
+
+      const { product: nextProduct, preserveSelection } =
+        findProductForModelChange(nextModel, model, frame.product);
+      if (!nextProduct) {
+        return;
+      }
+
+      const preferredRegion = preserveSelection ? frame.region : null;
+      const preferredCity = preserveSelection ? frame.city : null;
+      const forecastTime = resolveForecastTime(
+        nextModel,
+        nextProduct,
+        preserveSelection ? frame.forecastTime : null
+      );
+      const region = resolveRegion(
+        nextModel,
+        nextProduct,
+        preferredRegion,
+        null
+      );
+      const city = resolveCity(nextModel, nextProduct, preferredCity, null);
+
+      resetTimer(forecastTime);
       updateFrame(frame.id, {
-        model: e.target.value,
-        group: nextModel.default.product.group,
-        product: nextModel.default.product.value,
-        region: nextModel.default.product.region,
-        forecastTime: nextModel.forecastTime,
+        model: nextModel.value,
+        group: nextProduct.group,
+        product: nextProduct.value,
+        region,
+        forecastTime,
         isPlaying: false,
-        city: null,
+        city,
         init: null,
       });
       updateLocalConfig({
@@ -97,15 +130,29 @@ export default function DropDownConfig({
         framesWithImagesLoaded: [],
       });
     },
-    [config, frame.id, models, resetTimer, updateFrame, updateLocalConfig]
+    [
+      config,
+      frame.city,
+      frame.forecastTime,
+      frame.id,
+      frame.product,
+      frame.region,
+      model,
+      models,
+      resetTimer,
+      updateFrame,
+      updateLocalConfig,
+    ]
   );
 
   const handleCitySelected = useCallback(
     (id) => {
-      const product = model.options.products.find(
-        (product) => product.value === frame.product
+      const product = findProduct(model, frame.product);
+      const forecastTime = resolveForecastTime(
+        model,
+        product,
+        frame.forecastTime
       );
-      const forecastTime = product?.forecastTime ?? model.forecastTime;
       resetTimer(forecastTime);
       updateFrame(frame.id, {
         isPlaying: false,
@@ -122,8 +169,8 @@ export default function DropDownConfig({
       config,
       frame.id,
       frame.product,
-      model.forecastTime,
-      model.options.products,
+      frame.forecastTime,
+      model,
       resetTimer,
       updateFrame,
       updateLocalConfig,
@@ -132,10 +179,12 @@ export default function DropDownConfig({
 
   const handleChangeRegion = useCallback(
     (e) => {
-      const product = model.options.products.find(
-        (product) => product.value === frame.product
+      const product = findProduct(model, frame.product);
+      const forecastTime = resolveForecastTime(
+        model,
+        product,
+        frame.forecastTime
       );
-      const forecastTime = product?.forecastTime ?? model.forecastTime;
       resetTimer(forecastTime);
       updateFrame(frame.id, {
         region: e.target.value,
@@ -152,8 +201,8 @@ export default function DropDownConfig({
       config,
       frame.id,
       frame.product,
-      model.forecastTime,
-      model.options.products,
+      frame.forecastTime,
+      model,
       resetTimer,
       updateFrame,
       updateLocalConfig,
@@ -162,48 +211,57 @@ export default function DropDownConfig({
 
   const handleChangeGroup = useCallback(
     (e) => {
-      const firstProductGroup = modelProducts.find(
-        (product) => product.group === e.target.value
+      const nextProduct = findProductForSelection(model, {
+        groupValue: e.target.value,
+      });
+      if (!nextProduct) {
+        return;
+      }
+
+      const forecastTime = resolveForecastTime(
+        model,
+        nextProduct,
+        frame.forecastTime
       );
-      const forecastTime =
-        firstProductGroup.forecastTime !== undefined
-          ? firstProductGroup.forecastTime
-          : model.forecastTime;
       resetTimer(forecastTime);
       updateFrame(frame.id, {
-        group: e.target.value,
-        product: firstProductGroup.value,
+        group: nextProduct.group,
+        product: nextProduct.value,
         forecastTime,
         isPlaying: false,
-        city: null,
-        region:
-          firstProductGroup.regions !== null
-            ? firstProductGroup.regions[0]
-            : null,
       });
       updateLocalConfig({
         ...config,
         framesWithImagesLoaded: [],
       });
     },
-    [config, frame.id, model.forecastTime, modelProducts, resetTimer, updateFrame, updateLocalConfig]
+    [
+      config,
+      frame.forecastTime,
+      frame.id,
+      model,
+      resetTimer,
+      updateFrame,
+      updateLocalConfig,
+    ]
   );
 
   const handleChangeProduct = useCallback(
     (e) => {
-      const product = model.options.products.find(
-        (product) => product.value === e.target.value
+      const product = findProduct(model, e.target.value);
+      if (!product) {
+        return;
+      }
+
+      const forecastTime = resolveForecastTime(
+        model,
+        product,
+        frame.forecastTime
       );
-      const forecastTime =
-        product.forecastTime !== undefined
-          ? product.forecastTime
-          : model.forecastTime;
       resetTimer(forecastTime);
       updateFrame(frame.id, {
-        product: e.target.value,
+        product: product.value,
         group: product.group,
-        region: product.regions !== null ? product.regions[0] : null,
-        city: null,
         forecastTime,
         isPlaying: false,
       });
@@ -212,15 +270,25 @@ export default function DropDownConfig({
         framesWithImagesLoaded: [],
       });
     },
-    [config, frame.id, model.options.products, model.forecastTime, resetTimer, updateFrame, updateLocalConfig]
+    [
+      config,
+      frame.forecastTime,
+      frame.id,
+      model,
+      resetTimer,
+      updateFrame,
+      updateLocalConfig,
+    ]
   );
 
   const handleChangeInit = useCallback(
     (e) => {
-      const product = model.options.products.find(
-        (product) => product.value === frame.product
+      const product = findProduct(model, frame.product);
+      const forecastTime = resolveForecastTime(
+        model,
+        product,
+        frame.forecastTime
       );
-      const forecastTime = product?.forecastTime ?? model.forecastTime;
       resetTimer(forecastTime);
       updateFrame(frame.id, {
         init: e.target.value,
@@ -236,8 +304,8 @@ export default function DropDownConfig({
       config,
       frame.id,
       frame.product,
-      model.forecastTime,
-      model.options.products,
+      frame.forecastTime,
+      model,
       resetTimer,
       updateFrame,
       updateLocalConfig,
@@ -251,14 +319,14 @@ export default function DropDownConfig({
           <div className="border-b border-gray-200 p-4">
             <div className="mb-2">
               <label
-                htmlFor="model"
+                htmlFor={controlIds.model}
                 className="block w-full pb-3 text-sm font-bold"
               >
                 Modelo e produto
               </label>
               <select
-                name="model"
-                id="model"
+                name={controlIds.model}
+                id={controlIds.model}
                 value={frame.model}
                 onChange={(e) => handleChangeModel(e)}
                 className={classSelect}
@@ -274,7 +342,8 @@ export default function DropDownConfig({
               <>
                 <div className="mb-2">
                   <select
-                    name="group"
+                    name={controlIds.group}
+                    id={controlIds.group}
                     value={frame.group}
                     onChange={(e) => handleChangeGroup(e)}
                     className={classSelect}
@@ -291,7 +360,8 @@ export default function DropDownConfig({
             {productGroups.length > 1 && (
               <div>
                 <select
-                  name="product"
+                  name={controlIds.product}
+                  id={controlIds.product}
                   value={frame.product}
                   onChange={(e) => handleChangeProduct(e)}
                   className={classSelect}
@@ -309,14 +379,14 @@ export default function DropDownConfig({
             <div className="border-b border-gray-200 p-4">
               <div className="mb-2">
                 <label
-                  htmlFor="region"
+                  htmlFor={controlIds.region}
                   className="block w-full pb-3 text-sm font-bold"
                 >
                   Região
                 </label>
                 <select
-                  name="region"
-                  id="region"
+                  name={controlIds.region}
+                  id={controlIds.region}
                   value={frame.region}
                   onChange={(e) => handleChangeRegion(e)}
                   autoComplete="off"
@@ -333,7 +403,10 @@ export default function DropDownConfig({
           ) : (
             <div className="border-b border-gray-200 p-4">
               <div className="mb-2">
-                <label className="block w-full pb-3 text-sm font-bold">
+                <label
+                  htmlFor={controlIds.city}
+                  className="block w-full pb-3 text-sm font-bold"
+                >
                   Cidade
                 </label>
                 <ComboBox
@@ -343,6 +416,7 @@ export default function DropDownConfig({
                   onCitySelected={handleCitySelected} // Passa a função para receber o id
                   isInputFocused={isInputFocused}
                   setIsInputFocused={setIsInputFocused}
+                  inputId={controlIds.city}
                 />
               </div>
             </div>
@@ -350,15 +424,15 @@ export default function DropDownConfig({
           <div className="border-b border-gray-200 p-4">
             <div>
               <label
-                htmlFor="init"
+                htmlFor={controlIds.init}
                 className="block w-full pb-3 text-sm font-bold"
               >
                 Inicialização
               </label>
               {dates.length > 0 ? (
                 <select
-                  name="init"
-                  id="init"
+                  name={controlIds.init}
+                  id={controlIds.init}
                   value={frame.init === null ? dates[0] : frame.init}
                   onChange={(e) => handleChangeInit(e)}
                   className={classSelect}

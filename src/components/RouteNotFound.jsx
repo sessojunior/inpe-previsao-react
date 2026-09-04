@@ -3,16 +3,33 @@ import { FaArrowLeft, FaCloudSun, FaLink, FaRoute } from "react-icons/fa";
 
 import { ConfigContext } from "../contexts/ConfigContext";
 import { buildFramePathname } from "../lib/frameUrlState";
+import {
+  findProductForSelection,
+  hasRegions,
+  resolveCity,
+  resolveForecastTime,
+  resolveRegion,
+} from "../lib/frameSelection";
 
 function buildDefaultFrame(model) {
+  const product = findProductForSelection(model, {
+    productValue: model.default?.product?.value,
+    groupValue: model.default?.product?.group,
+  });
+  const productHasRegions = hasRegions(product);
+
   return {
     id: 1,
     model: model.value,
-    product: model.default.product.value,
-    group: model.default.product.group,
-    region: model.default.product.region,
-    city: null,
-    forecastTime: model.forecastTime,
+    product: product?.value ?? null,
+    group: product?.group ?? null,
+    region: productHasRegions
+      ? resolveRegion(model, product, model.default?.product?.region, null)
+      : null,
+    city: productHasRegions
+      ? null
+      : resolveCity(model, product, model.default?.product?.city, null),
+    forecastTime: resolveForecastTime(model, product, null),
     init: null,
     isPlaying: false,
   };
