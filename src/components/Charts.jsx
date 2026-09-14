@@ -13,47 +13,64 @@ export default function Charts({ date, urlCharts, urlCsv }) {
   // console.log("urlCsv", urlCsv);
 
   useEffect(() => {
+    const controller = new AbortController();
+    const { signal } = controller;
+
+    setDataCharts(null);
+    setDataCsv(null);
+    setError(null);
+    setLoading(true);
+
     async function fetchCharts() {
-      setError(null);
-      setLoading(true);
       try {
-        const response = await fetch(urlCharts);
+        const response = await fetch(urlCharts, { signal });
         const data = await response.json();
         if (data.datasets?.length == 0) {
           throw new Error("Dados não encontrados no JSON");
         }
-        setDataCharts(data.datasets[0]);
+        if (!signal.aborted) {
+          setDataCharts(data.datasets[0]);
+        }
       } catch (error) {
+        if (signal.aborted) return;
         console.log("Erro ao obter dados do JSON: " + urlCharts);
         // console.log(error);
         setError(error);
-      } finally {
-        setLoading(false);
       }
     }
 
     async function fetchCsv() {
-      setError(null);
-      setLoading(true);
       try {
-        const response = await fetch(urlCsv);
+        const response = await fetch(urlCsv, { signal });
         const text = await response.text();
         if (text == "") {
           throw new Error("Dados não encontrados no CSV");
         }
-        setDataCsv(text);
+        if (!signal.aborted) {
+          setDataCsv(text);
+        }
       } catch (error) {
+        if (signal.aborted) return;
         console.log("Erro ao obter dados do CSV: " + urlCsv);
         // console.log(error);
         setError(error);
-      } finally {
+      }
+    }
+
+    async function fetchData() {
+      await Promise.all([
+        urlCharts ? fetchCharts() : null,
+        urlCsv ? fetchCsv() : null,
+      ]);
+      if (!signal.aborted) {
         setLoading(false);
       }
     }
 
-    if (urlCharts) fetchCharts();
-    if (urlCsv) fetchCsv();
-  }, [date]);
+    fetchData();
+
+    return () => controller.abort();
+  }, [urlCharts, urlCsv]);
 
   if (loading) {
     return <div className="text-center pt-4">Carregando...</div>;
