@@ -1,3 +1,7 @@
+import jsonCities from "../data/cities.json";
+
+const cityIds = new Set(jsonCities.map((city) => city.id));
+
 export function getDefaultProduct(model) {
   if (!model?.options?.products) {
     return null;
@@ -68,11 +72,20 @@ export function resolveCity(model, product, preferredCity, fallbackCity) {
     fallbackCity,
   ];
 
-  return (
-    candidates.find(
-      (city) => city !== null && city !== undefined && city !== ""
-    ) ?? null
-  );
+  for (const candidate of candidates) {
+    const cityId =
+      typeof candidate === "number"
+        ? candidate
+        : typeof candidate === "string" && /^\d+$/.test(candidate)
+        ? Number(candidate)
+        : null;
+
+    if (Number.isInteger(cityId) && cityIds.has(cityId)) {
+      return cityId;
+    }
+  }
+
+  return null;
 }
 
 export function resolveRegion(model, product, preferredRegion, fallbackRegion) {

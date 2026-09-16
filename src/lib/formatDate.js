@@ -1,9 +1,34 @@
 // Input date: YYYY-MM-DD HHz. Ex: 2024-08-07 12z
 // Output date: Weekday DD Monthname YYYY HH UTC. Ex: Ter 07 Ago 2024 12 UTC
+const INIT_PATTERN = /^(\d{4})-(\d{2})-(\d{2}) (\d{2})z$/i;
+
+export function isValidForecastInit(value) {
+  if (typeof value !== "string") {
+    return false;
+  }
+
+  const match = value.match(INIT_PATTERN);
+  if (!match) {
+    return false;
+  }
+
+  const [, year, month, day, turn] = match;
+  const parsedDate = new Date(
+    Date.UTC(Number(year), Number(month) - 1, Number(day), Number(turn))
+  );
+
+  return (
+    parsedDate.getUTCFullYear() === Number(year) &&
+    parsedDate.getUTCMonth() === Number(month) - 1 &&
+    parsedDate.getUTCDate() === Number(day) &&
+    parsedDate.getUTCHours() === Number(turn)
+  );
+}
+
 export function formatDate(date) {
   // console.log("formatDate date", date)
 
-  if (!date) {
+  if (!isValidForecastInit(date)) {
     return;
   }
 

@@ -9,6 +9,59 @@ import highchartsAcessibility from "highcharts/modules/accessibility";
 import highchartsExport from "highcharts/modules/exporting";
 import highchartsExportData from "highcharts/modules/export-data";
 import highchartsBoost from "highcharts/modules/boost";
+
+function appendHeatmapLegend(idChart, stops) {
+  const chartElement = document.getElementById(idChart);
+  if (!chartElement) {
+    return;
+  }
+
+  const gradientStops = stops
+    .map(([, color], index) => {
+      const stopPercentage = (index / (stops.length - 1)) * 100;
+      return `${color} ${stopPercentage}%`;
+    })
+    .join(", ");
+
+  const legend = document.createElement("div");
+  legend.className = "w-full flex justify-center items-center";
+
+  const content = document.createElement("div");
+  content.className = "flex-1 text-center text-sm mx-2";
+  const gradientContainer = document.createElement("div");
+  gradientContainer.className =
+    "w-full flex flex-col items-center overflow-x-auto mt-1 mb-3";
+
+  const gradient = document.createElement("div");
+  gradient.className = "w-full h-3 rounded";
+  gradient.style.background = `linear-gradient(to right, ${gradientStops})`;
+  gradientContainer.appendChild(gradient);
+
+  const labels = document.createElement("div");
+  labels.className = "flex justify-between w-full mt-1";
+  stops.forEach(([value]) => {
+    const label = document.createElement("span");
+    label.className = "flex-1 text-center text-sm";
+    label.textContent = String(value);
+    labels.appendChild(label);
+  });
+  gradientContainer.appendChild(labels);
+  content.appendChild(gradientContainer);
+  legend.appendChild(content);
+
+  const logoLink = document.createElement("a");
+  logoLink.href = "https://www.gov.br/inpe/pt-br";
+  logoLink.className = "flex items-center justify-center p-2";
+  const logo = document.createElement("img");
+  logo.src = imgLogoInpe;
+  logo.alt = "INPE";
+  logo.className = "max-w-14 lg:max-w-16";
+  logoLink.appendChild(logo);
+  legend.appendChild(logoLink);
+
+  chartElement.parentNode?.insertBefore(legend, chartElement.nextSibling);
+}
+
 highchartsMore(Highcharts);
 highchartsWindbarb(Highcharts);
 highchartsHeatMap(Highcharts);
@@ -35,6 +88,24 @@ export default function Chart({
     parseInt(dateTime.substr(17, 2))
   );
 
+  if (dataCharts !== null && !Array.isArray(dataCharts?.data)) {
+    return null;
+  }
+
+  const chartData =
+    dataCharts?.data?.filter(
+      (item) => item !== null && typeof item === "object"
+    ) ?? [];
+
+  if (dataCharts !== null && chartData.length === 0) {
+    return null;
+  }
+
+  const hasChartField = (item, field) =>
+    Object.prototype.hasOwnProperty.call(item, field) &&
+    typeof item[field] === "number" &&
+    Number.isFinite(item[field]);
+
   // console.log("date", date);
   // console.log("dataCharts", dataCharts);
   // console.log("dataCsv", dataCsv);
@@ -44,8 +115,6 @@ export default function Chart({
   const parseCsvToHeatmapData = (csvString, valueType) => {
     const rows = csvString.trim().split("\n");
     const data = [];
-    const headers = rows[0].split(",");
-
     let minDate = Infinity;
     let maxDate = -Infinity;
 
@@ -180,27 +249,27 @@ export default function Chart({
 
   // Temperatura, pressão e precipitação
   if (product === "tempPressPrec") {
-    const existsItemp = dataCharts.data.some((item) =>
-      item.hasOwnProperty("temp")
+    const existsItemp = chartData.some((item) =>
+      hasChartField(item, "temp")
     );
-    const existsIpress = dataCharts.data.some((item) =>
-      item.hasOwnProperty("press")
+    const existsIpress = chartData.some((item) =>
+      hasChartField(item, "press")
     );
-    const existsIprec = dataCharts.data.some((item) =>
-      item.hasOwnProperty("prec")
+    const existsIprec = chartData.some((item) =>
+      hasChartField(item, "prec")
     );
     const existsTempPressPrec = existsItemp && existsIpress && existsIprec;
     if (!existsTempPressPrec) {
       return null;
     }
     const iTemp = existsItemp
-      ? dataCharts.data.map((item) => parseFloat(item.temp.toFixed(1)))
+      ? chartData.map((item) => parseFloat(item.temp.toFixed(1)))
       : [];
     const iPress = existsIpress
-      ? dataCharts.data.map((item) => parseFloat(item.press.toFixed(1)))
+      ? chartData.map((item) => parseFloat(item.press.toFixed(1)))
       : [];
     const iPrec = existsIprec
-      ? dataCharts.data.map((item) => parseFloat(item.prec.toFixed(1)))
+      ? chartData.map((item) => parseFloat(item.prec.toFixed(1)))
       : [];
     const optionsTempPressPrec = {
       chart: {
@@ -380,24 +449,24 @@ export default function Chart({
 
   // Temperatura mínima, máxima e média
   if (product === "tempMinMaxMedia") {
-    const existsTemp_mn = dataCharts.data.some((item) =>
-      item.hasOwnProperty("temp_mn")
+    const existsTemp_mn = chartData.some((item) =>
+      hasChartField(item, "temp_mn")
     );
-    const existsTemp_mx = dataCharts.data.some((item) =>
-      item.hasOwnProperty("temp_mx")
+    const existsTemp_mx = chartData.some((item) =>
+      hasChartField(item, "temp_mx")
     );
     const existsTempMinMax = existsTemp_mn && existsTemp_mx;
     if (!existsTempMinMax) {
       return null;
     }
     const tempMinMax = existsTempMinMax
-      ? dataCharts.data.map((item) => [
+      ? chartData.map((item) => [
           parseFloat(item.temp_mn.toFixed(2)),
           parseFloat(item.temp_mx.toFixed(2)),
         ])
       : [];
     const tempAverage = existsTempMinMax
-      ? dataCharts.data.map((item) =>
+      ? chartData.map((item) =>
           parseFloat(
             ((parseFloat(item.temp_mn) + parseFloat(item.temp_mx)) / 2).toFixed(
               2
@@ -487,14 +556,14 @@ export default function Chart({
 
   // Pressão
   if (product === "press") {
-    const existsPress = dataCharts.data.some((item) =>
-      item.hasOwnProperty("prec")
+    const existsPress = chartData.some((item) =>
+      hasChartField(item, "press")
     );
     if (!existsPress) {
       return null;
     }
     const press = existsPress
-      ? dataCharts.data.map((item) => parseFloat(item.press.toFixed(2)))
+      ? chartData.map((item) => parseFloat(item.press.toFixed(2)))
       : [];
     const optionsPress = {
       chart: {
@@ -542,14 +611,14 @@ export default function Chart({
 
   // Precipitação
   if (product === "prec") {
-    const existsPrec = dataCharts.data.some((item) =>
-      item.hasOwnProperty("prec")
+    const existsPrec = chartData.some((item) =>
+      hasChartField(item, "prec")
     );
     if (!existsPrec) {
       return null;
     }
     const prec = existsPrec
-      ? dataCharts.data.map((item) => parseFloat(item.prec.toFixed(2)))
+      ? chartData.map((item) => parseFloat(item.prec.toFixed(2)))
       : [];
     const optionsPrec = {
       chart: {
@@ -618,14 +687,16 @@ export default function Chart({
 
   // Vento
   if (product === "wind") {
-    const existsWind = dataCharts.data.some((item) =>
-      item.hasOwnProperty("wind")
+    const existsWind = chartData.some(
+      (item) =>
+        hasChartField(item, "wind_speed") &&
+        hasChartField(item, "wind_dir")
     );
     if (!existsWind) {
       return null;
     }
     const wind = existsWind
-      ? dataCharts.data.map((item) => [
+      ? chartData.map((item) => [
           parseFloat(item.wind_speed.toFixed(2)),
           parseFloat(item.wind_dir.toFixed(2)),
         ])
@@ -711,12 +782,14 @@ export default function Chart({
 
   // Umidade relativa
   if (product === "ur") {
-    const existsUr = dataCharts.data.some((item) => item.hasOwnProperty("ur"));
+    const existsUr = chartData.some((item) =>
+      hasChartField(item, "ur")
+    );
     if (!existsUr) {
       return null;
     }
     const ur = existsUr
-      ? dataCharts.data.map((item) => parseFloat(item.ur.toFixed(2)))
+      ? chartData.map((item) => parseFloat(item.ur.toFixed(2)))
       : [];
     const optionsUr = {
       chart: {
@@ -764,27 +837,27 @@ export default function Chart({
 
   // Nuvens
   if (product === "cloud") {
-    const existsLowCloud = dataCharts.data.some((item) =>
-      item.hasOwnProperty("low_cloud")
+    const existsLowCloud = chartData.some((item) =>
+      hasChartField(item, "low_cloud")
     );
-    const existsMidCloud = dataCharts.data.some((item) =>
-      item.hasOwnProperty("mid_cloud")
+    const existsMidCloud = chartData.some((item) =>
+      hasChartField(item, "mid_cloud")
     );
-    const existsHighCloud = dataCharts.data.some((item) =>
-      item.hasOwnProperty("high_cloud")
+    const existsHighCloud = chartData.some((item) =>
+      hasChartField(item, "high_cloud")
     );
     const existsCloud = existsLowCloud && existsMidCloud && existsHighCloud;
     if (!existsCloud) {
       return null;
     }
     const lowCloud = existsLowCloud
-      ? dataCharts.data.map((item) => parseFloat(item.low_cloud.toFixed(2)))
+      ? chartData.map((item) => parseFloat(item.low_cloud.toFixed(2)))
       : [];
     const midCloud = existsMidCloud
-      ? dataCharts.data.map((item) => parseFloat(item.mid_cloud.toFixed(2)))
+      ? chartData.map((item) => parseFloat(item.mid_cloud.toFixed(2)))
       : [];
     const highCloud = existsHighCloud
-      ? dataCharts.data.map((item) => parseFloat(item.high_cloud.toFixed(2)))
+      ? chartData.map((item) => parseFloat(item.high_cloud.toFixed(2)))
       : [];
     const optionsCloud = {
       chart: {
@@ -851,20 +924,20 @@ export default function Chart({
 
   // Monóxido de carbono
   if (product === "co") {
-    const existsCo_40 = dataCharts.data.some((item) =>
-      item.hasOwnProperty("co_40")
+    const existsCo_40 = chartData.some((item) =>
+      hasChartField(item, "co_40")
     );
-    const existsCo_700 = dataCharts.data.some((item) =>
-      item.hasOwnProperty("co_700")
+    const existsCo_700 = chartData.some((item) =>
+      hasChartField(item, "co_700")
     );
-    const existsCo_1400 = dataCharts.data.some((item) =>
-      item.hasOwnProperty("co_1400")
+    const existsCo_1400 = chartData.some((item) =>
+      hasChartField(item, "co_1400")
     );
-    const existsCo_5400 = dataCharts.data.some((item) =>
-      item.hasOwnProperty("co_5400")
+    const existsCo_5400 = chartData.some((item) =>
+      hasChartField(item, "co_5400")
     );
-    const existsCo_10200 = dataCharts.data.some((item) =>
-      item.hasOwnProperty("co_10200")
+    const existsCo_10200 = chartData.some((item) =>
+      hasChartField(item, "co_10200")
     );
     const existsCo =
       existsCo_40 &&
@@ -876,19 +949,19 @@ export default function Chart({
       return null;
     }
     const co_40 = existsCo_40
-      ? dataCharts.data.map((item) => parseFloat(item.co_40.toFixed(2)))
+      ? chartData.map((item) => parseFloat(item.co_40.toFixed(2)))
       : [];
     const co_700 = existsCo_700
-      ? dataCharts.data.map((item) => parseFloat(item.co_700.toFixed(2)))
+      ? chartData.map((item) => parseFloat(item.co_700.toFixed(2)))
       : [];
     const co_1400 = existsCo_1400
-      ? dataCharts.data.map((item) => parseFloat(item.co_1400.toFixed(2)))
+      ? chartData.map((item) => parseFloat(item.co_1400.toFixed(2)))
       : [];
     const co_5400 = existsCo_5400
-      ? dataCharts.data.map((item) => parseFloat(item.co_5400.toFixed(2)))
+      ? chartData.map((item) => parseFloat(item.co_5400.toFixed(2)))
       : [];
     const co_10200 = existsCo_10200
-      ? dataCharts.data.map((item) => parseFloat(item.co_10200.toFixed(2)))
+      ? chartData.map((item) => parseFloat(item.co_10200.toFixed(2)))
       : [];
     const optionsCo = {
       chart: {
@@ -968,20 +1041,20 @@ export default function Chart({
 
   // Material micro-particulado
   if (product === "pm25") {
-    const existsPm25_40 = dataCharts.data.some((item) =>
-      item.hasOwnProperty("pm25_40")
+    const existsPm25_40 = chartData.some((item) =>
+      hasChartField(item, "pm25_40")
     );
-    const existsPm25_700 = dataCharts.data.some((item) =>
-      item.hasOwnProperty("pm25_700")
+    const existsPm25_700 = chartData.some((item) =>
+      hasChartField(item, "pm25_700")
     );
-    const existsPm25_1400 = dataCharts.data.some((item) =>
-      item.hasOwnProperty("pm25_1400")
+    const existsPm25_1400 = chartData.some((item) =>
+      hasChartField(item, "pm25_1400")
     );
-    const existsPm25_5400 = dataCharts.data.some((item) =>
-      item.hasOwnProperty("pm25_5400")
+    const existsPm25_5400 = chartData.some((item) =>
+      hasChartField(item, "pm25_5400")
     );
-    const existsPm25_10200 = dataCharts.data.some((item) =>
-      item.hasOwnProperty("pm25_10200")
+    const existsPm25_10200 = chartData.some((item) =>
+      hasChartField(item, "pm25_10200")
     );
     const existsPm25 =
       existsPm25_40 &&
@@ -993,19 +1066,19 @@ export default function Chart({
       return null;
     }
     const pm25_40 = existsPm25
-      ? dataCharts.data.map((item) => parseFloat(item.pm25_40.toFixed(2)))
+      ? chartData.map((item) => parseFloat(item.pm25_40.toFixed(2)))
       : [];
     const pm25_700 = existsPm25_700
-      ? dataCharts.data.map((item) => parseFloat(item.pm25_700.toFixed(2)))
+      ? chartData.map((item) => parseFloat(item.pm25_700.toFixed(2)))
       : [];
     const pm25_1400 = existsPm25_1400
-      ? dataCharts.data.map((item) => parseFloat(item.pm25_1400.toFixed(2)))
+      ? chartData.map((item) => parseFloat(item.pm25_1400.toFixed(2)))
       : [];
     const pm25_5400 = existsPm25_5400
-      ? dataCharts.data.map((item) => parseFloat(item.pm25_5400.toFixed(2)))
+      ? chartData.map((item) => parseFloat(item.pm25_5400.toFixed(2)))
       : [];
     const pm25_10200 = existsPm25_10200
-      ? dataCharts.data.map((item) => parseFloat(item.pm25_10200.toFixed(2)))
+      ? chartData.map((item) => parseFloat(item.pm25_10200.toFixed(2)))
       : [];
     const optionsPm25 = {
       chart: {
@@ -1641,48 +1714,7 @@ export default function Chart({
       [4250, "#750476"],
     ];
     const generateLegend = (idChart) => {
-      // Gerar a legenda personalizada com o gradiente
-      const gradientStops = stops
-        .map(([value, color], index) => {
-          const stopPercentage = (index / (stops.length - 1)) * 100; // Distribuir uniformemente no gradiente
-          return `${color} ${stopPercentage}%`;
-        })
-        .join(", ");
-      // A legenda HTML
-      const legendHTML = `
-        <div class="w-full flex justify-center items-center">
-          <div class="flex-1 text-center text-sm mx-2">
-            <div class="w-full flex flex-col items-center overflow-x-auto mt-1 mb-3">
-              <div class="w-full h-3 rounded" style="background: linear-gradient(to right, ${gradientStops});"></div>
-              <div class="flex justify-between w-full mt-1">
-                ${stops
-                  .map(([value]) => {
-                    return `
-                      <span class="flex-1 text-center text-sm">${value}</span>
-                    `;
-                  })
-                  .join("")}
-              </div>
-            </div>
-          </div>
-          <div>
-            <a
-              href="https://www.gov.br/inpe/pt-br"
-              className="flex items-center justify-center p-2"
-            >
-              <img
-                src=${imgLogoInpe}
-                alt="INPE"
-                class="max-w-14 lg:max-w-16"
-              />
-            </a>
-          </div>
-        </div>
-      `;
-      // Inserir a legenda no DOM
-      document
-        .getElementById(idChart)
-        .insertAdjacentHTML("afterend", legendHTML);
+      appendHeatmapLegend(idChart, stops);
     };
     const optionsHeatmapVectorWindCo = {
       chart: {
@@ -1905,48 +1937,7 @@ export default function Chart({
       [500, "#750476"],
     ];
     const generateLegend = (idChart) => {
-      // Gerar a legenda personalizada com o gradiente
-      const gradientStops = stops
-        .map(([value, color], index) => {
-          const stopPercentage = (index / (stops.length - 1)) * 100; // Distribuir uniformemente no gradiente
-          return `${color} ${stopPercentage}%`;
-        })
-        .join(", ");
-      // A legenda HTML
-      const legendHTML = `
-        <div class="w-full flex justify-center items-center">
-          <div class="flex-1 text-center text-sm mx-2">
-            <div class="w-full flex flex-col items-center overflow-x-auto mt-1 mb-3">
-              <div class="w-full h-3 rounded" style="background: linear-gradient(to right, ${gradientStops});"></div>
-              <div class="flex justify-between w-full mt-1">
-                ${stops
-                  .map(([value]) => {
-                    return `
-                      <span class="flex-1 text-center text-sm">${value}</span>
-                    `;
-                  })
-                  .join("")}
-              </div>
-            </div>
-          </div>
-          <div>
-            <a
-              href="https://www.gov.br/inpe/pt-br"
-              className="flex items-center justify-center p-2"
-            >
-              <img
-                src=${imgLogoInpe}
-                alt="INPE"
-                class="max-w-14 lg:max-w-16"
-              />
-            </a>
-          </div>
-        </div>
-      `;
-      // Inserir a legenda no DOM
-      document
-        .getElementById(idChart)
-        .insertAdjacentHTML("afterend", legendHTML);
+      appendHeatmapLegend(idChart, stops);
     };
     const optionsHeatmapVectorWindPm25 = {
       chart: {
@@ -2173,48 +2164,7 @@ export default function Chart({
       [140, "#750476"],
     ];
     const generateLegend = (idChart) => {
-      // Gerar a legenda personalizada com o gradiente
-      const gradientStops = stops
-        .map(([value, color], index) => {
-          const stopPercentage = (index / (stops.length - 1)) * 100; // Distribuir uniformemente no gradiente
-          return `${color} ${stopPercentage}%`;
-        })
-        .join(", ");
-      // A legenda HTML
-      const legendHTML = `
-        <div class="w-full flex justify-center items-center">
-          <div class="flex-1 text-center text-sm mx-2">
-            <div class="w-full flex flex-col items-center overflow-x-auto mt-1 mb-3">
-              <div class="w-full h-3 rounded" style="background: linear-gradient(to right, ${gradientStops});"></div>
-              <div class="flex justify-between w-full mt-1">
-                ${stops
-                  .map(([value]) => {
-                    return `
-                      <span class="flex-1 text-center text-sm">${value}</span>
-                    `;
-                  })
-                  .join("")}
-              </div>
-            </div>
-          </div>
-          <div>
-            <a
-              href="https://www.gov.br/inpe/pt-br"
-              className="flex items-center justify-center p-2"
-            >
-              <img
-                src=${imgLogoInpe}
-                alt="INPE"
-                class="max-w-14 lg:max-w-16"
-              />
-            </a>
-          </div>
-        </div>
-      `;
-      // Inserir a legenda no DOM
-      document
-        .getElementById(idChart)
-        .insertAdjacentHTML("afterend", legendHTML);
+      appendHeatmapLegend(idChart, stops);
     };
     const optionsHeatmapVectorWindNox = {
       chart: {

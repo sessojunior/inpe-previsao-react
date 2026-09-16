@@ -1,4 +1,11 @@
-import { useState, useEffect, useContext, useCallback } from "react";
+import {
+  useState,
+  useEffect,
+  useContext,
+  useCallback,
+  useMemo,
+  useRef,
+} from "react";
 import { ConfigContext } from "../contexts/ConfigContext";
 import {
   FaChevronLeft,
@@ -19,6 +26,7 @@ export default function FrameTop({
   frame,
   model,
   dates,
+  datesStatus = dates.length > 0 ? "ready" : "loading",
   loadingImages,
   setLoadingImages,
   downloadImageUrl,
@@ -49,18 +57,18 @@ export default function FrameTop({
   // O intervalo de horas é baseado em periodHours (geralmente 3 ou 6 quando baseado em model ou 24 quando baseado em product)
 
   // Cálculo da quantidade de intervalos
-  const length =
-    Math.floor((Number(periodEnd) - Number(periodStart)) / periodHours) + 1;
+  const hours = useMemo(() => {
+    const length =
+      Math.floor((Number(periodEnd) - Number(periodStart)) / periodHours) + 1;
 
-  // Gerar o array de horas, formatando corretamente os valores, incluindo "000"
-  const hours = Array.from({ length }, (_, i) => {
-    const value = Number(periodStart) + i * periodHours;
+    return Array.from({ length }, (_, i) => {
+      const value = Number(periodStart) + i * periodHours;
 
-    // Formatar com 3 dígitos e tratar "000" como valor padrão, além de positivo/negativo
-    return value === 0
-      ? "000"
-      : (value > 0 ? "" : "-") + String(Math.abs(value)).padStart(3, "0");
-  });
+      return value === 0
+        ? "000"
+        : (value > 0 ? "" : "-") + String(Math.abs(value)).padStart(3, "0");
+    });
+  }, [periodEnd, periodHours, periodStart]);
 
   //console.log(hours);
 
@@ -122,54 +130,6 @@ export default function FrameTop({
     }
   }, [forecastTime, hours, updateFrameState]);
 
-  {
-    /* Begin Timer */
-  }
-
-  const [timer, setTimer] = useState(0);
-  const [timeInterval, setTimeInterval] = useState(null);
-
-  useEffect(() => {
-    if (timer > 0) {
-      updateFrameState(
-        { forecastTime, isPlaying },
-        { persist: false, syncUrl: false }
-      );
-    }
-  }, [forecastTime, isPlaying, timer, updateFrameState]);
-
-  useEffect(() => {
-    async function checkIsAllPlaying() {
-      if (config.isAllPlaying) {
-        await preloadImages();
-        if (config.isAllPlaying) {
-          clearInterval(timeInterval);
-          setForecastTime(periodStart);
-          setIsPlaying(true);
-          if (config.framesWithImagesLoaded.length === config.quantityFrames) {
-            startAnimation();
-          }
-        }
-      } else {
-        pauseTimer();
-      }
-    }
-    checkIsAllPlaying();
-  }, [config.isAllPlaying]);
-
-  useEffect(() => {
-    if (
-      config.framesWithImagesLoaded.length === config.quantityFrames &&
-      config.quantityFrames > 1
-    ) {
-      startAnimation();
-      toast.success(
-        "Todas as imagens de animação dos quadros foram carregadas com sucesso!",
-        { toastId: "allFramesLoaded" }
-      );
-    }
-  }, [config.framesWithImagesLoaded]);
-
   const urlImage = useCallback(
     (forecastTime) => {
       const init = frame.init ?? dates[0];
@@ -190,102 +150,253 @@ export default function FrameTop({
         .replaceAll("{{day}}", day);
       return url;
     },
-    [frame.city, frame.init, dates, frame.product, frame.region, model]
+    [
+      dates,
+      frame.city,
+      frame.init,
+      frame.product,
+      frame.region,
+      model.timeRun,
+      model.urlImage,
+      model.value,
+    ]
   );
 
-  function saveImagesInCache(imageUrls) {
-    const promises = imageUrls.map((url) => {
-      return new Promise((resolve, reject) => {
-        const img = new Image();
-        img.src = url;
-        img.onload = () => resolve(url);
-        img.onerror = () =>
-          reject(
-            new Error(`Erro ao carregar a imagem do frame ${frame.id}: ${url}`)
-          );
-      });
-    });
-    return Promise.all(promises);
-  }
+  const animationIntervalRef = useRef(null);
+  const preloadRequestRef = useRef(0);
+  const componentMountedRef = useRef(true);
+  const [timer, setTimer] = useState(0);
 
-  const preloadImages = async () => {
+  const clearAnimationInterval = useCallback(() => {
+    if (animationIntervalRef.current !== null) {
+      clearInterval(animationIntervalRef.current);
+      animationIntervalRef.current = null;
+    }
+  }, []);
+
+  useEffect(() => {
+    componentMountedRef.current = true;
+
+    return () => {
+      componentMountedRef.current = false;
+      preloadRequestRef.current += 1;
+      clearAnimationInterval();
+    };
+  }, [clearAnimationInterval]);
+
+  useEffect(() => {
+    return () => {
+      preloadRequestRef.current += 1;
+    };
+  }, [hours, urlImage]);
+
+  useEffect(() => {
+    if (timer > 0) {
+      updateFrameState(
+        { forecastTime, isPlaying },
+        { persist: false, syncUrl: false }
+      );
+    }
+  }, [forecastTime, isPlaying, timer, updateFrameState]);
+
+  const saveImagesInCache = useCallback(
+    (imageUrls) =>
+      Promise.all(
+        imageUrls.map(
+          (url) =>
+            new Promise((resolve, reject) => {
+              const img = new Image();
+              img.src = url;
+              img.onload = () => resolve(url);
+              img.onerror = () =>
+                reject(
+                  new Error(
+                    `Erro ao carregar a imagem do frame ${frame.id}: ${url}`
+                  )
+                );
+            })
+        )
+      ),
+    [frame.id]
+  );
+
+  const preloadImages = useCallback(async () => {
+    if (!componentMountedRef.current) {
+      return false;
+    }
+
+    const requestId = preloadRequestRef.current + 1;
+    preloadRequestRef.current = requestId;
+    const isCurrentRequest = () =>
+      componentMountedRef.current && preloadRequestRef.current === requestId;
+
     setLoadingImages(true);
-    if (frame.init !== undefined || dates.length > 0) {
-      let imageUrls = hours.map((forecastTime) => urlImage(forecastTime));
-      try {
-        await saveImagesInCache(imageUrls);
-        setConfig((prev) => ({
+    if (!frame.init && dates.length === 0) {
+      setLoadingImages(false);
+      return false;
+    }
+
+    try {
+      await saveImagesInCache(hours.map((time) => urlImage(time)));
+      if (!isCurrentRequest()) {
+        return null;
+      }
+
+      setConfig((prev) => {
+        if (!prev.isAllPlaying || prev.framesWithImagesLoaded.includes(frame.id)) {
+          return prev;
+        }
+
+        return {
           ...prev,
-          framesWithImagesLoaded: prev.framesWithImagesLoaded.includes(frame.id)
-            ? prev.framesWithImagesLoaded
-            : [...prev.framesWithImagesLoaded, frame.id],
-        }));
-      } catch (error) {
-        console.error(
-          `Erro ao pré-carregar as imagens do frame ${frame.id}:`,
-          error
-        );
-      } finally {
+          framesWithImagesLoaded: [...prev.framesWithImagesLoaded, frame.id],
+        };
+      });
+      return true;
+    } catch (error) {
+      console.error(`Erro ao pré-carregar as imagens do frame ${frame.id}:`, error);
+      return isCurrentRequest() ? false : null;
+    } finally {
+      if (
+        componentMountedRef.current &&
+        preloadRequestRef.current === requestId
+      ) {
         setLoadingImages(false);
       }
     }
-  };
+  }, [
+    dates.length,
+    frame.id,
+    frame.init,
+    hours,
+    saveImagesInCache,
+    setConfig,
+    setLoadingImages,
+    urlImage,
+  ]);
 
-  const startAnimation = () => {
-    clearInterval(timeInterval);
-    updateFrameState({ isPlaying: false }, { persist: false, syncUrl: false });
-    setIsPlaying(false);
+  const startAnimation = useCallback(
+    (resetToStart = false) => {
+      if (!componentMountedRef.current || hours.length === 0) {
+        return;
+      }
 
-    setTimeInterval(
-      setInterval(() => {
-        let ft = null;
+      clearAnimationInterval();
+      if (resetToStart) {
+        setTimer(0);
+        setForecastTime(periodStart);
+      }
+      setIsPlaying(true);
+      animationIntervalRef.current = setInterval(() => {
         setTimer((prev) => prev + 1);
         setForecastTime((prev) => {
-          if (prev === hours[hours.length - 1]) {
-            ft = hours[0];
-            return ft;
-          } else {
-            ft = hours[hours.indexOf(prev) + 1];
-            return ft;
-          }
+          const currentIndex = hours.indexOf(prev);
+          const nextIndex =
+            currentIndex < 0 || currentIndex === hours.length - 1
+              ? 0
+              : currentIndex + 1;
+          return hours[nextIndex];
         });
         setIsPlaying(true);
-      }, 500)
-    );
-  };
+      }, 500);
+    }, [clearAnimationInterval, hours, periodStart]
+  );
+
+  const stopAnimation = useCallback(() => {
+    clearAnimationInterval();
+    setIsPlaying(false);
+  }, [clearAnimationInterval]);
+
+  const pauseTimer = useCallback(() => {
+    stopAnimation();
+    updateFrameState({ isPlaying: false }, { persist: false, syncUrl: false });
+    updateLocalConfig({
+      ...config,
+      isAllPlaying: false,
+      framesWithImagesLoaded: [],
+    });
+  }, [config, stopAnimation, updateFrameState, updateLocalConfig]);
+
+  const resetTimer = useCallback(
+    (time = null) => {
+      setTimer(0);
+      pauseTimer();
+      setForecastTime(time ?? forecastTime);
+      setIsPlaying(false);
+    },
+    [forecastTime, pauseTimer]
+  );
 
   const startTimer = useCallback(async () => {
     toast.warn(
       `Aguarde o carregamento das imagens do quadro ${frame.id} para iniciar a animação!`
     );
-    await preloadImages();
+    const imagesLoaded = await preloadImages();
+    if (imagesLoaded === null) {
+      return;
+    }
+
+    if (!imagesLoaded) {
+      toast.error(
+        `Não foi possível carregar as imagens do quadro ${frame.id}. A animação não foi iniciada.`
+      );
+      return;
+    }
+
     toast.success(
       `As imagens de animação do quadro ${frame.id} foram carregadas com sucesso!`
     );
     startAnimation();
   }, [frame.id, preloadImages, startAnimation]);
 
-  const pauseTimer = () => {
-    clearInterval(timeInterval);
-    updateFrameState({ isPlaying: false }, { persist: false, syncUrl: false });
-    setIsPlaying(false);
-    updateLocalConfig({
-      ...config,
-      isAllPlaying: false,
-      framesWithImagesLoaded: [],
+  useEffect(() => {
+    if (!config.isAllPlaying) {
+      stopAnimation();
+      return undefined;
+    }
+
+    let isCurrent = true;
+    preloadImages().then((imagesLoaded) => {
+      if (!isCurrent || imagesLoaded === null || imagesLoaded) {
+        return;
+      }
+
+      setConfig((prev) =>
+        prev.isAllPlaying
+          ? { ...prev, isAllPlaying: false, framesWithImagesLoaded: [] }
+          : prev
+      );
+      toast.error(
+        `Não foi possível carregar as imagens do quadro ${frame.id}. A animação geral foi pausada.`
+      );
     });
-  };
 
-  const resetTimer = (time = null) => {
-    setTimer(0);
-    pauseTimer();
-    setForecastTime(time ?? forecastTime);
-    setIsPlaying(false);
-  };
+    return () => {
+      isCurrent = false;
+    };
+  }, [config.isAllPlaying, frame.id, preloadImages, setConfig, stopAnimation]);
 
-  {
-    /* End Timer */
-  }
+  useEffect(() => {
+    const allFramesLoaded =
+      config.framesWithImagesLoaded.length === config.quantityFrames &&
+      config.framesWithImagesLoaded.includes(frame.id);
+
+    if (!config.isAllPlaying || !allFramesLoaded) {
+      return;
+    }
+
+    startAnimation(true);
+    toast.success(
+      "Todas as imagens de animação dos quadros foram carregadas com sucesso!",
+      { toastId: "allFramesLoaded" }
+    );
+  }, [
+    config.framesWithImagesLoaded,
+    config.isAllPlaying,
+    config.quantityFrames,
+    frame.id,
+    startAnimation,
+  ]);
 
   // Capturar eventos de teclado
   useEffect(() => {
@@ -347,8 +458,8 @@ export default function FrameTop({
     activeFrameId,
     frame.id,
     isPlaying,
-    pauseTimer,
-    startTimer,
+    pauseAllTimer,
+    startAllTimer,
   ]);
 
   return (
@@ -376,6 +487,7 @@ export default function FrameTop({
             frame={frame}
             model={model}
             dates={dates}
+            datesStatus={datesStatus}
             resetTimer={resetTimer}
             isInputFocused={isInputFocused}
             setIsInputFocused={setIsInputFocused}
@@ -394,6 +506,12 @@ export default function FrameTop({
             <span>
               {frame.init
                 ? formatDate(frame.init)
+                : datesStatus === "loading"
+                ? "Carregando..."
+                : datesStatus === "error"
+                ? "Datas indisponíveis"
+                : datesStatus === "empty"
+                ? "Data não disponível"
                 : dates.length > 0
                 ? formatDate(dates[0])
                 : "Data não definida"}

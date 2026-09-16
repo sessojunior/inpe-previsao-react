@@ -3,6 +3,7 @@ import { ConfigContext } from "../contexts/ConfigContext";
 
 import FrameTop from "./FrameTop";
 import FrameImage from "./FrameImage";
+import { isValidForecastInit } from "../lib/formatDate";
 
 export default function Frame({ id }) {
   const {
@@ -18,15 +19,19 @@ export default function Frame({ id }) {
   const frame = frames.find((item) => item.id === id);
   const model = models.find((item) => item.value === frame?.model);
   const [dates, setDates] = useState([]);
+  const [datesStatus, setDatesStatus] = useState("loading");
   const [loadingImages, setLoadingImages] = useState(false);
   const [downloadImageUrl, setDownloadImageUrl] = useState("");
 
   useEffect(() => {
+    const controller = new AbortController();
     let isCurrentRequest = true;
 
     setDates([]);
+    setDatesStatus("loading");
 
     if (!model?.urlDates) {
+      setDatesStatus("empty");
       return () => {
         isCurrentRequest = false;
       };
@@ -34,15 +39,27 @@ export default function Frame({ id }) {
 
     async function fetchUrlDates() {
       try {
-        const response = await fetch(model.urlDates);
+        const response = await fetch(model.urlDates, {
+          signal: controller.signal,
+        });
+        if (response.ok === false) {
+          throw new Error(`Falha ao carregar datas: HTTP ${response.status}`);
+        }
         const data = await response.json();
         if (isCurrentRequest) {
-          setDates(Array.isArray(data.datesRun) ? data.datesRun : []);
+          const nextDates = Array.isArray(data.datesRun)
+            ? data.datesRun.filter(isValidForecastInit)
+            : [];
+          setDates(nextDates);
+          setDatesStatus(nextDates.length > 0 ? "ready" : "empty");
         }
       } catch (error) {
-        if (isCurrentRequest) {
-          console.log(error);
+        if (error.name === "AbortError" || !isCurrentRequest) {
+          return;
         }
+
+        console.error(error);
+        setDatesStatus("error");
       }
     }
 
@@ -50,16 +67,33 @@ export default function Frame({ id }) {
 
     return () => {
       isCurrentRequest = false;
+      controller.abort();
     };
   }, [model?.urlDates, model?.value]);
 
   useEffect(() => {
-    if (!frame?.init || dates.length === 0 || dates.includes(frame.init)) {
+    if (
+      dates.length === 0 ||
+      (frame?.init && dates.includes(frame.init))
+    ) {
       return;
     }
 
     updateFrame(id, { init: dates[0] });
   }, [dates, frame?.init, id, updateFrame]);
+
+  useEffect(() => {
+    if (frame && model) {
+      return undefined;
+    }
+
+    const recoveryTimer = setTimeout(() => {
+      resetFrames();
+      window.location.reload();
+    }, 5000);
+
+    return () => clearTimeout(recoveryTimer);
+  }, [frame, model, resetFrames]);
 
   // Corrigindo bug de values errados no model ou frame
   // Se não foi possível carregar o arquivo JSON de Config.jsx
@@ -67,11 +101,6 @@ export default function Frame({ id }) {
     console.error(
       "É provável que não tenha sido possível carregar o arquivo models.json ou regions.json em Config.jsx."
     );
-
-    setTimeout(() => {
-      resetFrames();
-      window.location.reload();
-    }, 5000);
 
     return (
       <div className="p-8 text-red-500">
@@ -96,6 +125,7 @@ export default function Frame({ id }) {
         frame={frame}
         model={model}
         dates={dates}
+        datesStatus={datesStatus}
         loadingImages={loadingImages}
         setLoadingImages={setLoadingImages}
         downloadImageUrl={downloadImageUrl}

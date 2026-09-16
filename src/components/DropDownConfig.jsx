@@ -17,6 +17,7 @@ export default function DropDownConfig({
   frame,
   model,
   dates,
+  datesStatus = dates.length > 0 ? "ready" : "loading",
   resetTimer,
   isInputFocused,
   setIsInputFocused,
@@ -341,6 +342,9 @@ export default function DropDownConfig({
             {frame.model !== frame.product && (
               <>
                 <div className="mb-2">
+                  <label htmlFor={controlIds.group} className="sr-only">
+                    Grupo de produto
+                  </label>
                   <select
                     name={controlIds.group}
                     id={controlIds.group}
@@ -359,6 +363,9 @@ export default function DropDownConfig({
             )}
             {productGroups.length > 1 && (
               <div>
+                <label htmlFor={controlIds.product} className="sr-only">
+                  Produto
+                </label>
                 <select
                   name={controlIds.product}
                   id={controlIds.product}
@@ -429,7 +436,7 @@ export default function DropDownConfig({
               >
                 Inicialização
               </label>
-              {dates.length > 0 ? (
+              {datesStatus === "ready" && dates.length > 0 ? (
                 <select
                   name={controlIds.init}
                   id={controlIds.init}
@@ -443,8 +450,12 @@ export default function DropDownConfig({
                     </option>
                   ))}
                 </select>
+              ) : datesStatus === "loading" ? (
+                <p role="status">Carregando datas...</p>
+              ) : datesStatus === "empty" ? (
+                <p role="status">Nenhuma data disponível.</p>
               ) : (
-                <p>Carregando...</p>
+                <p role="alert">Não foi possível carregar as datas.</p>
               )}
             </div>
           </div>

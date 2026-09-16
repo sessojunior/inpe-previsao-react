@@ -7,6 +7,7 @@ export default function Charts({ date, urlCharts, urlCsv }) {
   const [dataCsv, setDataCsv] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [requestUrls, setRequestUrls] = useState(null);
 
   // console.log("date", date);
   // console.log("urlCharts", urlCharts);
@@ -20,19 +21,37 @@ export default function Charts({ date, urlCharts, urlCsv }) {
     setDataCsv(null);
     setError(null);
     setLoading(true);
+    setRequestUrls({ urlCharts, urlCsv });
 
     async function fetchCharts() {
       try {
         const response = await fetch(urlCharts, { signal });
+
+        if (response.ok === false) {
+          const error = new Error(
+            "Os dados do meteograma não estão disponíveis para esta seleção"
+          );
+          error.code = response.status === 404 ? "unavailable" : "request";
+          error.status = response.status;
+          throw error;
+        }
+
         const data = await response.json();
-        if (data.datasets?.length == 0) {
-          throw new Error("Dados não encontrados no JSON");
+        if (!Array.isArray(data?.datasets) || !data.datasets[0]) {
+          const error = new Error(
+            "Os dados do meteograma não estão disponíveis para esta seleção"
+          );
+          error.code = "unavailable";
+          throw error;
         }
         if (!signal.aborted) {
           setDataCharts(data.datasets[0]);
         }
       } catch (error) {
         if (signal.aborted) return;
+        if (error instanceof TypeError || error instanceof SyntaxError) {
+          error.code = "unavailable";
+        }
         console.log("Erro ao obter dados do JSON: " + urlCharts);
         // console.log(error);
         setError(error);
@@ -42,15 +61,32 @@ export default function Charts({ date, urlCharts, urlCsv }) {
     async function fetchCsv() {
       try {
         const response = await fetch(urlCsv, { signal });
+
+        if (response.ok === false) {
+          const error = new Error(
+            "Os dados do meteograma não estão disponíveis para esta seleção"
+          );
+          error.code = response.status === 404 ? "unavailable" : "request";
+          error.status = response.status;
+          throw error;
+        }
+
         const text = await response.text();
-        if (text == "") {
-          throw new Error("Dados não encontrados no CSV");
+        if (!text.trim()) {
+          const error = new Error(
+            "Os dados do meteograma não estão disponíveis para esta seleção"
+          );
+          error.code = "unavailable";
+          throw error;
         }
         if (!signal.aborted) {
           setDataCsv(text);
         }
       } catch (error) {
         if (signal.aborted) return;
+        if (error instanceof TypeError || error instanceof SyntaxError) {
+          error.code = "unavailable";
+        }
         console.log("Erro ao obter dados do CSV: " + urlCsv);
         // console.log(error);
         setError(error);
@@ -72,15 +108,22 @@ export default function Charts({ date, urlCharts, urlCsv }) {
     return () => controller.abort();
   }, [urlCharts, urlCsv]);
 
-  if (loading) {
+  // A nova seleção pode renderizar antes de o efeito limpar o estado anterior.
+  const isCurrentSelection =
+    requestUrls?.urlCharts === urlCharts && requestUrls?.urlCsv === urlCsv;
+
+  if (!isCurrentSelection || loading) {
     return <div className="text-center pt-4">Carregando...</div>;
   }
 
   if (error) {
+    const dataUnavailable = error.code === "unavailable";
+
     return (
-      <div className="text-center pt-4">
-        Ocorreu um erro ao obter os dados para o dia {date.day}/{date.month}/
-        {date.year}.
+      <div className="text-center pt-4" role="status">
+        {dataUnavailable
+          ? "Os dados do meteograma não estão disponíveis ou não puderam ser acessados para esta cidade e data."
+          : `Não foi possível obter os dados do meteograma para o dia ${date.day}/${date.month}/${date.year}.`}
       </div>
     );
   }

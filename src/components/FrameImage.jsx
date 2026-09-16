@@ -1,7 +1,12 @@
-import { useCallback, useContext, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import ImageNotFound from "../assets/not-found.png";
 import FrameCharts from "./FrameCharts";
+
+const MAX_IMAGE_RETRIES = 3;
+const RETRY_DELAYS_MS = [1500, 3000, 6000];
+const BACKGROUND_RETRY_DELAY_MS = 15000;
+const MAX_BACKGROUND_TRIES = 20;
 
 export default function FrameImage({
   frame,
@@ -16,13 +21,9 @@ export default function FrameImage({
   // "não encontrado". Algumas imagens ainda estão sendo geradas no servidor
   // do CPTEC (respondem 503) e passam a existir após alguns segundos/minutos,
   // então tentamos novamente com intervalos crescentes.
-  const MAX_IMAGE_RETRIES = 3;
-  const RETRY_DELAYS_MS = [1500, 3000, 6000];
 
   // Após o fallback, continua verificando silenciosamente (a cada 15s, até
   // 20 vezes) se a imagem passou a existir no servidor, sem trocar a data.
-  const BACKGROUND_RETRY_DELAY_MS = 15000;
-  const MAX_BACKGROUND_TRIES = 20;
 
   const [attempt, setAttempt] = useState(0);
   const [failed, setFailed] = useState(false);
@@ -30,6 +31,16 @@ export default function FrameImage({
   const [backgroundTries, setBackgroundTries] = useState(0);
   const retryTimerRef = useRef(null);
   const backgroundTimerRef = useRef(null);
+  const mountedRef = useRef(true);
+  const imageRequestRef = useRef(0);
+
+  useEffect(() => {
+    mountedRef.current = true;
+
+    return () => {
+      mountedRef.current = false;
+    };
+  }, []);
 
   // Se o período que inicia ou termina for específico para o produto, por exemplo, um produto que inicia em "024", obtém a partir do produto o período de horas que o mesmo roda.
   const product =
@@ -39,11 +50,14 @@ export default function FrameImage({
 
   const publicImage = ImageNotFound;
   const init = frame.init ?? dates[0];
+  const frameId = frame?.id;
+  const isFramePlaying = frame?.isPlaying;
   const year = init?.slice(0, 4);
   const month = init?.slice(5, 7);
   const day = init?.slice(8, 10);
   const turn = init?.slice(11, 13);
   const forecastTime = frame.forecastTime ?? periodStart;
+  const isChart = Boolean(frame?.city && model?.urlCharts);
 
   const urlImage = model?.urlImage
     .replaceAll("{{model}}", model?.value)
@@ -96,10 +110,22 @@ export default function FrameImage({
   // Em caso de erro, tenta novamente com intervalo crescente; após esgotar
   // as tentativas, mostra a imagem de "não encontrado".
   const handleImageError = useCallback(() => {
+    if (!mountedRef.current) {
+      return;
+    }
+
     if (attempt < MAX_IMAGE_RETRIES) {
       setRetrying(true);
+      const requestId = imageRequestRef.current;
       retryTimerRef.current = setTimeout(
-        () => setAttempt((previous) => previous + 1),
+        () => {
+          if (
+            mountedRef.current &&
+            imageRequestRef.current === requestId
+          ) {
+            setAttempt((previous) => previous + 1);
+          }
+        },
         RETRY_DELAYS_MS[attempt] ?? 1500
       );
       return;
@@ -116,16 +142,31 @@ export default function FrameImage({
       return undefined;
     }
 
+    const requestId = imageRequestRef.current;
     backgroundTimerRef.current = setTimeout(() => {
       const probe = new Image();
       probe.src = `${urlImage}?bg=${backgroundTries + 1}`;
       probe.onload = () => {
+        if (
+          !mountedRef.current ||
+          imageRequestRef.current !== requestId
+        ) {
+          return;
+        }
+
         setFailed(false);
         setRetrying(false);
         setAttempt((previous) => previous + 1);
         setBackgroundTries(0);
       };
       probe.onerror = () => {
+        if (
+          !mountedRef.current ||
+          imageRequestRef.current !== requestId
+        ) {
+          return;
+        }
+
         setBackgroundTries((previous) => previous + 1);
       };
     }, BACKGROUND_RETRY_DELAY_MS);
@@ -145,6 +186,7 @@ export default function FrameImage({
       backgroundTimerRef.current = null;
     }
 
+    imageRequestRef.current += 1;
     setBackgroundTries(0);
     setFailed(false);
     setRetrying(true);
@@ -160,7 +202,17 @@ export default function FrameImage({
     : urlImage;
 
   useEffect(() => {
+    const requestId = imageRequestRef.current + 1;
+    imageRequestRef.current = requestId;
+
     const loadImage = async () => {
+      if (
+        !mountedRef.current ||
+        imageRequestRef.current !== requestId
+      ) {
+        return;
+      }
+
       setLoading(true);
 
       try {
@@ -171,32 +223,47 @@ export default function FrameImage({
           img.onerror = () =>
             reject(
               new Error(
-                `Erro ao carregar a imagem do frame ${frame.id}: ${urlImage}`
+                `Erro ao carregar a imagem do frame ${frameId}: ${urlImage}`
               )
             );
         });
       } catch (error) {
         //console.error(error);
       } finally {
-        setLoading(false);
+        if (
+          mountedRef.current &&
+          imageRequestRef.current === requestId
+        ) {
+          setLoading(false);
+        }
       }
     };
 
     // console.log("frame", frame);
 
-    if (init && urlImage) {
-      setDownloadImageUrl(urlImage);
-
-      if (frame && !frame.isPlaying) {
-        loadImage();
+    if (isChart || !init || !urlImage) {
+      setDownloadImageUrl("");
+      if (mountedRef.current) {
+        setLoading(false);
       }
+      return;
     }
-  }, [urlImage]);
 
-  if (!frame || !model || dates.length === 0) return null;
+    if (mountedRef.current) {
+      setDownloadImageUrl(urlImage);
+      if (isFramePlaying) {
+        setLoading(false);
+        return;
+      }
+
+      loadImage();
+    }
+  }, [frameId, init, isChart, isFramePlaying, setDownloadImageUrl, urlImage]);
+
+  if (!frame || !model || (!frame.init && dates.length === 0)) return null;
 
   // Se é um meteograma, mostrar o gráfico
-  if (frame?.city && model?.urlCharts) {
+  if (isChart) {
     // console.log("frame.city", frame.city);
     return (
       <FrameCharts

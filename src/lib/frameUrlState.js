@@ -1,4 +1,6 @@
 import jsonAppConfig from "../data/config.json";
+import jsonCities from "../data/cities.json";
+import { isValidForecastInit } from "./formatDate";
 
 const REDIRECT_STORAGE_KEY = "spa-redirect-path";
 
@@ -114,7 +116,7 @@ export function getInitialModel(models) {
 }
 
 export function formatInitSlug(init) {
-  if (!init) {
+  if (!isValidForecastInit(init)) {
     return null;
   }
 
@@ -136,7 +138,8 @@ export function parseInitSlug(initSlug) {
     return null;
   }
 
-  return `${match[1]} ${match[2]}z`;
+  const init = `${match[1]} ${match[2]}z`;
+  return isValidForecastInit(init) ? init : null;
 }
 
 export function buildFramePathname(models, frame) {
@@ -232,7 +235,11 @@ export function inspectFramePathname(models, pathname) {
 
   if (locationSlug.startsWith("city-")) {
     const cityId = Number(locationSlug.slice(5));
-    if (Number.isInteger(cityId) && cityId > 0) {
+    const cityExists = jsonCities.some((item) => item.id === cityId);
+    const productUsesRegions =
+      Array.isArray(product.regions) && product.regions.length > 0;
+
+    if (Number.isInteger(cityId) && cityId > 0 && cityExists && !productUsesRegions) {
       city = cityId;
     } else {
       return {

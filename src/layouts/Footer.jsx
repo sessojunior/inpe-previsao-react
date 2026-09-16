@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useMemo } from "react";
 import { ConfigContext } from "../contexts/ConfigContext";
 
 import {
@@ -17,7 +17,7 @@ export default function Footer() {
   const [activeSection, setActiveSection] = useState(null);
   const [activeLinks, setActiveLinks] = useState(null);
 
-  const linksAcesso = [
+  const linksAcesso = useMemo(() => [
     {
       label: "Acesso a Informação",
       url: "https://www.gov.br/inpe/pt-br/acesso-a-informacao/",
@@ -74,7 +74,7 @@ export default function Footer() {
       label: "Cooperações Nacionais e Internacionais",
       url: "https://www.gov.br/inpe/pt-br/acesso-a-informacao/cooperacoes-nacionais-e-internacionais",
     },
-  ];
+  ], []);
 
   const linksAssuntos = [
     {
@@ -92,7 +92,7 @@ export default function Footer() {
     { label: "Eventos", url: "https://www.gov.br/inpe/pt-br/assuntos/eventos" },
     {
       label: "Capacitação Pós-Graduação",
-      url: "http://antigo.inpe.br/posgraduacao/",
+      url: "https://www.gov.br/inpe/pt-br/area-conhecimento/posgraduacao/",
     },
     {
       label: "Anúncio de Oportunidades",
@@ -117,7 +117,7 @@ export default function Footer() {
       label: "Biblioteca On-Line",
       url: "https://www.gov.br/inpe/pt-br/area-conhecimento/biblioteca",
     },
-    { label: "Vídeos", url: "http://www.youtube.com/inpemct" },
+    { label: "Vídeos", url: "https://www.youtube.com/inpemct" },
   ];
 
   const linksCanais = [
@@ -135,7 +135,7 @@ export default function Footer() {
     },
     {
       label: "Visitas ao INPE",
-      url: "http://www.gov.br/inpe/pt-br/acesso-a-informacao/institucional/visita/",
+      url: "https://www.gov.br/inpe/pt-br/acesso-a-informacao/institucional/visita/",
     },
   ];
 
@@ -165,7 +165,7 @@ export default function Footer() {
   useEffect(() => {
     setActiveSection("acesso");
     setActiveLinks(linksAcesso);
-  }, []);
+  }, [linksAcesso]);
 
   const toggleSection = (section, links) => {
     setActiveSection(activeSection === section ? null : section);

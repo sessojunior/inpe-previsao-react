@@ -24,7 +24,7 @@ export default function Header() {
       label: "Acesso à Informação",
       url: "https://www.gov.br/acessoainformacao/pt-br",
     },
-    { label: "Legislação", url: "http://www4.planalto.gov.br/legislacao" },
+    { label: "Legislação", url: "https://www4.planalto.gov.br/legislacao" },
     {
       label: "Acessibilidade",
       url: "https://www.gov.br/governodigital/pt-br/acessibilidade-digital",
@@ -36,11 +36,11 @@ export default function Header() {
     { label: "CPTEC", url: "https://www.cptec.inpe.br/" },
     {
       label: "Previsão Numérica",
-      url: "http://previsaonumerica.cptec.inpe.br/",
+      url: "https://previsaonumerica.cptec.inpe.br/",
       subitems: [
         {
           label: "Previsão Numérica de Tempo",
-          url: "http://previsaonumerica.cptec.inpe.br/",
+          url: "https://previsaonumerica.cptec.inpe.br/",
         },
         {
           label: "Previsão Numérica Subsazonal",
@@ -52,18 +52,18 @@ export default function Header() {
         },
       ],
     },
-    { label: "Clima", url: "http://clima.cptec.inpe.br/" },
+    { label: "Clima", url: "https://clima.cptec.inpe.br/" },
     { label: "Nowcasting", url: "https://nowcasting.cptec.inpe.br/" },
     {
       label: "Satélite",
-      url: "http://satelite.cptec.inpe.br/home/novoSite/index.jsp",
+      url: "https://satelite.cptec.inpe.br/home/index.jsp",
     },
     { label: "Ondas", url: "https://previsaonumerica.cptec.inpe.br/wwatch/alt_onda/glo/" },
     {
       label: "Bacias",
       url: "https://bacias.cptec.inpe.br/",
     },
-    { label: "Qualidade do Ar", url: "http://meioambiente.cptec.inpe.br/" },
+    { label: "Qualidade do Ar", url: "https://meioambiente.cptec.inpe.br/" },
     {
       label: "Pós Graduação",
       url: "https://www.gov.br/inpe/pt-br/area-conhecimento/posgraduacao/",

@@ -4,6 +4,7 @@ import jsonModels from "../data/models.json";
 import jsonRegions from "../data/regions.json";
 import jsonCities from "../data/cities.json";
 import jsonAppConfig from "../data/config.json";
+import { isValidForecastInit } from "../lib/formatDate";
 import {
   buildFramePathname,
   getInitialModel,
@@ -97,8 +98,8 @@ function normalizeFrame(frame, models, fallbackFrame) {
       frame?.forecastTime,
       baseFrame.forecastTime
     ),
-    isPlaying: false,
-    init: typeof frame?.init === "string" ? frame.init : null,
+    isPlaying: Boolean(frame?.isPlaying),
+    init: isValidForecastInit(frame?.init) ? frame.init : null,
   };
 }
 
@@ -315,27 +316,24 @@ export default function ConfigProvider({ children }) {
 
   const startAllTimer = () => {
     console.log("startAllTimer");
-    const localConfig = {
-      ...config,
-      isAllPlaying: true,
-      framesWithImagesLoaded: [],
-    };
     updateLocalConfig({
       ...config,
       isAllPlaying: false, // Manter false no localStorage
       framesWithImagesLoaded: [], // Manter vazio no localStorage
     });
-    setConfig(localConfig);
+    setConfig((currentConfig) => ({
+      ...currentConfig,
+      isAllPlaying: true,
+      framesWithImagesLoaded: [],
+    }));
   };
 
   const pauseAllTimer = () => {
-    const localConfig = {
+    updateLocalConfig({
       ...config,
       isAllPlaying: false,
       framesWithImagesLoaded: [],
-    };
-    updateLocalConfig(localConfig);
-    setConfig(localConfig);
+    });
   };
 
   return (

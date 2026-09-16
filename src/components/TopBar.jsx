@@ -2,13 +2,12 @@ import { BsArrowsFullscreen, BsBorderAll } from "react-icons/bs";
 import { TbColumns1, TbColumns2, TbColumns3 } from "react-icons/tb";
 import { FaPause, FaPlay } from "react-icons/fa";
 
-import { useEffect, useContext, useState } from "react";
+import { useContext } from "react";
 import { ConfigContext } from "../contexts/ConfigContext";
 
 export default function TopBar() {
   const { config, frames, startAllTimer, pauseAllTimer, updateLocalConfig } =
     useContext(ConfigContext);
-  const [showButtonAllPlaying, setShowButtonAllPlaying] = useState(true);
 
   const classButton =
     "size-9 md:size-[38px] inline-flex justify-center items-center gap-2 rounded-full font-medium text-gray-700 hover:bg-blue-200 text-xs md:text-sm";
@@ -26,14 +25,22 @@ export default function TopBar() {
     updateLocalConfig({
       ...config,
       quantityFrames: quantity,
+      isAllPlaying: false,
+      framesWithImagesLoaded: [],
     });
   };
 
-  useEffect(() => {
-    const existsForecastTimeNull =
-      frames.filter((frame) => frame.forecastTime === null).length > 0;
-    setShowButtonAllPlaying(!existsForecastTimeNull);
-  }, [frames]);
+  const visibleFrames = frames.slice(0, config.quantityFrames);
+  const canPlayAll =
+    visibleFrames.length > 0 &&
+    visibleFrames.every(
+      (frame) => frame.forecastTime !== null && frame.init !== null
+    );
+  const isAllPlaying =
+    config.isAllPlaying &&
+    config.framesWithImagesLoaded.length === config.quantityFrames &&
+    canPlayAll &&
+    visibleFrames.every((frame) => frame.isPlaying);
 
   return (
     <header className="flex justify-start md:justify-between items-center px-4 w-full h-16 bg-gray-100 border border-y-gray-300">
@@ -50,9 +57,9 @@ export default function TopBar() {
         <h2 className="text-md md:text-xl font-medium">Previsão Numérica</h2>
       </div>
       <div className="flex gap-1">
-        {showButtonAllPlaying && (
+        {canPlayAll && (
           <>
-            {config.isAllPlaying ? (
+            {isAllPlaying ? (
               <button
                 className={classButtonActive}
                 onClick={pauseAllTimer}
