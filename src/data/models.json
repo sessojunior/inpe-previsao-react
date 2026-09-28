@@ -2249,7 +2249,19 @@
     "urlDates": "https://s1.cptec.inpe.br/grafico/Modelos/portal_previsao_numerica/mod_monan.json",
     "urlCharts": null,
     "urlCsv": null,
-    "timeRun": 24,
+    "timeRun": 12,
+    "periodsByTurn": {
+      "00": {
+        "periodStart": "000",
+        "periodEnd": "168",
+        "forecastTime": "000"
+      },
+      "12": {
+        "periodStart": "012",
+        "periodEnd": "120",
+        "forecastTime": "012"
+      }
+    },
     "periodHours": 3,
     "periodStart": "000",
     "periodEnd": "168",

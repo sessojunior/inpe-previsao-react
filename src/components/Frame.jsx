@@ -3,7 +3,10 @@ import { ConfigContext } from "../contexts/ConfigContext";
 
 import FrameTop from "./FrameTop";
 import FrameImage from "./FrameImage";
-import { isValidForecastInit } from "../lib/formatDate";
+import {
+  expandForecastInits,
+  resolveForecastTime,
+} from "../lib/frameSelection";
 
 export default function Frame({ id }) {
   const {
@@ -47,9 +50,7 @@ export default function Frame({ id }) {
         }
         const data = await response.json();
         if (isCurrentRequest) {
-          const nextDates = Array.isArray(data.datesRun)
-            ? data.datesRun.filter(isValidForecastInit)
-            : [];
+          const nextDates = expandForecastInits(data.datesRun, model);
           setDates(nextDates);
           setDatesStatus(nextDates.length > 0 ? "ready" : "empty");
         }
@@ -69,7 +70,7 @@ export default function Frame({ id }) {
       isCurrentRequest = false;
       controller.abort();
     };
-  }, [model?.urlDates, model?.value]);
+  }, [model, model?.urlDates, model?.value]);
 
   useEffect(() => {
     if (
@@ -79,8 +80,28 @@ export default function Frame({ id }) {
       return;
     }
 
-    updateFrame(id, { init: dates[0] });
-  }, [dates, frame?.init, id, updateFrame]);
+    const product = model.options.products.find(
+      (item) => item.value === frame?.product
+    );
+    updateFrame(id, {
+      init: dates[0],
+      forecastTime: resolveForecastTime(
+        model,
+        product,
+        frame?.forecastTime,
+        undefined,
+        dates[0]
+      ),
+    });
+  }, [
+    dates,
+    frame?.forecastTime,
+    frame?.init,
+    frame?.product,
+    id,
+    model,
+    updateFrame,
+  ]);
 
   useEffect(() => {
     if (frame && model) {

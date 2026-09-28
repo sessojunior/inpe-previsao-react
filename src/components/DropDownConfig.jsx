@@ -288,7 +288,9 @@ export default function DropDownConfig({
       const forecastTime = resolveForecastTime(
         model,
         product,
-        frame.forecastTime
+        frame.forecastTime,
+        undefined,
+        e.target.value
       );
       resetTimer(forecastTime);
       updateFrame(frame.id, {

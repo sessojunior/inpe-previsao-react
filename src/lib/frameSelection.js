@@ -1,4 +1,5 @@
 import jsonCities from "../data/cities.json";
+import { isValidForecastInit } from "./formatDate.js";
 
 const cityIds = new Set(jsonCities.map((city) => city.id));
 
@@ -108,14 +109,75 @@ function getPeriodValue(product, model, key) {
   return product?.[key] ?? model?.[key];
 }
 
-export function isForecastTimeValid(model, product, forecastTime) {
+function getRunTurn(init) {
+  return typeof init === "string" ? init.slice(11, 13) : null;
+}
+
+export function expandForecastInits(dates, model) {
+  const filteredDates = Array.isArray(dates)
+    ? dates.filter(isValidForecastInit)
+    : [];
+  const turns = Object.keys(model?.periodsByTurn ?? {}).filter((turn) =>
+    /^\d{2}$/.test(turn)
+  );
+  if (turns.length <= 1) {
+    return filteredDates;
+  }
+
+  const validDates = [...new Set(filteredDates)];
+  const latest00 = validDates
+    .filter((date) => getRunTurn(date) === "00")
+    .sort((a, b) => b.localeCompare(a))[0];
+  const expandedDates = new Set(validDates);
+
+  if (latest00 && turns.length > 1) {
+    for (const date of validDates) {
+      if (date === latest00 || getRunTurn(date) !== "00") {
+        continue;
+      }
+
+      for (const turn of turns) {
+        if (turn !== "00") {
+          expandedDates.add(`${date.slice(0, 10)} ${turn}z`);
+        }
+      }
+    }
+  }
+
+  return [...expandedDates].sort((a, b) => b.localeCompare(a));
+}
+
+export function getForecastPeriod(model, product, init) {
+  const turn = getRunTurn(init);
+  const turnPeriod = turn ? model?.periodsByTurn?.[turn] : null;
+  const productHasForecastTime = Object.prototype.hasOwnProperty.call(
+    product ?? {},
+    "forecastTime"
+  );
+
+  return {
+    periodStart:
+      product?.periodStart ?? turnPeriod?.periodStart ?? model?.periodStart,
+    periodEnd:
+      turnPeriod?.periodEnd ?? getPeriodValue(product, model, "periodEnd"),
+    periodHours:
+      product?.periodHours ?? turnPeriod?.periodHours ?? model?.periodHours,
+    forecastTime: productHasForecastTime
+      ? product.forecastTime
+      : turnPeriod?.forecastTime ?? model?.forecastTime,
+  };
+}
+
+export function isForecastTimeValid(model, product, forecastTime, init) {
   if (forecastTime === null || forecastTime === undefined || forecastTime === "") {
     return false;
   }
 
-  const periodStart = getPeriodValue(product, model, "periodStart");
-  const periodEnd = getPeriodValue(product, model, "periodEnd");
-  const periodHours = getPeriodValue(product, model, "periodHours");
+  const { periodStart, periodEnd, periodHours } = getForecastPeriod(
+    model,
+    product,
+    init
+  );
 
   if (periodStart === undefined || periodEnd === undefined || !periodHours) {
     return true;
@@ -138,29 +200,37 @@ export function isForecastTimeValid(model, product, forecastTime) {
   );
 }
 
-export function resolveForecastTime(model, product, preferredForecastTime, fallbackForecastTime) {
+export function resolveForecastTime(
+  model,
+  product,
+  preferredForecastTime,
+  fallbackForecastTime,
+  init
+) {
+  const period = getForecastPeriod(model, product, init);
+
   if (product && Object.prototype.hasOwnProperty.call(product, "forecastTime")) {
     if (product.forecastTime === null) {
       return null;
     }
 
-    if (isForecastTimeValid(model, product, preferredForecastTime)) {
+    if (isForecastTimeValid(model, product, preferredForecastTime, init)) {
       return preferredForecastTime;
     }
 
-    return product.forecastTime;
+    return period.forecastTime;
   }
 
-  if (isForecastTimeValid(model, product, preferredForecastTime)) {
+  if (isForecastTimeValid(model, product, preferredForecastTime, init)) {
     return preferredForecastTime;
   }
 
-  if (model?.forecastTime !== undefined) {
-    return model.forecastTime;
+  if (period.forecastTime !== undefined) {
+    return period.forecastTime;
   }
 
-  if (product?.periodStart !== undefined) {
-    return product.periodStart;
+  if (period.periodStart !== undefined) {
+    return period.periodStart;
   }
 
   return fallbackForecastTime ?? null;

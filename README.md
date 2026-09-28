@@ -141,6 +141,7 @@ Exemplo:
   - **{{turn}}** - _(string)_. Turno da rodada (HH). Exemplos: "00", "12".
   - **{{cityId}}** - _(string)_. ID da cidade. Exemplo: "1083".
 - **timeRun** - _(number)_. Tempo (em horas) que leva para rodar todo o modelo, ou de quanto em quanto tempo esse modelo é rodado.
+- **periodsByTurn** - _(Object, opcional)_. Permite configurar o período conforme o turno da rodada, no formato `"HH": { "periodStart": "HHH", "periodEnd": "HHH", "forecastTime": "HHH" }`. Exemplo: o MONAN usa `"00": { "periodStart": "000", "periodEnd": "168", "forecastTime": "000" }` e `"12": { "periodStart": "012", "periodEnd": "120", "forecastTime": "012" }`.
 - **periodHours** - _(number)_. As figuras são geradas em um intervalo de horas. Esse é o intervalo de horas de cada figura de previsão do modelo. É necessário para calcular e obter um array com as horas de previsão. Por exemplo, para um número de 3, será gerado um array ["000", "003", "006", ...] e para um número 6, será gerado um array ["000", "006", "012", ...]. Valores possíveis: 1, 3 ou 6.
 - **periodStart** - _(string)_. Tempo inicial da figura para o array de tempos. Exemplo: "000".
 - **periodEnd** - _(string)_. Tempo final da figura para o array de tempos. Exemplos: "180", "240".
@@ -676,6 +677,8 @@ Cada modelo possui as chaves _periodStart_ e _periodEnd_, que funcionam para tod
 Ou seja, se um modelo for até 180 horas e de 3 em 3 horas, todos os produtos e variáveis ou níveis deste modelo serão assim.
 
 Entretanto, alguns produtos por serem mais específicos, possuem particularidades, como é o caso de temperatura mínima, temperatura máxima e umidade relativa mínima, que tem um intervalo maior que é de 24 horas. Ou seja, roda 1 vez por dia. Neste caso, esses produtos teriam mais algumas chaves, específicas para estes produtos, como: _periodStart_, _periodEnd_ e _periodHours_.
+
+Quando o mesmo modelo possui horizontes ou tempos iniciais diferentes por turno, como o MONAN com 00Z iniciando em 000 e 12Z iniciando em 012, use _periodsByTurn_ no objeto do modelo. O turno continua vindo de _datesRun_ em _urlDates_; se uma rodada anterior estiver disponível apenas em 00Z, a aplicação também deriva os turnos configurados para esse ciclo e usa o período correspondente.
 
 ## Sugestão de melhorias futuras
 

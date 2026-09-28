@@ -20,6 +20,7 @@ import { IoClose } from "react-icons/io5";
 import DropDownConfig from "./DropDownConfig";
 import DropDownTime from "./DropDownTime";
 import { formatDate } from "../lib/formatDate";
+import { getForecastPeriod } from "../lib/frameSelection";
 import { toast } from "react-toastify";
 
 export default function FrameTop({
@@ -45,14 +46,16 @@ export default function FrameTop({
     model.options.products.find((product) => product.value === frame.product) ||
     model.options.products[0];
 
-  // Se o intervalo de horas for específico para o produto, por exemplo, um produto que só roda de 24 em 24 horas, obtém a partir do produto o período de horas que o mesmo roda.
-  const periodHours = product.periodHours ?? model.periodHours;
+  const init = frame.init ?? dates[0];
+  const { periodHours, periodStart, periodEnd } = getForecastPeriod(
+    model,
+    product,
+    init
+  );
 
-  // Se o período que inicia ou termina for específico para o produto, por exemplo, um produto que inicia em "024", obtém a partir do produto o período de horas que o mesmo roda.
-  const periodStart = product.periodStart ?? model.periodStart;
-  const periodEnd = product.periodEnd ?? model.periodEnd;
-
-  // Cria um array de horas iniciando com model.periodStart (geralmente "000") e terminando com model.periodEnd (geralmente "180" ou "240")
+  // O período considera as configurações específicas do produto e, quando
+  // configurado, o limite correspondente ao turno da inicialização.
+  // Cria um array com os tempos disponíveis para a rodada selecionada.
   // Precisa ter 3 caracteres, e ficaria assim: ["000", "003", "006", ..., "240"]
   // O intervalo de horas é baseado em periodHours (geralmente 3 ou 6 quando baseado em model ou 24 quando baseado em product)
 
@@ -132,7 +135,6 @@ export default function FrameTop({
 
   const urlImage = useCallback(
     (forecastTime) => {
-      const init = frame.init ?? dates[0];
       if (!init) return null;
       const year = init?.slice(0, 4);
       const month = init?.slice(5, 7);
@@ -151,14 +153,13 @@ export default function FrameTop({
       return url;
     },
     [
-      dates,
       frame.city,
-      frame.init,
       frame.product,
       frame.region,
       model.timeRun,
       model.urlImage,
       model.value,
+      init,
     ]
   );
 

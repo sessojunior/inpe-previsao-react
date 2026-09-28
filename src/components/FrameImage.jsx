@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import ImageNotFound from "../assets/not-found.png";
 import FrameCharts from "./FrameCharts";
+import { getForecastPeriod } from "../lib/frameSelection";
 
 const MAX_IMAGE_RETRIES = 3;
 const RETRY_DELAYS_MS = [1500, 3000, 6000];
@@ -46,10 +47,9 @@ export default function FrameImage({
   const product =
     model.options.products.find((product) => product.value === frame.product) ||
     model.options.products[0];
-  const periodStart = product.periodStart ?? model.periodStart;
-
   const publicImage = ImageNotFound;
   const init = frame.init ?? dates[0];
+  const { periodStart } = getForecastPeriod(model, product, init);
   const frameId = frame?.id;
   const isFramePlaying = frame?.isPlaying;
   const year = init?.slice(0, 4);

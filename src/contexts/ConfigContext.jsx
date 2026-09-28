@@ -96,7 +96,8 @@ function normalizeFrame(frame, models, fallbackFrame) {
       model,
       product,
       frame?.forecastTime,
-      baseFrame.forecastTime
+      baseFrame.forecastTime,
+      frame?.init
     ),
     isPlaying: Boolean(frame?.isPlaying),
     init: isValidForecastInit(frame?.init) ? frame.init : null,
