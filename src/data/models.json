@@ -26,8 +26,8 @@
     "forecastTime": "000",
     "default": {
       "product": {
-        "value": "prec_pnmm",
-        "group": "prec_pnmm",
+        "value": "t_2m",
+        "group": "t",
         "region": "ams"
       }
     },
