@@ -1,0 +1,85 @@
+# Um serviço por ambiente:
+#   local    build na máquina do desenvolvedor -> docker compose up -d
+#   dev      estrela -> docker compose up -d dev
+#   homolog  fortuna -> docker compose up -d homolog
+#   prod     cumulus -> docker compose up -d prod
+# dev, homolog e prod usam a imagem do registry, publicada com o build-3.0.sh (.build.conf).
+# Nos servidores, a pasta da aplicação só precisa deste arquivo.
+
+# Configuração comum a todos os ambientes.
+x-prevnum: &prevnum
+  restart: unless-stopped
+  networks:
+    - frontend
+  stop_grace_period: 30s
+  mem_limit: 128m
+  mem_reservation: 64m
+  cpus: 0.5
+  pids_limit: 256
+  security_opt:
+    - no-new-privileges:true
+  # Remove todas as capacidades do kernel e devolve apenas as que o
+  # entrypoint e o nginx usam: troca de dono dos diretórios de cache
+  # (CHOWN, DAC_OVERRIDE), porta 80 (NET_BIND_SERVICE) e troca dos
+  # workers para o usuário nginx (SETUID, SETGID).
+  cap_drop:
+    - ALL
+  cap_add:
+    - CHOWN
+    - DAC_OVERRIDE
+    - NET_BIND_SERVICE
+    - SETGID
+    - SETUID
+  healthcheck:
+    test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1/health"]
+    interval: 30s
+    timeout: 5s
+    retries: 3
+    start_period: 10s
+  logging:
+    driver: json-file
+    options:
+      max-size: "10m"
+      max-file: "3"
+
+services:
+  local:
+    <<: *prevnum
+    container_name: prevnum-local
+    image: prevnum-img
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        VITE_BASE_PATH: ${VITE_BASE_PATH:-/}
+    ports:
+      - "${APP_PORT:-3003}:80"
+
+  dev:
+    <<: *prevnum
+    profiles: ["dev"]
+    container_name: prevnum-dev
+    image: registry.cptec.inpe.br/previsao-numerica/frontend:latest-dev
+    ports:
+      - "3003:80"
+
+  homolog:
+    <<: *prevnum
+    profiles: ["homolog"]
+    container_name: prevnum-homolog
+    image: registry.cptec.inpe.br/previsao-numerica/frontend:latest-homolog
+    ports:
+      - "3003:80"
+
+  prod:
+    <<: *prevnum
+    profiles: ["prod"]
+    container_name: prevnum-app
+    # Versão fixa: trocar a tag a cada publicação (e voltar para a anterior, se preciso).
+    image: registry.cptec.inpe.br/previsao-numerica/frontend:v1.1.2-prod
+    ports:
+      - "3003:80"
+
+networks:
+  frontend:
+    external: true
