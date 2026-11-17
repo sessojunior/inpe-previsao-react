@@ -103,12 +103,24 @@ test("registers the BRAMS15 environmental model with its current metadata", () =
     brams15.urlDates,
     "https://s1.cptec.inpe.br/grafico/Modelos/portal_previsao_numerica/mod_brams15.json"
   );
+  assert.equal(brams15.timeRun, 24);
   assert.equal(brams15.periodStart, "-024");
   assert.equal(brams15.periodEnd, "072");
   assert.equal(brams15.periodHours, 3);
   assert.equal(brams15.options.groups.length, 8);
   assert.equal(brams15.options.products.length, 32);
   assert.equal(brams15.default.product.value, "aod550_40");
+});
+
+test("allows all BRAMS15 environmental regions for map products", () => {
+  const expectedRegions = ["ams", "bra", "sul", "sud", "coe", "nte", "nde"];
+  const mapProducts = brams15.options.products.filter(
+    (product) => product.value !== "meteograms"
+  );
+
+  for (const product of mapProducts) {
+    assert.deepEqual(product.regions, expectedRegions, product.value);
+  }
 });
 
 test("keeps BRAMS15 meteograms as city products without forecast time", () => {

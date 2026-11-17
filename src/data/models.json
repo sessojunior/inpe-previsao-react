@@ -2692,7 +2692,7 @@
     "urlDates": "https://s1.cptec.inpe.br/grafico/Modelos/portal_previsao_numerica/mod_brams15.json",
     "urlCharts": "https://ftp.cptec.inpe.br/modelos/produtos/BRAMS/ams_15km/grh/json2/{{year}}/{{month}}/{{day}}/{{turn}}/{{cityId}}.json",
     "urlCsv": "https://ftp.cptec.inpe.br/modelos/produtos/BRAMS/ams_15km/grh/csv/{{year}}/{{month}}/{{day}}/{{turn}}/{{cityId}}.csv",
-    "timeRun": 12,
+    "timeRun": 24,
     "periodHours": 3,
     "periodStart": "-024",
     "periodEnd": "072",
@@ -2746,7 +2746,12 @@
           "group": "aod550_40",
           "regions": [
             "ams",
-            "bra"
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nte",
+            "nde"
           ]
         },
         {
@@ -2755,7 +2760,12 @@
           "group": "pm25wd_40",
           "regions": [
             "ams",
-            "bra"
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nte",
+            "nde"
           ]
         },
         {
@@ -2764,7 +2774,12 @@
           "group": "pmint_40",
           "regions": [
             "ams",
-            "bra"
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nte",
+            "nde"
           ]
         },
         {
@@ -2773,7 +2788,12 @@
           "group": "co",
           "regions": [
             "ams",
-            "bra"
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nte",
+            "nde"
           ]
         },
         {
@@ -2782,7 +2802,12 @@
           "group": "co",
           "regions": [
             "ams",
-            "bra"
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nte",
+            "nde"
           ]
         },
         {
@@ -2791,7 +2816,12 @@
           "group": "co",
           "regions": [
             "ams",
-            "bra"
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nte",
+            "nde"
           ]
         },
         {
@@ -2800,7 +2830,12 @@
           "group": "co",
           "regions": [
             "ams",
-            "bra"
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nte",
+            "nde"
           ]
         },
         {
@@ -2809,7 +2844,12 @@
           "group": "co",
           "regions": [
             "ams",
-            "bra"
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nte",
+            "nde"
           ]
         },
         {
@@ -2818,7 +2858,12 @@
           "group": "co",
           "regions": [
             "ams",
-            "bra"
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nte",
+            "nde"
           ]
         },
         {
@@ -2827,7 +2872,12 @@
           "group": "co",
           "regions": [
             "ams",
-            "bra"
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nte",
+            "nde"
           ]
         },
         {
@@ -2836,7 +2886,12 @@
           "group": "pm25",
           "regions": [
             "ams",
-            "bra"
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nte",
+            "nde"
           ]
         },
         {
@@ -2845,7 +2900,12 @@
           "group": "pm25",
           "regions": [
             "ams",
-            "bra"
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nte",
+            "nde"
           ]
         },
         {
@@ -2854,7 +2914,12 @@
           "group": "pm25",
           "regions": [
             "ams",
-            "bra"
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nte",
+            "nde"
           ]
         },
         {
@@ -2863,7 +2928,12 @@
           "group": "pm25",
           "regions": [
             "ams",
-            "bra"
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nte",
+            "nde"
           ]
         },
         {
@@ -2872,7 +2942,12 @@
           "group": "pm25",
           "regions": [
             "ams",
-            "bra"
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nte",
+            "nde"
           ]
         },
         {
@@ -2881,7 +2956,12 @@
           "group": "pm25",
           "regions": [
             "ams",
-            "bra"
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nte",
+            "nde"
           ]
         },
         {
@@ -2890,7 +2970,12 @@
           "group": "pm25",
           "regions": [
             "ams",
-            "bra"
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nte",
+            "nde"
           ]
         },
         {
@@ -2899,7 +2984,12 @@
           "group": "o3",
           "regions": [
             "ams",
-            "bra"
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nte",
+            "nde"
           ]
         },
         {
@@ -2908,7 +2998,12 @@
           "group": "o3",
           "regions": [
             "ams",
-            "bra"
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nte",
+            "nde"
           ]
         },
         {
@@ -2917,7 +3012,12 @@
           "group": "o3",
           "regions": [
             "ams",
-            "bra"
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nte",
+            "nde"
           ]
         },
         {
@@ -2926,7 +3026,12 @@
           "group": "o3",
           "regions": [
             "ams",
-            "bra"
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nte",
+            "nde"
           ]
         },
         {
@@ -2935,7 +3040,12 @@
           "group": "o3",
           "regions": [
             "ams",
-            "bra"
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nte",
+            "nde"
           ]
         },
         {
@@ -2944,7 +3054,12 @@
           "group": "o3",
           "regions": [
             "ams",
-            "bra"
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nte",
+            "nde"
           ]
         },
         {
@@ -2953,7 +3068,12 @@
           "group": "o3",
           "regions": [
             "ams",
-            "bra"
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nte",
+            "nde"
           ]
         },
         {
@@ -2962,7 +3082,12 @@
           "group": "nox",
           "regions": [
             "ams",
-            "bra"
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nte",
+            "nde"
           ]
         },
         {
@@ -2971,7 +3096,12 @@
           "group": "nox",
           "regions": [
             "ams",
-            "bra"
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nte",
+            "nde"
           ]
         },
         {
@@ -2980,7 +3110,12 @@
           "group": "nox",
           "regions": [
             "ams",
-            "bra"
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nte",
+            "nde"
           ]
         },
         {
@@ -2989,7 +3124,12 @@
           "group": "nox",
           "regions": [
             "ams",
-            "bra"
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nte",
+            "nde"
           ]
         },
         {
@@ -2998,7 +3138,12 @@
           "group": "nox",
           "regions": [
             "ams",
-            "bra"
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nte",
+            "nde"
           ]
         },
         {
@@ -3007,7 +3152,12 @@
           "group": "nox",
           "regions": [
             "ams",
-            "bra"
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nte",
+            "nde"
           ]
         },
         {
@@ -3016,7 +3166,12 @@
           "group": "nox",
           "regions": [
             "ams",
-            "bra"
+            "bra",
+            "sul",
+            "sud",
+            "coe",
+            "nte",
+            "nde"
           ]
         },
         {
