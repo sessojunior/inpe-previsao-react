@@ -2694,7 +2694,7 @@
     "urlCsv": "https://ftp.cptec.inpe.br/modelos/produtos/BRAMS/ams_15km/grh/csv/{{year}}/{{month}}/{{day}}/{{turn}}/{{cityId}}.csv",
     "timeRun": 24,
     "periodHours": 3,
-    "periodStart": "-024",
+    "periodStart": "000",
     "periodEnd": "072",
     "forecastTime": "000",
     "default": {

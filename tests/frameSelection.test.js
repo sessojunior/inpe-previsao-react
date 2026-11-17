@@ -104,7 +104,7 @@ test("registers the BRAMS15 environmental model with its current metadata", () =
     "https://s1.cptec.inpe.br/grafico/Modelos/portal_previsao_numerica/mod_brams15.json"
   );
   assert.equal(brams15.timeRun, 24);
-  assert.equal(brams15.periodStart, "-024");
+  assert.equal(brams15.periodStart, "000");
   assert.equal(brams15.periodEnd, "072");
   assert.equal(brams15.periodHours, 3);
   assert.equal(brams15.options.groups.length, 8);
