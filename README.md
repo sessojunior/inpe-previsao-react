@@ -81,6 +81,52 @@ A solução mais fácil para esse problema é criar um arquivo **.htaccess** no 
 </IfModule>
 ```
 
+**Restrição de CORS no Varnish:** embora o `.htaccess` defina `Access-Control-Allow-Origin`, existe uma camada Varnish na frente dos servidores `s0`, `s1`, `s2` e `s3` que aplica uma restrição adicional de segurança. O Varnish remove esse cabeçalho para origens externas arbitrárias e só o recria quando a origem pertence a um domínio `*.inpe.br` ou `*.cptec.inpe.br`. Os cabeçalhos `Access-Control-Allow-Methods` e `Access-Control-Allow-Headers` continuam sendo enviados normalmente.
+
+Por esse motivo, uma aplicação aberta diretamente em `http://localhost` não consegue ler os JSONs do CPTEC via `fetch`, mesmo que o arquivo `.htaccess` esteja correto. Para testar localmente sem alterar essa política de segurança, é necessário usar o domínio local `test.cptec.inpe.br`, apontado para `127.0.0.1` no arquivo `hosts`, conforme descrito na seção de desenvolvimento local abaixo. Assim, o navegador envia uma origem pertencente a `cptec.inpe.br` e o Varnish permite o acesso ao JSON.
+
+## Desenvolvimento local com um domínio do CPTEC
+
+O Varnish que atende os arquivos do CPTEC libera o cabeçalho `Access-Control-Allow-Origin` para origens dos domínios `inpe.br` e `cptec.inpe.br`, mas não para `http://localhost`. Para testar esta aplicação localmente sem reabrir o CORS para qualquer domínio, foi configurado no Vite o host `test.cptec.inpe.br`.
+
+**A configuração do arquivo `hosts` é obrigatória para esse teste.** Sem ela, o endereço `test.cptec.inpe.br` não apontará para o servidor local e a aplicação não conseguirá ser acessada pelo domínio autorizado.
+
+No Windows, edite o arquivo abaixo como administrador:
+
+```text
+C:\Windows\System32\drivers\etc\hosts
+```
+
+Acrescente a linha:
+
+```text
+127.0.0.1 test.cptec.inpe.br
+```
+
+Depois de iniciar o projeto com:
+
+```bash
+npm run dev
+```
+
+Depois de salvar o arquivo `hosts`, reiniciar o servidor Vite e, se necessário, o navegador, acesse a aplicação local pelo endereço:
+
+```text
+http://test.cptec.inpe.br:5173/inpe-previsao-react/
+```
+
+O endereço-base do servidor de desenvolvimento é [http://test.cptec.inpe.br:5173/](http://test.cptec.inpe.br:5173/). Para abrir esta aplicação, é necessário acrescentar o diretório `/inpe-previsao-react/`, conforme o endereço completo acima.
+
+O arquivo `vite.config.js` mantém `localhost` permitido e também libera `test.cptec.inpe.br` no servidor de desenvolvimento. O alias definido no arquivo `hosts` afeta somente o computador local; ele não cria nem altera um registro DNS público.
+
+O endereço oficial da aplicação continua sendo:
+
+```text
+https://previsaonumerica.cptec.inpe.br
+```
+
+Essa configuração de desenvolvimento não altera o build nem o comportamento do domínio oficial.
+
 ## Arquivos JSON da pasta _/data_
 
 O projeto necessita de arquivos JSON que estão no diretório **/data** para rodar o aplicativo. São eles:

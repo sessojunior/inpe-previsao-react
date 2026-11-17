@@ -30,6 +30,7 @@ const models = JSON.parse(
 const monan = models.find((model) => model.value === "MONAN");
 const legacyModel = models.find((model) => model.value !== "MONAN");
 const aprec = monan.options.products.find((product) => product.value === "aprec");
+const brams15 = models.find((model) => model.value === "BRAMS15");
 
 test("adds the available MONAN 12Z run when the trigger lists only 00Z", () => {
   assert.deepEqual(
@@ -93,4 +94,34 @@ test("builds the MONAN 12Z image path from the selected initialization", () => {
     url,
     "https://s1.cptec.inpe.br/grafico/Modelos/MONAN/pn/aprec/2026/09/27/12/MONAN_aprec_ams_2026092712z_012z.png"
   );
+});
+
+test("registers the BRAMS15 environmental model with its current metadata", () => {
+  assert.ok(brams15);
+  assert.equal(brams15.label, "BRAMS 15 km Ambiental");
+  assert.equal(
+    brams15.urlDates,
+    "https://s1.cptec.inpe.br/grafico/Modelos/portal_previsao_numerica/mod_brams15.json"
+  );
+  assert.equal(brams15.periodStart, "-024");
+  assert.equal(brams15.periodEnd, "072");
+  assert.equal(brams15.periodHours, 3);
+  assert.equal(brams15.options.groups.length, 8);
+  assert.equal(brams15.options.products.length, 32);
+  assert.equal(brams15.default.product.value, "aod550_40");
+});
+
+test("keeps BRAMS15 meteograms as city products without forecast time", () => {
+  assert.ok(brams15);
+  const meteograms = brams15.options.products.find(
+    (product) => product.value === "meteograms"
+  );
+
+  assert.deepEqual(meteograms, {
+    label: null,
+    value: "meteograms",
+    group: "meteograms",
+    regions: null,
+    forecastTime: null,
+  });
 });
