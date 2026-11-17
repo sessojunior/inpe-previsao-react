@@ -1,7 +1,7 @@
 import { useContext, useMemo } from "react";
 import { FaArrowLeft, FaCloudSun, FaLink, FaRoute } from "react-icons/fa";
 
-import { ConfigContext } from "../contexts/ConfigContext";
+import { ConfigContext } from "../contexts/config-context";
 import { buildFramePathname } from "../lib/frameUrlState";
 import {
   findProductForSelection,

@@ -76,7 +76,7 @@ services:
     profiles: ["prod"]
     container_name: prevnum-app
     # Versão fixa: trocar a tag a cada publicação (e voltar para a anterior, se preciso).
-    image: registry.cptec.inpe.br/previsao-numerica/frontend:v1.1.2-prod
+    image: registry.cptec.inpe.br/previsao-numerica/frontend:v1.2.0-prod
     ports:
       - "3003:80"
 

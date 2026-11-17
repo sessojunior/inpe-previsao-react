@@ -1,5 +1,5 @@
 import { useContext, useState, useRef, useEffect } from "react";
-import { ConfigContext } from "../contexts/ConfigContext";
+import { ConfigContext } from "../contexts/config-context";
 
 import imgLogo from "../assets/govbr-logo.png";
 import { FaEllipsisV, FaBars } from "react-icons/fa";

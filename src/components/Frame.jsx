@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { ConfigContext } from "../contexts/ConfigContext";
+import { ConfigContext } from "../contexts/config-context";
 
 import FrameTop from "./FrameTop";
 import FrameImage from "./FrameImage";

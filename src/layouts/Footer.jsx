@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect, useMemo } from "react";
-import { ConfigContext } from "../contexts/ConfigContext";
+import { ConfigContext } from "../contexts/config-context";
 
 import {
   FaYoutube,

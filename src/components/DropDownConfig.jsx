@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState, useMemo, useCallback } from "react";
-import { ConfigContext } from "../contexts/ConfigContext";
+import { ConfigContext } from "../contexts/config-context";
 
 import { formatDate } from "../lib/formatDate";
 import {

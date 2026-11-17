@@ -3,7 +3,7 @@ import { useContext } from "react";
 import Frames from "../components/Frames";
 import RouteNotFound from "../components/RouteNotFound";
 import TopBar from "../components/TopBar";
-import { ConfigContext } from "../contexts/ConfigContext";
+import { ConfigContext } from "../contexts/config-context";
 
 export default function Container() {
   const { routeState } = useContext(ConfigContext);

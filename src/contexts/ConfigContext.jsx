@@ -1,4 +1,6 @@
-import { useCallback, useEffect, useRef, useState, createContext } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+
+import { ConfigContext } from "./config-context";
 
 import jsonModels from "../data/models.json";
 import jsonRegions from "../data/regions.json";
@@ -17,8 +19,6 @@ import {
   resolveCity,
   resolveRegion,
 } from "../lib/frameSelection";
-
-export const ConfigContext = createContext({});
 
 const MAX_FRAMES = 4;
 

@@ -3,7 +3,7 @@ import { TbColumns1, TbColumns2, TbColumns3 } from "react-icons/tb";
 import { FaPause, FaPlay } from "react-icons/fa";
 
 import { useContext } from "react";
-import { ConfigContext } from "../contexts/ConfigContext";
+import { ConfigContext } from "../contexts/config-context";
 
 export default function TopBar() {
   const { config, frames, startAllTimer, pauseAllTimer, updateLocalConfig } =

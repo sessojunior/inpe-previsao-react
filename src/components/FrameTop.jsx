@@ -6,7 +6,7 @@ import {
   useMemo,
   useRef,
 } from "react";
-import { ConfigContext } from "../contexts/ConfigContext";
+import { ConfigContext } from "../contexts/config-context";
 import {
   FaChevronLeft,
   FaChevronRight,
